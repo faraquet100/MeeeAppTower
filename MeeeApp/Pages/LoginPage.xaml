@@ -34,6 +34,7 @@
                        Margin="0,0,0,0"
                        HorizontalOptions="Center" FontAutoScalingEnabled="False" />
 
+                <!-- Entry is placed within a Frame because removing the Android underline also removes any specified entry background -->
                 <Frame BackgroundColor="{StaticResource Gray200}" Padding="0" Margin="12,24,12,0">
                     <Entry x:Name="TxtEmail"
                        PlaceholderColor="White"

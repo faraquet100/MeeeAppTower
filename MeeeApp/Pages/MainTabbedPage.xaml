@@ -34,6 +34,9 @@
             <pages:ResourcesPage   />
         </x:Arguments>
     </NavigationPage>
+
+    <!-- Android does not work properly with more than 4 tabs -->
+
     <!--
     <NavigationPage IconImageSource="icons8_30gear">
         <x:Arguments>
