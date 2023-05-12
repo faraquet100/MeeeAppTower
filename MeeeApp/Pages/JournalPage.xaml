@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MeeeApp.Pages.JournalPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:controls="clr-namespace:MeeeApp.Controls"
+             Title="Journal">
+
+    <Grid>
+
+        <controls:FixedScrollView ZIndex="2">
+            <VerticalStackLayout VerticalOptions="Start" Padding="24">
+
+                <Label x:Name="LblDayTitle"
+                       Text="Today"
+                       FontSize="32"
+                       FontAttributes="Bold" />
+
+
+                <Grid Margin="0,12,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Frame x:Name="FramePlan" Grid.Column="0" CornerRadius="10" BackgroundColor="{StaticResource MeeePrimaryMagenta}" Padding="0"  HasShadow="False" BorderColor="Transparent" Margin="0,2,6,2">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <HorizontalStackLayout Grid.Column="0" Padding="6" VerticalOptions="Center" HorizontalOptions="Center">
+                                <Image x:Name="ImgPlan" Source="icons8_30gear" HeightRequest="20" WidthRequest="20">
+                                </Image>
+                                <Label Text="Plan" FontSize="18" FontAttributes="Bold" TextColor="White" Padding="4,0,0,0" />
+                            </HorizontalStackLayout>
+                        </Grid>
+
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapPlan" Tapped="TapPlan_Tapped" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+
+                    <Frame x:Name="FrameReflection" Grid.Column="1" CornerRadius="10" BackgroundColor="{StaticResource Gray500}" Padding="0" HasShadow="False" BorderColor="Transparent" Margin="6,2,0,2">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <HorizontalStackLayout Grid.Column="0" Padding="6" VerticalOptions="Center" HorizontalOptions="Center">
+                                <Image x:Name="ImgReflection" Source="icons8_idea" HeightRequest="20" WidthRequest="20">
+                                </Image>
+                                <Label Text="Reflection" FontSize="18" FontAttributes="Bold" TextColor="White" Padding="4,0,0,0" />
+                            </HorizontalStackLayout>
+
+                        </Grid>
+
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapReflection" Tapped="TapReflection_Tapped" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    
+                    
+
+                </Grid>
+
+                
+
+                <HorizontalStackLayout HorizontalOptions="Fill" BackgroundColor="AliceBlue">
+
+                   
+
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </controls:FixedScrollView>
+
+
+        <ActivityIndicator
+                ZIndex="3"
+                x:Name="MyActivityIndicator"
+                IsRunning="true" Color="{StaticResource MeeePrimaryCyan}"
+                Scale="2"
+                BackgroundColor="Transparent"
+                IsVisible="false" Margin="0,12"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                />
+    </Grid>
+
+</ContentPage>

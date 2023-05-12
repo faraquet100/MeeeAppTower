@@ -1,0 +1,103 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
+		<OutputType>Exe</OutputType>
+		<RootNamespace>MeeeApp</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+
+		<!-- Display name -->
+		<ApplicationTitle>MeeeApp</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.companyname.meeeapp</ApplicationId>
+		<ApplicationIdGuid>ecaa9c96-77c0-4391-a8a3-72f38c889858</ApplicationIdGuid>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="5.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Pages\" />
+	  <None Remove="Services\" />
+	  <None Remove="Controls\" />
+	  <None Remove="Platforms\iOS\Utils\" />
+	  <None Remove="Resources\Images\meee_web.png" />
+	  <None Remove="Resources\Images\sample_background.png" />
+	  <None Remove="Models\" />
+	  <None Remove="Resources\Images\sample_background2.png" />
+	  <None Remove="Resources\Images\SF_gear%403x.png" />
+	  <None Remove="Resources\Images\SF_gear%402x.png" />
+	  <None Remove="Resources\Images\settings_icon_adobe_express.svg" />
+	  <None Remove="Resources\Images\SF_gear.png" />
+	  <None Remove="Resources\Images\Ion_ios_compass.png" />
+	  <None Remove="Resources\Images\Ion_ios_home.png" />
+	  <None Remove="Resources\Images\Linear_graduation_hat.png" />
+	  <None Remove="Resources\Images\SF_book.png" />
+	  <None Remove="Resources\Images\SF_gear-1.png" />
+	  <None Remove="Resources\Images\icons8-settings-30.svg" />
+	  <None Remove="Resources\Images\icons8-settings-60.svg" />
+	  <None Remove="Resources\Images\icons8-home.svg" />
+	  <None Remove="Resources\Images\icons8-idea.svg" />
+	  <None Remove="Resources\Images\icons8-bookmark.svg" />
+	  <None Remove="Resources\Images\icons8-toolbox.svg" />
+	  <None Remove="Claases\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Pages\" />
+	  <Folder Include="Services\" />
+	  <Folder Include="Controls\" />
+	  <Folder Include="Platforms\iOS\Utils\" />
+	  <Folder Include="Models\" />
+	  <Folder Include="Claases\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Resources\Images\meee_web.png" />
+	  <BundleResource Include="Resources\Images\sample_background.png" />
+	  <BundleResource Include="Resources\Images\sample_background2.png" />
+	  <BundleResource Include="Resources\Images\icons8_30gear.svg" />
+	  <BundleResource Include="Resources\Images\icons8_home.svg" />
+	  <BundleResource Include="Resources\Images\icons8_idea.svg" />
+	  <BundleResource Include="Resources\Images\icons8_bookmark.svg" />
+	  <BundleResource Include="Resources\Images\icons8_toolbox.svg" />
+	</ItemGroup>
+</Project>

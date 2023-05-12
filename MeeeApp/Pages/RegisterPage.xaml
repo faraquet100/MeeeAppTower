@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MeeeApp.Pages.RegisterPage"
+             xmlns:controls="clr-namespace:MeeeApp.Controls"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="True"
+             NavigationPage.HasNavigationBar="False">
+
+
+    <!-- Content -->
+
+    <Grid>
+
+        <Image Source="sample_background" ZIndex="0" Aspect="AspectFill" HeightRequest="1000" Opacity="0.3" />
+
+        <Frame BackgroundColor="{StaticResource MeeePrimaryMagenta}" HeightRequest="1000" Opacity="0.2" />
+
+        <controls:FixedScrollView ZIndex="2">
+
+            <VerticalStackLayout VerticalOptions="Start" Padding="12">
+
+                <Image Source="meee_web.png"
+                       HorizontalOptions="Center"
+                       HeightRequest="60"
+                       Margin="0,24,0,24"
+                        />
+
+                <Label Text="Register for Meee"
+                       TextColor="#2C2A29"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                   
+                       HorizontalOptions="Center" FontAutoScalingEnabled="False" />
+
+                <Entry x:Name="TxtName"
+                       BackgroundColor="White"
+                       Opacity="0.9"
+                       Placeholder="Your Name"
+                       Margin="12,12,12,0"
+                      />
+
+                <Entry x:Name="TxtEmail"
+                       BackgroundColor="White"
+                       Opacity="0.9"
+                       Placeholder="Email"
+                       Margin="12,12,12,0"
+                      />
+
+                <Entry x:Name="TxtPassword"
+                       BackgroundColor="White"
+                       Opacity="0.9"
+                       Placeholder="Password"
+                       Margin="12,12,12,0"
+                      />
+
+                <Entry x:Name="TxtPasswordConfirm"
+                       BackgroundColor="White"
+                       Opacity="0.9"
+                       Placeholder="Confirm Password"
+                       Margin="12,12,12,0"
+                      />
+                
+
+                <Button x:Name="BtnRegister"
+                        Text="Register"
+                        HeightRequest="44"
+                        FontSize="15"
+                        FontAttributes="Bold"
+                        BackgroundColor="{StaticResource MeeePrimaryCyan}"
+                        Clicked="BtnRegister_Clicked" Margin="12,12,12,0" />
+
+                <HorizontalStackLayout HorizontalOptions="Center" Margin="0,12,0,0">
+                    <Label Text="Already a member?"
+                           FontSize="15"
+                            />
+
+                    <Label Text="Login here"
+                           FontSize="15"
+                           FontAttributes="Bold"
+                           Margin="6, 0, 0, 0"
+                           TextColor="{StaticResource MeeePrimaryMagenta}" />
+
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="TapLogin" Tapped="TapLogin_Tapped" />
+                    </HorizontalStackLayout.GestureRecognizers>
+
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+
+        </controls:FixedScrollView>
+
+        
+
+        <ActivityIndicator
+                ZIndex="3"
+                x:Name="MyActivityIndicator"
+                IsRunning="true" Color="{StaticResource MeeePrimaryCyan}"
+                Scale="2"
+                BackgroundColor="Transparent"
+                IsVisible="false" Margin="0,12"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                />
+
+    </Grid>
+</ContentPage>

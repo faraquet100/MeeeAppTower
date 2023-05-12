@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:controls="clr-namespace:MeeeApp.Controls"
+             x:Class="MeeeApp.Pages.LoginPage"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="False"
+             NavigationPage.HasNavigationBar="False">
+
+
+    <!-- Content -->
+
+    <Grid>
+
+        <Image Source="sample_background" ZIndex="0" Aspect="AspectFill" HeightRequest="1000" Opacity="0.3" />
+
+        <Frame BackgroundColor="{StaticResource MeeePrimaryCyan}" HeightRequest="1000" Opacity="0.2" />
+
+        <controls:FixedScrollView ZIndex="2">
+
+            <VerticalStackLayout VerticalOptions="Start" Padding="12">
+
+                <Image Source="meee_web.png"
+                       HorizontalOptions="Center"
+                       HeightRequest="120"
+                       Margin="0,24,0,24"
+                        />
+
+                <Label Text="Sign In to Meee"
+                       TextColor="#2C2A29"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       Margin="0,0,0,0"
+                       HorizontalOptions="Center" FontAutoScalingEnabled="False" />
+
+                <Frame BackgroundColor="{StaticResource Gray200}" Padding="0" Margin="12,24,12,0">
+                    <Entry x:Name="TxtEmail"
+                       PlaceholderColor="White"
+                       FontAttributes="Bold"
+                       FontSize="15"
+                       HorizontalTextAlignment="Center"
+                       Placeholder="Email"
+                       Keyboard="Email" >
+                    </Entry>
+                </Frame>
+                
+                <Frame BackgroundColor="{StaticResource Gray200}" Padding="0" Margin="12,12,12,0">
+                    <Entry x:Name="TxtPassword"
+                           PlaceholderColor="White"
+                           FontAttributes="Bold"
+                           FontSize="15"
+                           HorizontalTextAlignment="Center"
+                           Placeholder="Password"
+                           IsPassword="True"  />
+                </Frame>
+
+                <Button x:Name="BtnLogin"
+                        Text="Sign In"
+                        HeightRequest="44"
+                        FontSize="15"
+                        FontAttributes="Bold"
+                        BackgroundColor="{StaticResource MeeePrimaryMagenta}"
+                        Clicked="BtnLogin_Clicked" Margin="12,12,12,0" />
+
+                <HorizontalStackLayout HorizontalOptions="Center" Margin="0,12,0,0">
+                    <Label Text="Not a member?"
+                           FontSize="15"
+                            />
+
+                    <Label Text="Register here"
+                           FontSize="15"
+                           FontAttributes="Bold"
+                           Margin="6, 0, 0, 0"
+                           TextColor="{StaticResource MeeePrimaryCyan}" />
+
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="TapRegister" Tapped="TapRegister_Tapped" />
+                    </HorizontalStackLayout.GestureRecognizers>
+
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+
+        </controls:FixedScrollView>
+
+        
+
+        <ActivityIndicator
+                ZIndex="3"
+                x:Name="MyActivityIndicator"
+                IsRunning="true" Color="{StaticResource MeeePrimaryCyan}"
+                Scale="2"
+                BackgroundColor="Transparent"
+                IsVisible="false" Margin="0,12"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                />
+
+    </Grid>
+
+</ContentPage>
