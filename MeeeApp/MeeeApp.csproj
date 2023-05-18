@@ -12,14 +12,14 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>MeeeApp</ApplicationTitle>
+		<ApplicationTitle>Meee</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.meeeapp</ApplicationId>
+		<ApplicationId>com.cobalttechno.ios.meee</ApplicationId>
 		<ApplicationIdGuid>ecaa9c96-77c0-4391-a8a3-72f38c889858</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
@@ -31,6 +31,11 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	  <CodesignProvision>Automatic:AppStore</CodesignProvision>
+	  <CodesignKey>iPhone Distribution</CodesignKey>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
 	<ItemGroup>
@@ -116,6 +121,21 @@
 	  <None Remove="Resources\Images\SF_30_circle.png" />
 	  <None Remove="Resources\Images\SF_31_circle.png" />
 	  <None Remove="Resources\Images\SF_circle.png" />
+	  <None Remove="Resources\Images\day.png" />
+	  <None Remove="Resources\Images\night.png" />
+	  <None Remove="Resources\Images\moon.png" />
+	  <None Remove="Resources\Images\sun.png" />
+	  <None Remove="Resources\Images\tick.png" />
+	  <None Remove="Resources\Fonts\head-of-sean.ttf" />
+	  <None Remove="Resources\Images\face1.png" />
+	  <None Remove="Resources\Images\face9.png" />
+	  <None Remove="Resources\Images\face8.png" />
+	  <None Remove="Resources\Images\face7.png" />
+	  <None Remove="Resources\Images\face6.png" />
+	  <None Remove="Resources\Images\face5.png" />
+	  <None Remove="Resources\Images\face4.png" />
+	  <None Remove="Resources\Images\face3.png" />
+	  <None Remove="Resources\Images\face2.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Pages\" />
@@ -123,7 +143,7 @@
 	  <Folder Include="Controls\" />
 	  <Folder Include="Platforms\iOS\Utils\" />
 	  <Folder Include="Models\" />
-	  <Folder Include="Claases\" />
+	  <Folder Include="Classes\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <BundleResource Include="Resources\Images\meee_web.png" />
@@ -169,5 +189,20 @@
 	  <BundleResource Include="Resources\Images\sf_30_circle.png" />
 	  <BundleResource Include="Resources\Images\sf_31_circle.png" />
 	  <BundleResource Include="Resources\Images\sf_circle.png" />
+	  <BundleResource Include="Resources\Images\day.png" />
+	  <BundleResource Include="Resources\Images\night.png" />
+	  <BundleResource Include="Resources\Images\moon.png" />
+	  <BundleResource Include="Resources\Images\sun.png" />
+	  <BundleResource Include="Resources\Images\tick.png" />
+	  <BundleResource Include="Resources\Fonts\head-of-sean.ttf" />
+	  <BundleResource Include="Resources\Images\face1.png" />
+	  <BundleResource Include="Resources\Images\face9.png" />
+	  <BundleResource Include="Resources\Images\face8.png" />
+	  <BundleResource Include="Resources\Images\face7.png" />
+	  <BundleResource Include="Resources\Images\face6.png" />
+	  <BundleResource Include="Resources\Images\face5.png" />
+	  <BundleResource Include="Resources\Images\face4.png" />
+	  <BundleResource Include="Resources\Images\face3.png" />
+	  <BundleResource Include="Resources\Images\face2.png" />
 	</ItemGroup>
 </Project>

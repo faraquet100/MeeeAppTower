@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Behaviors;
 using MeeeApp.Services;
+using Microsoft.Maui.Controls.Shapes;
 
 namespace MeeeApp.Pages;
 
@@ -9,7 +10,7 @@ public partial class JournalPage : ContentPage
 {
     public ObservableCollection<ExerciseListContent> DsExerciseList = new ObservableCollection<ExerciseListContent>()
     {
-        new ExerciseListContent { LabelText = "Daily Exercises (2/3)" }
+        new ExerciseListContent { LabelText = "Daily Exercises (2 of 3)" }
     };
 
     private DateTime calendarDate = DateTime.Now;
@@ -25,21 +26,32 @@ public partial class JournalPage : ContentPage
         InitializeComponent();
     }
 
+    #region Start Up
+
     protected override void OnAppearing()
     {
         
         base.OnAppearing();
         InitialDelayedSetup();
+        FormatForPlan();
+
+#if ANDROID
+        FixAndroid();
+#endif
 
         LvExercises.ItemsSource = DsExerciseList;
-        
     }
 
     // For some reason, the behaviours won't work if run immediately
     // So for the icon tint to work we need a very short delay
     async void InitialDelayedSetup()
     {
-        await Task.Delay(50);
+        await Task.Delay(300);
+
+        var yellowBehaviour = new IconTintColorBehavior
+        {
+            TintColor = AppSettings.MeeeColorYellow
+        };
 
         var behaviour = new IconTintColorBehavior
         {
@@ -48,12 +60,27 @@ public partial class JournalPage : ContentPage
 
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            ImgPlan.Behaviors.Add(behaviour);
+            ImgPlan.Behaviors.Add(yellowBehaviour);
             ImgReflection.Behaviors.Add(behaviour);
+            ImgHappy.Behaviors.Add(yellowBehaviour);
+            ImgSad.Behaviors.Add(yellowBehaviour);
         });
 
         BuildCalendar(CalendarType.CheckIn);
+        BuildChart(CalendarType.CheckIn);
     }
+
+    private void FixAndroid()
+    {
+        // Android specific formatting fixes
+        BorderPlanThoughts.Margin = new Thickness(-5, 0, -5, -0);
+        BorderReflectionThoughts.Margin = new Thickness(-5, 0, -5, -0);
+        BorderExercises.Margin = new Thickness(-2, 12, -2, 0);
+        BorderCalendar.Margin = new Thickness(-5, 12, -5, 0);
+        BorderCalendar.Margin = new Thickness(-5, 12, -5, 0);
+    }
+
+    #endregion
 
     #region Actions
 
@@ -69,18 +96,24 @@ public partial class JournalPage : ContentPage
 
     void LvExercises_ItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectedItemChangedEventArgs e)
     {
-        LvExercises.SelectedItem = null;
+        
+        if (e.SelectedItem != null)
+        {
+            Navigation.PushAsync(new ExercisesPage());
+            LvExercises.SelectedItem = null;
+        }
     }
 
-    void BtnCheckIn_Clicked(System.Object sender, System.EventArgs e)
+    async void BtnCheckIn_Clicked(System.Object sender, System.EventArgs e)
     {
-        /*
-        Label label = new Label();
-        label.Text = "Hello, I'm Dynamic!";
-        label.FontAttributes = FontAttributes.Bold;
+        await Navigation.PushModalAsync(new CheckInPage());
+        await Navigation.PushModalAsync(new CheckInPage());
 
-        VsCalendar.Children.Add(label);
-        */
+    }
+
+    void BtnCheckOut_Clicked(System.Object sender, System.EventArgs e)
+    {
+
     }
 
     void BtnPreviousMonth_Clicked(System.Object sender, System.EventArgs e)
@@ -101,24 +134,67 @@ public partial class JournalPage : ContentPage
 
     private void FormatForPlan()
     {
-        VsPlan.IsVisible = true;
-        VsReflection.IsVisible = false;
+        ImgDay.IsVisible = true;
+        ImgNight.IsVisible = false;
+        
+        
         FramePlan.BackgroundColor = AppSettings.MeeeColorMagenta;
         FrameReflection.BackgroundColor = AppSettings.MeeeColorGrey500;
+        BorderPlanThoughts.IsVisible = true;
+        BorderReflectionThoughts.IsVisible = false;
+        BtnCheckIn.IsVisible = true;
+        BtnCheckOut.IsVisible = false;
 
+        //BuildCalendar(CalendarType.CheckIn);
+        //BuildChart(CalendarType.CheckIn);
     }
 
     private void FormatForReflection()
     {
-        VsPlan.IsVisible = false;
-        VsReflection.IsVisible = true;
+        ImgDay.IsVisible = false;
+        ImgNight.IsVisible = true;
+        
         FrameReflection.BackgroundColor = AppSettings.MeeeColorMagenta;
         FramePlan.BackgroundColor = AppSettings.MeeeColorGrey500;
+        BorderPlanThoughts.IsVisible = false;
+        BorderReflectionThoughts.IsVisible = true;
+        BtnCheckIn.IsVisible = false;
+        BtnCheckOut.IsVisible = true;
+
+        //BuildCalendar(CalendarType.CheckOut);
+        //BuildChart(CalendarType.CheckOut);
     }
 
     #endregion
 
     #region Calendar
+
+    // We only need to build this once, since it's just for the last 14 days
+    private void BuildChart(CalendarType calendarType)
+    {
+        var entries = GetCalendarEntries(calendarType, DateTime.Now);
+        int BOTTOM_ROW = 9;
+
+        var startDate = DateTime.Now.AddDays(-15);
+        for (int x = 1; x < 15; x++)
+        {
+            var currentDate = startDate.AddDays(x);
+            var entry = CalendarEntryForDate(entries, currentDate);
+            if (entry != null)
+            {
+                var cell = new BoxView
+                {
+                    Color = AppSettings.MeeeColorCyan,
+                    CornerRadius = 8,
+                    Margin = new Thickness(2, 0)
+                };
+
+                GridChart.Add(cell, x, BOTTOM_ROW - entry.CheckInScore);
+                GridChart.SetRowSpan(cell, entry.CheckInScore);
+            }
+        }
+
+    }
 
     private void BuildCalendar(CalendarType calendarType)
     {
@@ -126,7 +202,7 @@ public partial class JournalPage : ContentPage
         var monthTitle = calendarDate.ToString("MMMM yyyy");
         LblCalendarMonth.Text = monthTitle;
 
-        var entries = GetCalendarEntries(calendarDate);
+        var entries = GetCalendarEntries(calendarType, calendarDate);
         var firstDay = new DateTime(calendarDate.Year, calendarDate.Month, 1);
         
         var buildDate = firstDay;
@@ -137,6 +213,12 @@ public partial class JournalPage : ContentPage
         GridRow5.IsVisible = false;
         GridRow6.IsVisible = false;
 
+
+        var normalBehaviour = new IconTintColorBehavior
+        {
+            TintColor = AppSettings.MeeeColorGrey300
+        };
+
         var todayBehaviour = new IconTintColorBehavior
         {
             TintColor = AppSettings.MeeeColorRed
@@ -145,6 +227,11 @@ public partial class JournalPage : ContentPage
         var checkInBehaviour = new IconTintColorBehavior
         {
             TintColor = AppSettings.MeeeColorMagenta
+        };
+
+        var checkOutBehaviour = new IconTintColorBehavior
+        {
+            TintColor = AppSettings.MeeeColorCyan
         };
 
         HideAllDayImages();
@@ -168,6 +255,12 @@ public partial class JournalPage : ContentPage
                 imageControl.Source = dayNumberImage;
                 imageControl.IsVisible = true;
 
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    imageControl.Behaviors.Add(normalBehaviour);
+                });
+
+
                 // Today?
                 if (buildDate.Year == DateTime.Now.Year && buildDate.Month == DateTime.Now.Month && buildDate.Day == DateTime.Now.Day)
                 {
@@ -179,11 +272,20 @@ public partial class JournalPage : ContentPage
                 }
 
                 // Check In?
-                if (IsCheckedIn(entries, buildDate) != null)
+                if (calendarType == CalendarType.CheckIn &&  IsCheckedIn(entries, buildDate) != null)
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
                         imageControl.Behaviors.Add(checkInBehaviour);
+                    });
+                }
+
+                // Check Out?
+                if (calendarType == CalendarType.CheckOut && IsCheckedIn(entries, buildDate) != null)
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        imageControl.Behaviors.Add(checkOutBehaviour);
                     });
                 }
 
@@ -228,25 +330,58 @@ public partial class JournalPage : ContentPage
     }
 
 
-    private List<CalendarEntry> GetCalendarEntries(DateTime date)
+    private List<CalendarEntry> GetCalendarEntries(CalendarType calendarType, DateTime date)
     {
         // Just a bunch of dummy entries for last two months
 
-        return new List<CalendarEntry>()
+        if (calendarType == CalendarType.CheckIn)
         {
-            new CalendarEntry { Date = DateTime.Now.AddDays(-2), CheckInScore = 5 },
-            new CalendarEntry { Date = DateTime.Now.AddDays(-5), CheckInScore = 5 },
-            new CalendarEntry { Date = DateTime.Now.AddDays(-6), CheckInScore = 5 },
-            new CalendarEntry { Date = DateTime.Now.AddDays(-11), CheckInScore = 5 },
-            new CalendarEntry { Date = DateTime.Now.AddDays(-16), CheckInScore = 5 },
-            new CalendarEntry { Date = DateTime.Now.AddDays(-21), CheckInScore = 5 },
-            new CalendarEntry { Date = DateTime.Now.AddDays(-30), CheckInScore = 5 },
-            new CalendarEntry { Date = DateTime.Now.AddDays(-31), CheckInScore = 5 },
-            new CalendarEntry { Date = DateTime.Now.AddDays(-32), CheckInScore = 5 },
-            new CalendarEntry { Date = DateTime.Now.AddDays(-33), CheckInScore = 5 },
-            new CalendarEntry { Date = DateTime.Now.AddDays(-36), CheckInScore = 5 },
-            new CalendarEntry { Date = DateTime.Now.AddDays(-38), CheckInScore = 5 },
-        };
+            var startDate = DateTime.Parse("05/01/2023");
+            return new List<CalendarEntry>()
+            {
+                new CalendarEntry { Date = startDate, CheckInScore = 5 },
+                new CalendarEntry { Date = startDate.AddDays(1), CheckInScore = 5 },
+                new CalendarEntry { Date = startDate.AddDays(2), CheckInScore = 4 },
+                new CalendarEntry { Date = startDate.AddDays(3), CheckInScore = 8 },
+                new CalendarEntry { Date = startDate.AddDays(4), CheckInScore = 9 },
+                new CalendarEntry { Date = startDate.AddDays(5), CheckInScore = 2 },
+                new CalendarEntry { Date = startDate.AddDays(6), CheckInScore = 1 },
+                new CalendarEntry { Date = startDate.AddDays(7), CheckInScore = 3 },
+                //new CalendarEntry { Date = startDate.AddDays(8), CheckInScore = 5 },
+                //new CalendarEntry { Date = startDate.AddDays(9), CheckInScore = 5 },
+                new CalendarEntry { Date = startDate.AddDays(10), CheckInScore = 7 },
+                new CalendarEntry { Date = startDate.AddDays(11), CheckInScore = 5 },
+                new CalendarEntry { Date = startDate.AddDays(12), CheckInScore = 8 },
+                new CalendarEntry { Date = startDate.AddDays(13), CheckInScore = 8 },
+                new CalendarEntry { Date = startDate.AddDays(14), CheckInScore = 6 },
+                new CalendarEntry { Date = startDate.AddDays(15), CheckInScore = 5 },
+                new CalendarEntry { Date = startDate.AddDays(16), CheckInScore = 2 },
+                new CalendarEntry { Date = startDate.AddDays(17), CheckInScore = 4 },
+                new CalendarEntry { Date = startDate.AddDays(18), CheckInScore = 5 },
+                new CalendarEntry { Date = startDate.AddDays(19), CheckInScore = 5 },
+                new CalendarEntry { Date = startDate.AddDays(20), CheckInScore = 5 },
+                new CalendarEntry { Date = startDate.AddDays(21), CheckInScore = 5 },
+                new CalendarEntry { Date = startDate.AddDays(22), CheckInScore = 5 }
+            };
+        }
+        else
+        {
+        }
+
+        return new List<CalendarEntry>();
+    }
+
+    private CalendarEntry CalendarEntryForDate(List<CalendarEntry> entries, DateTime date)
+    {
+        foreach (var entry in entries)
+        {
+            if (entry.Date.Year == date.Year && entry.Date.Month == date.Month && entry.Date.Day == date.Day)
+            {
+                return entry;
+            }
+        }
+
+        return null;
     }
 
     #endregion
@@ -265,4 +400,5 @@ public partial class JournalPage : ContentPage
     }
 
     
+
 }

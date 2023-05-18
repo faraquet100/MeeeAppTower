@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MeeeApp.Pages.ExercisesPage"
+             NavigationPage.HasNavigationBar="true"
+             Title="Exercises">
+
+    <Grid>
+        <Image x:Name="ImgDay" Source="day.png" ZIndex="0" Aspect="AspectFill" HeightRequest="1000" Opacity="1.0" IsVisible="true" />
+
+        <ListView x:Name="LvExerciseList"
+                  BackgroundColor="Transparent"
+                  SeparatorVisibility="None"
+                  HasUnevenRows="True"
+                  ItemSelected="LvExerciseList_ItemSelected"
+                  Margin="12,12,12,12"
+                  >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Border BackgroundColor="White"
+                                Stroke="{StaticResource Gray300}"
+                                StrokeThickness="5"
+                                Margin="0,6,0,6"
+                                Padding="12"
+                                >
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="16,16,16,16" />
+                            </Border.StrokeShape>
+
+
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Title}"
+                                       FontSize="22"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"
+                                       TextColor="{StaticResource MeeePrimaryBlack}" />
+
+                                <Label Text="{Binding TimeToComplete}"
+                                       FontSize="12"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"
+                                       />
+
+                                <Label Text="{Binding Subtitle}"
+                                       FontSize="15"
+                                       Margin="0,12,0,0"
+                                       HorizontalTextAlignment="Center"
+                                       TextColor="{StaticResource Gray500}" />
+
+                                <BoxView HeightRequest="1"
+                                         BackgroundColor="LightGray"
+                                         Margin="0,12,0,12"
+                                         />
+
+                                <Grid ColumnDefinitions="Auto,Auto,*,Auto"
+                                      Margin="0,0,0,0"
+                                      >
+                                    <Label Text="Last Session:"
+                                           TextColor="{StaticResource Gray500}"
+                                           Grid.Column="0" />
+
+                                    <Label Text="{Binding LastSession}"
+                                           FontAttributes="Bold"
+                                           TextColor="{StaticResource MeeePrimaryMagenta}"
+                                           Grid.Column="1" />
+
+                                    <Image x:Name="ImgTick"
+                                           IsVisible="{Binding IsComplete}"
+                                           Source="tick.png"
+                                           HeightRequest="20"
+                                           WidthRequest="20"
+                                           Grid.Column="3" />
+                                </Grid>
+
+                            </VerticalStackLayout>
+                        </Border>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+
+    </Grid>
+
+
+</ContentPage>

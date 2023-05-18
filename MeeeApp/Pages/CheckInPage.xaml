@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MeeeApp.Pages.CheckInPage"
+             Title="CheckInPage">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto">
+
+        <!-- Cancel Button -->
+        <Button x:Name="BtnCancel"
+                Clicked="BtnCancel_Clicked"
+                Grid.Row="0"
+                BackgroundColor="Transparent"
+                HorizontalOptions="Start"
+                Text="Cancel"
+                TextColor="{StaticResource MeeePrimaryMagenta}" />
+
+        <!-- Salutation -->
+        <VerticalStackLayout
+            Grid.Row="1"
+            Margin="24,24,24,0"
+            >
+
+
+            <Label Text="Morning Hannah!"
+                   TextColor="{StaticResource MeeePrimaryCyan}"
+                   FontAttributes="Bold"
+                   FontFamily="HandOfSean"
+                   Padding="0,12,0,12"
+                   FontSize="32" />
+
+            <Label Text="How are you feeling today?"
+                   TextColor="{StaticResource Gray600}"
+                   FontSize="20"
+                   FontAttributes="Bold" />
+
+        </VerticalStackLayout>
+
+        <!-- Check In Button -->
+        <VerticalStackLayout 
+                             Grid.Row="5"
+                             Padding="24"
+                             BackgroundColor="{StaticResource MeeePrimaryMagenta}">
+
+            <Label Text="CHECK IN"
+                   TextColor="White"
+                   FontFamily="HandOfSean"
+                   HeightRequest="40"
+                   LineHeight="1.4"
+                   HorizontalOptions="Center"
+                   FontSize="28" />
+
+            <VerticalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer x:Name="TapCheckIn"
+                                      NumberOfTapsRequired="1"
+                                      Tapped="TapCheckIn_Tapped" />
+            </VerticalStackLayout.GestureRecognizers>
+
+        </VerticalStackLayout>
+
+        <!-- Slider Image -->
+
+        <VerticalStackLayout Grid.Row="2">
+            <Image x:Name="ImgFace"
+               Source="face5.png"
+               Margin="0,62,0,28"
+               HeightRequest="120"
+               WidthRequest="120"
+               HorizontalOptions="Center" />
+
+            <Label x:Name="LblFaceValue"
+                   TextColor="{StaticResource MeeePrimaryBlack}"
+                   Text="5"
+                   LineHeight="1.2"
+                   FontSize="40"
+                   HorizontalOptions="Center"
+                   FontAttributes="Bold"
+                   FontFamily="HandOfSean" />
+        </VerticalStackLayout>
+        
+
+       <!-- Check In Slider -->
+
+       <Slider
+                x:Name="SliderCheckIn"
+                Minimum="1"
+               Maximum="9"
+               Value="5"
+               Grid.Row="3"
+               Margin="24,24,24,0"
+               MinimumTrackColor="{StaticResource MeeePrimaryMagenta}"
+               MaximumTrackColor="{StaticResource Gray600}"
+               ThumbColor="{StaticResource MeeePrimaryMagenta}"
+               ValueChanged="SliderCheckIn_ValueChanged"
+               />
+
+    </Grid>
+
+
+</ContentPage>
