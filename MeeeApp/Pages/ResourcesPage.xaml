@@ -4,5 +4,6 @@
              x:Class="MeeeApp.Pages.ResourcesPage"
              Title="Resources">
 
+    <Label Text="Resources" />
 
 </ContentPage>

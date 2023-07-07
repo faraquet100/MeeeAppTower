@@ -1,11 +1,22 @@
-﻿namespace MeeeApp.Pages;
+﻿using MeeeApp.Models;
+
+namespace MeeeApp.Pages;
 
 public partial class CheckInPage : ContentPage
 {
+    private User _user;
+    
 	public CheckInPage()
 	{
-		InitializeComponent();
+        InitializeComponent();
+        _user = User.UserFromPreferences();
 	}
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        LblName.Text = "Morning " + _user.FirstName;
+    }
 
     #region Actions
 

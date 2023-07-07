@@ -39,6 +39,13 @@
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\field_clear.png" />
+	  <MauiImage Remove="Resources\Images\field_clear_lrg.png" />
+	  <MauiImage Remove="Resources\Images\field_grey.png" />
+	  <MauiImage Remove="Resources\Images\sun.png" />
+	  <MauiImage Remove="Resources\Images\moon.png" />
+	</ItemGroup>
+	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
@@ -58,7 +65,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="5.1.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -123,8 +131,6 @@
 	  <None Remove="Resources\Images\SF_circle.png" />
 	  <None Remove="Resources\Images\day.png" />
 	  <None Remove="Resources\Images\night.png" />
-	  <None Remove="Resources\Images\moon.png" />
-	  <None Remove="Resources\Images\sun.png" />
 	  <None Remove="Resources\Images\tick.png" />
 	  <None Remove="Resources\Fonts\head-of-sean.ttf" />
 	  <None Remove="Resources\Images\face1.png" />
@@ -136,13 +142,34 @@
 	  <None Remove="Resources\Images\face4.png" />
 	  <None Remove="Resources\Images\face3.png" />
 	  <None Remove="Resources\Images\face2.png" />
+	  <None Remove="Resources\Images\field_clear_lrg.png" />
+	  <None Remove="Resources\Images\field_clear.png" />
+	  <None Remove="Resources\Images\field_grey.png" />
+	  <None Remove="Resources\Images\button_black.png" />
+	  <None Remove="Resources\Images\button_blue.png" />
+	  <None Remove="Resources\Images\button_grey.png" />
+	  <None Remove="Resources\Images\button_pink.png" />
+	  <None Remove="Resources\Images\divider_sml.png" />
+	  <None Remove="Resources\Images\keyboard-close.png" />
+	  <None Remove="Resources\Images\times.png" />
+	  <None Remove="Resources\Images\tab_journal.svg" />
+	  <None Remove="Resources\Images\tab_journal30.png" />
+	  <None Remove="Resources\Images\back_arrow.png" />
+	  <None Remove="Resources\Images\next_arrow.png" />
+	  <None Remove="Resources\Images\moon_inactive.png" />
+	  <None Remove="Resources\Images\sun_inactive.png" />
+	  <None Remove="Resources\Images\sun.png" />
+	  <None Remove="Resources\Images\sun_drawing.png" />
+	  <None Remove="Resources\Fonts\Montserrat-Italic.ttf" />
+	  <None Remove="Resources\Fonts\Montserrat.ttf" />
+	  <None Remove="Resources\Images\underline_pink.png" />
+	  <None Remove="Resources\Images\moon.png" />
+	  <None Remove="Resources\Images\edit_box.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Pages\" />
 	  <Folder Include="Services\" />
-	  <Folder Include="Controls\" />
 	  <Folder Include="Platforms\iOS\Utils\" />
-	  <Folder Include="Models\" />
 	  <Folder Include="Classes\" />
 	</ItemGroup>
 	<ItemGroup>
@@ -191,8 +218,6 @@
 	  <BundleResource Include="Resources\Images\sf_circle.png" />
 	  <BundleResource Include="Resources\Images\day.png" />
 	  <BundleResource Include="Resources\Images\night.png" />
-	  <BundleResource Include="Resources\Images\moon.png" />
-	  <BundleResource Include="Resources\Images\sun.png" />
 	  <BundleResource Include="Resources\Images\tick.png" />
 	  <BundleResource Include="Resources\Fonts\head-of-sean.ttf" />
 	  <BundleResource Include="Resources\Images\face1.png" />
@@ -204,5 +229,33 @@
 	  <BundleResource Include="Resources\Images\face4.png" />
 	  <BundleResource Include="Resources\Images\face3.png" />
 	  <BundleResource Include="Resources\Images\face2.png" />
+	  <BundleResource Include="Resources\Images\field_clear_lrg.png" />
+	  <BundleResource Include="Resources\Images\field_clear.png" />
+	  <BundleResource Include="Resources\Images\field_grey.png" />
+	  <BundleResource Include="Resources\Images\field_clear.png" />
+	  <BundleResource Include="Resources\Images\field_clear_lrg.png" />
+	  <BundleResource Include="Resources\Images\field_grey.png" />
+	  <BundleResource Include="Resources\Images\button_black.png" />
+	  <BundleResource Include="Resources\Images\button_blue.png" />
+	  <BundleResource Include="Resources\Images\button_grey.png" />
+	  <BundleResource Include="Resources\Images\button_pink.png" />
+	  <BundleResource Include="Resources\Images\divider_sml.png" />
+	  <BundleResource Include="Resources\Images\keyboard_close.png" />
+	  <BundleResource Include="Resources\Images\times.png" />
+	  <BundleResource Include="Resources\Images\tab_journal.svg" />
+	  <BundleResource Include="Resources\Images\tab_journal30.png" />
+	  <BundleResource Include="Resources\Images\back_arrow.png" />
+	  <BundleResource Include="Resources\Images\next_arrow.png" />
+	  <BundleResource Include="Resources\Images\moon_inactive.png" />
+	  <BundleResource Include="Resources\Images\moon_inactive.png" />
+	  <BundleResource Include="Resources\Images\moon_inactive.png" />
+	  <BundleResource Include="Resources\Images\sun_inactive.png" />
+	  <BundleResource Include="Resources\Images\sun.png" />
+	  <BundleResource Include="Resources\Images\sun_drawing.png" />
+	  <BundleResource Include="Resources\Fonts\Montserrat-Italic.ttf" />
+	  <BundleResource Include="Resources\Fonts\Montserrat.ttf" />
+	  <BundleResource Include="Resources\Images\underline_pink.png" />
+	  <BundleResource Include="Resources\Images\moon.png" />
+	  <BundleResource Include="Resources\Images\edit_box.png" />
 	</ItemGroup>
 </Project>

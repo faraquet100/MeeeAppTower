@@ -13,13 +13,12 @@
 
     <Grid>
 
-        <Image Source="sample_background" ZIndex="0" Aspect="AspectFill" HeightRequest="1000" Opacity="0.3" />
-
-        <Frame BackgroundColor="{StaticResource MeeePrimaryCyan}" HeightRequest="1000" Opacity="0.2" />
+        <!-- <Image Source="sample_background" ZIndex="0" Aspect="AspectFill" HeightRequest="1000" Opacity="0.3" /> -->
+        <!-- <Frame BackgroundColor="{StaticResource MeeePrimaryCyan}" HeightRequest="1000" Opacity="0.2" /> -->
 
         <controls:FixedScrollView ZIndex="2">
 
-            <VerticalStackLayout VerticalOptions="Start" Padding="12">
+            <VerticalStackLayout VerticalOptions="Start" Padding="12" Margin="0,0,0,48">
 
                 <Image Source="meee_web.png"
                        HorizontalOptions="Center"
@@ -27,59 +26,115 @@
                        Margin="0,24,0,24"
                         />
 
-                <Label Text="Sign In to Meee"
-                       TextColor="#2C2A29"
-                       FontSize="26"
-                       FontAttributes="Bold"
-                       Margin="0,0,0,0"
-                       HorizontalOptions="Center" FontAutoScalingEnabled="False" />
+                <Grid Padding="0" Margin="12,24,12,0" WidthRequest="320">
 
-                <!-- Entry is placed within a Frame because removing the Android underline also removes any specified entry background -->
-                <Frame BackgroundColor="{StaticResource Gray200}" Padding="0" Margin="12,24,12,0">
+                    <Image
+                        WidthRequest="320"
+                        HeightRequest="70"
+                        Aspect="Fill"
+                        VerticalOptions="Center"
+                        Source="field_clear_lrg.png" />
+
                     <Entry x:Name="TxtEmail"
-                       PlaceholderColor="White"
+                       PlaceholderColor="{StaticResource Gray400}"
                        FontAttributes="Bold"
-                       FontSize="15"
+                       FontFamily="OpenSansRegular"
+                       FontSize="17"
+                       VerticalOptions="Center"
                        HorizontalTextAlignment="Center"
-                       Placeholder="Email"
+                       Placeholder="email"
+                       Margin="24,0,24,4"
                        Keyboard="Email" >
                     </Entry>
-                </Frame>
-                
-                <Frame BackgroundColor="{StaticResource Gray200}" Padding="0" Margin="12,12,12,0">
+                    
+                </Grid>
+
+                <Grid Padding="0" Margin="12,0,12,0" WidthRequest="320">
+
+                    <Image
+                        WidthRequest="320"
+                        HeightRequest="70"
+                        Aspect="Fill"
+                        VerticalOptions="Center"
+                        Source="field_clear_lrg.png" />
+
                     <Entry x:Name="TxtPassword"
-                           PlaceholderColor="White"
+                           PlaceholderColor="{StaticResource Gray400}"
                            FontAttributes="Bold"
-                           FontSize="15"
+                           VerticalOptions="Center"
+                           FontSize="17"
+                           FontFamily="OpenSansRegular"
+                           Margin="24,0,24,4"
                            HorizontalTextAlignment="Center"
-                           Placeholder="Password"
+                           Placeholder="password"
                            IsPassword="True"  />
-                </Frame>
 
-                <Button x:Name="BtnLogin"
-                        Text="Sign In"
-                        HeightRequest="44"
-                        FontSize="15"
-                        FontAttributes="Bold"
-                        BackgroundColor="{StaticResource MeeePrimaryMagenta}"
-                        Clicked="BtnLogin_Clicked" Margin="12,12,12,0" />
+                </Grid>
 
-                <HorizontalStackLayout HorizontalOptions="Center" Margin="0,12,0,0">
-                    <Label Text="Not a member?"
-                           FontSize="15"
+                <controls:CobaltGrid Padding="0" Margin="12,24,12,0" WidthRequest="320">
+
+                    <controls:CobaltImageButton x:Name="ImgBtnLogin"
+                             Source="button_black.png"
+                             WidthRequest="320"
+                             HeightRequest="70"
+                             Aspect="Fill"
+                             Clicked="ImgBtnLogin_Clicked"
+                             VerticalOptions="Center">
+                    </controls:CobaltImageButton>
+
+                    <Label
+                        Text="sign in"
+                        TextColor="White"
+                        FontFamily="BearHugs"
+                        VerticalOptions="Center"
+                        FontSize="36"
+                        HorizontalOptions="Center"
+                        Margin="0,0,0,4"
+                        />
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="TapSignIn" Tapped="TapSignIn_Tapped" />
+                    </Grid.GestureRecognizers>
+                   
+                </controls:CobaltGrid>
+
+                <Grid ColumnDefinitions="*,Auto,*" Margin="0,48,0,0" HorizontalOptions="Center">
+
+                    <controls:CobaltButton x:Name="BtnForgot"
+                            Text="forgot"
+                            Margin="24,0,24,0"
+                            Grid.Column="0"
+                            TextColor="{StaticResource MeeePrimaryBlack}"
+                            FontFamily="BearHugs"
+                            HorizontalOptions="Center"
+                            BackgroundColor="Transparent"
+                            FontSize="36"
+                            Clicked="BtnForgot_Clicked"
                             />
 
-                    <Label Text="Register here"
-                           FontSize="15"
-                           FontAttributes="Bold"
-                           Margin="6, 0, 0, 0"
-                           TextColor="{StaticResource MeeePrimaryCyan}" />
+                    <Image Source="divider_sml.png"
+                           Grid.Column="1"
+                           HeightRequest="44"
+                           WidthRequest="4"
+                           Aspect="AspectFill"
+                           Opacity="0.2"
+                           Margin="0,4,0,0"
+                           />
 
-                    <HorizontalStackLayout.GestureRecognizers>
-                        <TapGestureRecognizer x:Name="TapRegister" Tapped="TapRegister_Tapped" />
-                    </HorizontalStackLayout.GestureRecognizers>
+                    <controls:CobaltButton x:Name="BtnRegister"
+                            Text="sign up"
+                            Margin="24,0,24,0"
+                            Grid.Column="2"
+                            HorizontalOptions="Center"
+                            TextColor="{StaticResource MeeePrimaryBlack}"
+                            FontFamily="BearHugs"
+                            BackgroundColor="Transparent"
+                            Clicked="BtnRegister_Clicked"
+                            FontSize="36" />
 
-                </HorizontalStackLayout>
+
+                </Grid>
+                
 
             </VerticalStackLayout>
 

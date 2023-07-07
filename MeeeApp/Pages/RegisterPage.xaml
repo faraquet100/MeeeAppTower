@@ -4,6 +4,7 @@
              x:Class="MeeeApp.Pages.RegisterPage"
              xmlns:controls="clr-namespace:MeeeApp.Controls"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              ios:Page.UseSafeArea="True"
              NavigationPage.HasNavigationBar="False">
 
@@ -12,70 +13,222 @@
 
     <Grid>
 
-        <Image Source="sample_background" ZIndex="0" Aspect="AspectFill" HeightRequest="1000" Opacity="0.3" />
-
-        <Frame BackgroundColor="{StaticResource MeeePrimaryMagenta}" HeightRequest="1000" Opacity="0.2" />
+        <!-- <Image Source="sample_background" ZIndex="0" Aspect="AspectFill" HeightRequest="1000" Opacity="0.3" /> -->
+        <!-- <Frame BackgroundColor="{StaticResource MeeePrimaryMagenta}" HeightRequest="1000" Opacity="0.2" /> -->
 
         <controls:FixedScrollView ZIndex="2">
 
-            <VerticalStackLayout VerticalOptions="Start" Padding="12">
+            <VerticalStackLayout VerticalOptions="Start" Padding="12" Margin="0,0,0,48">
 
                 <Image Source="meee_web.png"
                        HorizontalOptions="Center"
-                       HeightRequest="60"
+                       HeightRequest="120"
                        Margin="0,24,0,24"
                         />
 
-                <Label Text="Register for Meee"
-                       TextColor="#2C2A29"
-                       FontSize="26"
+                <!-- First Name -->
+                <Grid Padding="0" Margin="12,0,12,0" WidthRequest="320">
+
+                    <Image
+                        WidthRequest="320"
+                        HeightRequest="70"
+                        Aspect="Fill"
+                        VerticalOptions="Center"
+                        Source="field_clear_lrg.png" />
+
+                    <Entry x:Name="TxtFirst"
+                       PlaceholderColor="{StaticResource Gray400}"
                        FontAttributes="Bold"
+                       FontFamily="OpenSansRegular"
+                       FontSize="17"
+                       VerticalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Placeholder="first name"
+                       Margin="24,0,24,4">
+                       
+                    </Entry>
+                    
+                </Grid>
+
+                <!-- Last Name -->
+                <Grid Padding="0" Margin="12,0,12,0" WidthRequest="320">
+
+                    <Image
+                        WidthRequest="320"
+                        HeightRequest="70"
+                        Aspect="Fill"
+                        VerticalOptions="Center"
+                        Source="field_clear_lrg.png" />
+
+                    <Entry x:Name="TxtLast"
+                       PlaceholderColor="{StaticResource Gray400}"
+                       FontAttributes="Bold"
+                       FontFamily="OpenSansRegular"
+                       FontSize="17"
+                       VerticalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Placeholder="last name"
+                       Margin="24,0,24,4">
+                       
+                    </Entry>
+                    
+                </Grid>
+
+                <!-- Email -->
+                <Grid Padding="0" Margin="12,0,12,0" WidthRequest="320">
+
+                    <Image
+                        WidthRequest="320"
+                        HeightRequest="70"
+                        Aspect="Fill"
+                        VerticalOptions="Center"
+                        Source="field_clear_lrg.png" />
+
+                    <Entry x:Name="TxtEmail"
+                       PlaceholderColor="{StaticResource Gray400}"
+                       FontAttributes="Bold"
+                       FontFamily="OpenSansRegular"
+                       FontSize="17"
+                       VerticalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Placeholder="email"
+                       Margin="24,0,24,4" Keyboard="Email">
+                       
+                    </Entry>
+                    
+                </Grid>
+
+                <!-- Password -->
+                <Grid Padding="0" Margin="12,0,12,0" WidthRequest="320">
+
+                    <Image
+                        WidthRequest="320"
+                        HeightRequest="70"
+                        Aspect="Fill"
+                        VerticalOptions="Center"
+                        Source="field_clear_lrg.png" />
+
+                    <Grid>
+                        <Entry x:Name="TxtPassword"
+                            PlaceholderColor="{StaticResource Gray400}"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansRegular"
+                            FontSize="17"
+                            VerticalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Placeholder="password"
+                            IsPassword="True"
+                            TextChanged="TxtPassword_TextChanged"
+                            Margin="24,0,24,4">
+                        </Entry>
+
+                        <Image x:Name="ImgPasswordOkay"
+                           Source="tick.png"
+                           HorizontalOptions="End"
+                           IsVisible="false"
+                           Margin="0,0,18,0"
+                           WidthRequest="24"
+                           HeightRequest="24" />
+
+                        <Image x:Name="ImgPasswordNotOkay"
+                           Source="times.png"
+                           HorizontalOptions="End"
+                           IsVisible="false"
+                           Margin="0,0,18,0"
+                           WidthRequest="24"
+                           HeightRequest="24" />
+                    </Grid>
+                    
+                </Grid>
+
+                    
+
+
+                <Label Text="*Passwords should be at least 8 characters."
+                       HorizontalOptions="Center"
+                       FontFamily="OpenSansRegular"
+                       FontSize="12"
+                       ></Label>
+
+                <!-- Confirm Password -->
+                <Grid Padding="0" Margin="12,0,12,0" WidthRequest="320">
+
+                    <Image
+                        WidthRequest="320"
+                        HeightRequest="70"
+                        Aspect="Fill"
+                        VerticalOptions="Center"
+                        Source="field_clear_lrg.png" />
+
+                    <Grid>
+                        <Entry x:Name="TxtConfirmPassword"
+                           PlaceholderColor="{StaticResource Gray400}"
+                           FontAttributes="Bold"
+                           FontFamily="OpenSansRegular"
+                           FontSize="17"
+                           VerticalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           Placeholder="confirm password"
+                           IsPassword="True"
+                           TextChanged="TxtConfirmPassword_TextChanged"
+                           Margin="24,0,24,4">
+                        </Entry>
+
+                        <Image x:Name="ImgConfirmPasswordOkay"
+                           Source="tick.png"
+                           HorizontalOptions="End"
+                           Margin="0,0,18,0"
+                           IsVisible="false"
+                           WidthRequest="24"
+                           HeightRequest="24" />
+
+                        <Image x:Name="ImgConfirmPasswordNotOkay"
+                           Source="times.png"
+                           HorizontalOptions="End"
+                           Margin="0,0,18,0"
+                           IsVisible="false"
+                           WidthRequest="24"
+                           HeightRequest="24">
+                        </Image>
+                    </Grid>
+                    
+                </Grid>
+
+                <controls:CobaltGrid Padding="0" Margin="12,24,12,0" WidthRequest="320">
+
+                    <controls:CobaltImageButton x:Name="ImgBtnRegister"
+                             Source="button_black.png"
+                             WidthRequest="320"
+                             HeightRequest="70"
+                             Aspect="Fill"
+                             Clicked="ImgBtnRegister_Clicked"
+                             VerticalOptions="Center">
+                    </controls:CobaltImageButton>
+
+                    <Label
+                        Text="sign up"
+                        TextColor="White"
+                        FontFamily="BearHugs"
+                        VerticalOptions="Center"
+                        FontSize="36"
+                        HorizontalOptions="Center"
+                        Margin="0,0,0,4"
+                        />
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="TapRegister" Tapped="TapRegister_Tapped"  />
+                    </Grid.GestureRecognizers>
                    
-                       HorizontalOptions="Center" FontAutoScalingEnabled="False" />
+                </controls:CobaltGrid>
 
-                <Entry x:Name="TxtName"
-                       BackgroundColor="White"
-                       Opacity="0.9"
-                       Placeholder="Your Name"
-                       Margin="12,12,12,0"
-                      />
-
-                <Entry x:Name="TxtEmail"
-                       BackgroundColor="White"
-                       Opacity="0.9"
-                       Placeholder="Email"
-                       Margin="12,12,12,0"
-                      />
-
-                <Entry x:Name="TxtPassword"
-                       BackgroundColor="White"
-                       Opacity="0.9"
-                       Placeholder="Password"
-                       Margin="12,12,12,0"
-                      />
-
-                <Entry x:Name="TxtPasswordConfirm"
-                       BackgroundColor="White"
-                       Opacity="0.9"
-                       Placeholder="Confirm Password"
-                       Margin="12,12,12,0"
-                      />
-                
-
-                <Button x:Name="BtnRegister"
-                        Text="Register"
-                        HeightRequest="44"
-                        FontSize="15"
-                        FontAttributes="Bold"
-                        BackgroundColor="{StaticResource MeeePrimaryCyan}"
-                        Clicked="BtnRegister_Clicked" Margin="12,12,12,0" />
-
-                <HorizontalStackLayout HorizontalOptions="Center" Margin="0,12,0,0">
+                <HorizontalStackLayout HorizontalOptions="Center" Margin="0,0,0,0">
                     <Label Text="Already a member?"
+                           FontFamily="OpenSansRegular"
                            FontSize="15"
                             />
 
                     <Label Text="Login here"
+                           FontFamily="OpenSansRegular"
                            FontSize="15"
                            FontAttributes="Bold"
                            Margin="6, 0, 0, 0"

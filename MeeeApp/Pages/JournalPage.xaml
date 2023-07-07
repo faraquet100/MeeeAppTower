@@ -18,173 +18,268 @@
 
             <VerticalStackLayout VerticalOptions="Start" Padding="24">
 
-                <Label x:Name="LblDayTitle"
-                       Text="Today"
-                       FontSize="32"
-                       FontAttributes="Bold" />
+                <Grid ColumnDefinitions="1*,Auto,1*" WidthRequest="160" HorizontalOptions="Start">
+
+                    <controls:CobaltImageButton
+                        x:Name="ImgBtnDayBack"
+                        Grid.Column="0"        
+                        Source="back_arrow.png"
+                        HeightRequest="20"
+                        WidthRequest="16"
+                        Aspect="Fill"
+                        Clicked="ImgBtnDayBack_Clicked"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center">
+                    </controls:CobaltImageButton>
+
+                    <Label x:Name="LblDayTitle"
+                           Text="today"
+                           Grid.Column="1"
+                           FontSize="36"
+                           FontFamily="BearHugs"
+                           FontAttributes="Bold" />
+
+                    <controls:CobaltImageButton
+                        x:Name="ImgBtnDayForward"
+                        Grid.Column="2"        
+                        Source="next_arrow.png"
+                        HeightRequest="20"
+                        WidthRequest="16"
+                        Aspect="Fill"
+                        Clicked="ImgBtnDayForward_Clicked"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center">
+                    </controls:CobaltImageButton>
+                </Grid>
 
                 <HorizontalStackLayout HorizontalOptions="Start">
                         <Label Text="You last checked in 2 days ago."
                                TextColor="{StaticResource Gray600}"
+                               FontFamily="OpenSansRegular"
                                Margin="0,4,0,0"/>
                     </HorizontalStackLayout>
 
                 <!-- Main Tab Buttons -->
 
-                <Grid Margin="0,12,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+                 <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*" Margin="0,12,0,0">
 
-                    <!-- Plan Button -->
+                    <controls:CobaltGrid x:Name="GridPlanSelection" Grid.Row="0" Grid.Column="0">
+                        <HorizontalStackLayout HorizontalOptions="End" Margin="0,0,30,0">
+                            <Image x:Name="ImgPlanSelection"
+                                   Source="sun_drawing.png"
+                                   VerticalOptions="Center"
+                                   Aspect="AspectFit"
+                                   HeightRequest="34"
+                                   WidthRequest="34" />
 
-                    <Frame x:Name="FramePlan" Grid.Column="0" CornerRadius="10" BackgroundColor="{StaticResource MeeePrimaryMagenta}" Padding="0"  HasShadow="False" BorderColor="Transparent" Margin="0,2,6,2">
+                            <Label x:Name="TxtPlanSelection"
+                                   Text="Plan"
+                                   Margin="6,6,0,0"
+                                   FontFamily="OpenSansSemibold"
+                                   VerticalOptions="Center"
+                                   FontAttributes="Bold"
+                                   FontSize="18" />
 
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
+                        </HorizontalStackLayout>
 
-                            <HorizontalStackLayout Grid.Column="0" Padding="6" VerticalOptions="Center" HorizontalOptions="Center">
-                                <Image x:Name="ImgPlan" Source="sun.png" HeightRequest="20" WidthRequest="20">
-                                </Image>
-                                <Label Text="Plan" FontSize="18" FontAttributes="Bold" TextColor="White" Padding="4,0,0,0" />
-                            </HorizontalStackLayout>
-                        </Grid>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="GridPlanTap" Tapped="GridPlanTap_Tapped" />
+                        </Grid.GestureRecognizers>
+                    </controls:CobaltGrid>
 
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer x:Name="TapPlan" Tapped="TapPlan_Tapped" />
-                        </Frame.GestureRecognizers>
-                    </Frame>
+                    <Image x:Name="ImgPlanUnderline"
+                           Source="underline_pink.png"
+                           Grid.Column="0"
+                           Grid.Row="1"
+                           Aspect="Fill"
+                           WidthRequest="80"
+                           HeightRequest="10"
+                           Margin="40,0,0,0"
+                           />
 
-                    <!-- Reflection Button -->
+                    <controls:CobaltGrid x:Name="GridReflectionSelection" Grid.Row="0" Grid.Column="1">
+                        <HorizontalStackLayout HorizontalOptions="Start">
 
-                    <Frame x:Name="FrameReflection" Grid.Column="1" CornerRadius="10" BackgroundColor="{StaticResource Gray500}" Padding="0" HasShadow="False" BorderColor="Transparent" Margin="6,2,0,2">
+                            <Image x:Name="ImgReflectionSelection"
+                                   Source="moon_inactive.png"
+                                   VerticalOptions="Center"
+                                   Margin="0,6,0,0"
+                                   Aspect="AspectFit"
+                                   HeightRequest="30"
+                                   WidthRequest="30" />
 
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
+                            <Label x:Name="TxtReflectionSelection"
+                                   Text="Reflection"
+                                   Margin="4,6,0,0"
+                                   FontFamily="OpenSansSemibold"
+                                   VerticalOptions="Center"
+                                   FontAttributes="Bold"
+                                   FontSize="18" />
 
-                            <HorizontalStackLayout Grid.Column="0" Padding="6" VerticalOptions="Center" HorizontalOptions="Center">
-                                <Image x:Name="ImgReflection" Source="moon.png" HeightRequest="20" WidthRequest="20">
-                                </Image>
-                                <Label Text="Reflection" FontSize="18" FontAttributes="Bold" TextColor="White" Padding="4,0,0,0" />
-                            </HorizontalStackLayout>
+                        </HorizontalStackLayout>
 
-                        </Grid>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="GridReflectionTap" Tapped="GridReflectionTap_Tapped" />
+                        </Grid.GestureRecognizers>
+                    </controls:CobaltGrid>
 
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer x:Name="TapReflection" Tapped="TapReflection_Tapped" />
-                        </Frame.GestureRecognizers>
-                    </Frame>
+                    <Image x:Name="ImgReflectionUnderline"
+                           Source="underline_pink.png"
+                           Grid.Column="1"
+                           Grid.Row="1"
+                           Aspect="Fill"
+                           WidthRequest="80"
+                           HeightRequest="10"
+                           Margin="0,0,30,0"
+                           />
+
                 </Grid>
 
                 <!-- Plan Content -->
 
                 <VerticalStackLayout x:Name="VsPlan" Margin="0,12,0,0">
 
-                    <!-- <Label Text="What are your plans for today?" FontAttributes="Bold" FontSize="Medium" Padding="0,0,0,6" /> -->
-                    <Border x:Name="BorderPlanThoughts" Background="{StaticResource White}" Stroke="{StaticResource Gray300}" StrokeThickness="5" Padding="0,4,0,12">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="16,16,16,16" />
-                        </Border.StrokeShape>
-                        <Editor x:Name="EdtPlanThoughts"
-                                FontSize="Medium"
-                                Margin="4,4,4,4"
-                                MinimumHeightRequest="80"
-                                Placeholder="My thoughts or plans are . . ."
-                                PlaceholderColor="{StaticResource Gray300}"
-                                AutoSize="TextChanges"
-                                />
-                    </Border>
+                    <Grid x:Name="GridPlanThoughts" Padding="0" Margin="12,12,12,12" WidthRequest="320">
 
-                    <Border x:Name="BorderReflectionThoughts" Background="{StaticResource White}" Stroke="{StaticResource Gray300}" StrokeThickness="5" Padding="0,4,0,12">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="16,16,16,16" />
-                        </Border.StrokeShape>
-                        <Editor x:Name="EdtReflectionThoughts"
-                                FontSize="Medium"
-                                MinimumHeightRequest="80"
-                                Margin="4,4,4,4"
-                                Placeholder="Today I . . ."
-                                PlaceholderColor="{StaticResource Gray300}"
-                                AutoSize="TextChanges"
-                                />
-                    </Border>
+                        <Image
+                            Margin="-16"                        
+                            HeightRequest="200"
+                            Aspect="Fill"
+                            VerticalOptions="Center"
+                            Source="edit_box.png" />
+
+                        <ScrollView x:Name="ScrollEdtPlan" Orientation="Vertical" VerticalScrollBarVisibility="Always"
+                                    MinimumHeightRequest="160"
+                                    MaximumHeightRequest="160"
+                                    >
+
+                            <Editor x:Name="EdtPlanThoughts"
+                                    FontSize="Medium"
+                                    Margin="4,4,4,4"
+                                    FontFamily="OpenSanRegular"
+                                    Placeholder="My thoughts or plans are . . ."
+                                    PlaceholderColor="{StaticResource Gray300}"
+                                    AutoSize="TextChanges"
+                                    
+                                    TextChanged="EdtPlanThoughts_TextChanged"
+                                    />
+
+                         </ScrollView>
+                    </Grid>
+
+                    <Grid x:Name="GridReflectionThoughts" Padding="0" Margin="12,12,12,12" WidthRequest="320">
+
+                        <Image
+                            Margin="-16"                        
+                            HeightRequest="200"
+                            Aspect="Fill"
+                            VerticalOptions="Center"
+                            Source="edit_box.png" />
+
+                        <ScrollView x:Name="ScrollEdtReflection" Orientation="Vertical" VerticalScrollBarVisibility="Always"
+                                    MinimumHeightRequest="160"
+                                    MaximumHeightRequest="160"
+                                    >
+
+                            <Editor x:Name="EdtReflectionThoughts"
+                                    FontSize="Medium"
+                                    Margin="4,4,4,4"
+                                    VerticalOptions="FillAndExpand"
+                                    VerticalTextAlignment="Start"
+                                    FontFamily="OpenSanRegular"
+                                    Placeholder="Today I . . ."
+                                    PlaceholderColor="{StaticResource Gray300}"
+                                    AutoSize="TextChanges"
+                                    TextChanged="EdtReflectionThoughts_TextChanged"
+                                    />
+
+                         </ScrollView>
+                    </Grid>
+
 
                     <!-- Check In Button -->
 
-                    <Button x:Name="BtnCheckIn"
-                        Text="Check In"
-                        HeightRequest="48"
-                        FontSize="20"
-                        CornerRadius="16"
-                        FontAttributes="Bold"
-                        BackgroundColor="{StaticResource MeeePrimaryMagenta}"
-                        Clicked="BtnCheckIn_Clicked"
-                        Margin="0,12,0,0" />
+                    <controls:CobaltGrid x:Name="GridCheckIn" Padding="0" Margin="0,12,0,0">
 
-                    <Button x:Name="BtnCheckOut"
-                        Text="Check Out"
-                        HeightRequest="48"
-                        FontSize="20"
-                        CornerRadius="16"
-                        FontAttributes="Bold"
-                        BackgroundColor="{StaticResource MeeePrimaryCyan}"
-                        Clicked="BtnCheckOut_Clicked"
-                        Margin="0,12,0,0" />
+                        <controls:CobaltImageButton x:Name="ImgBtnCheckIn"
+                                 Source="button_pink.png"
+                                 HeightRequest="70"
+                                 Aspect="Fill"
+                                 Clicked="BtnCheckIn_Clicked"
+                                 VerticalOptions="Center">
+                        </controls:CobaltImageButton>
+
+                        <Label
+                            Text="check-in"
+                            TextColor="White"
+                            FontFamily="BearHugs"
+                            VerticalOptions="Center"
+                            FontSize="36"
+                            HorizontalOptions="Center"
+                            Margin="0,0,0,4"
+                            />
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapCheckIn" Tapped="TapCheckIn_Tapped" />
+                        </Grid.GestureRecognizers>
+                   
+                    </controls:CobaltGrid>
+
+                    <controls:CobaltGrid x:Name="GridCheckOut" Padding="0" Margin="0,12,0,0">
+
+                        <controls:CobaltImageButton x:Name="ImgBtnCheckOut"
+                                 Source="button_pink.png"
+                                 HeightRequest="70"
+                                 Aspect="Fill"
+                                 Clicked="BtnCheckOut_Clicked"
+                                 VerticalOptions="Center">
+                        </controls:CobaltImageButton>
+
+                        <Label
+                            Text="check-out"
+                            TextColor="White"
+                            FontFamily="BearHugs"
+                            VerticalOptions="Center"
+                            FontSize="36"
+                            HorizontalOptions="Center"
+                            Margin="0,0,0,4"
+                            />
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapCheckOut" Tapped="TapCheckOut_Tapped" />
+                        </Grid.GestureRecognizers>
+                   
+                    </controls:CobaltGrid>
+
 
                     <!-- Daily Exercises -->
 
-                    <Border x:Name="BorderExercises" Background="{StaticResource MeeePrimaryBlack}" Stroke="{StaticResource Gray100}" Padding="3" Margin="0,12,0,0">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="16,16,16,16" />
-                        </Border.StrokeShape>
+                    <controls:CobaltGrid x:Name="GridDailyExercises" Padding="0" Margin="0,0,0,0">
 
-                        <ListView x:Name="LvExercises"
-                                  BackgroundColor="Transparent"
-                                  SeparatorVisibility="None"
-                                  ItemSelected="LvExercises_ItemSelected"
-                                  >
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <Grid Padding="12,0,12,0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                                 <ColumnDefinition Width="*"></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
+                        <controls:CobaltImageButton x:Name="ImgBtnDailyExcercises"
+                                 Source="button_black.png"
+                                 HeightRequest="70"
+                                 Aspect="Fill"
+                                 Clicked="ImgBtnDailyExcercises_Clicked"
+                                 VerticalOptions="Center">
+                        </controls:CobaltImageButton>
 
-                                            <Label 
-                                                   Grid.Column="0"
-                                                   VerticalOptions="Center"
-                                                   HorizontalOptions="Start"
-                                                   Text="{Binding LabelText}"
-                                                   TextColor="White"
-                                                   FontSize="20"
-                                                   FontAttributes="Bold" />
+                        <Label
+                            Text="daily exercises (2 of 3)"
+                            TextColor="White"
+                            FontFamily="BearHugs"
+                            VerticalOptions="Center"
+                            FontSize="24"
+                            HorizontalOptions="Center"
+                            Margin="0,0,0,4"
+                            />
 
-                                            <Image Source="chevron_right.png"
-                                                   Grid.Column="1"
-                                                   HorizontalOptions="End"
-                                                   VerticalOptions="Center"
-                                                   HeightRequest="24"
-                                                   WidthRequest="24">
-
-                                                <Image.Behaviors>
-                                                    <toolkit:IconTintColorBehavior TintColor="White" />
-                                                </Image.Behaviors>
-                                            </Image>
-                                        </Grid>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-
-                        </ListView>
-                    </Border>
-                        
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapDailyExercises" Tapped="TapDailyExercises_Tapped" />
+                        </Grid.GestureRecognizers>
+                   
+                    </controls:CobaltGrid>
+ 
                 </VerticalStackLayout>
 
 

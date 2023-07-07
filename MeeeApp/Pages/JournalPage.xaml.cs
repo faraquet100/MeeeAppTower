@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Behaviors;
+using MeeeApp.Controls;
+using MeeeApp.Models;
 using MeeeApp.Services;
 using Microsoft.Maui.Controls.Shapes;
 
@@ -8,12 +10,9 @@ namespace MeeeApp.Pages;
 
 public partial class JournalPage : ContentPage
 {
-    public ObservableCollection<ExerciseListContent> DsExerciseList = new ObservableCollection<ExerciseListContent>()
-    {
-        new ExerciseListContent { LabelText = "Daily Exercises (2 of 3)" }
-    };
-
     private DateTime calendarDate = DateTime.Now;
+    private User _user;
+    private List<CalendarEntry> CalendarEntries = new List<CalendarEntry>();
 
     enum CalendarType
     {
@@ -23,59 +22,29 @@ public partial class JournalPage : ContentPage
 
 	public JournalPage()
 	{
+        _user = User.UserFromPreferences();
         InitializeComponent();
+        LoadCalendarEntries();
     }
 
-    #region Start Up
+    #region StartUp
 
     protected override void OnAppearing()
     {
         
         base.OnAppearing();
-        InitialDelayedSetup();
         FormatForPlan();
 
 #if ANDROID
         FixAndroid();
 #endif
 
-        LvExercises.ItemsSource = DsExerciseList;
     }
 
-    // For some reason, the behaviours won't work if run immediately
-    // So for the icon tint to work we need a very short delay
-    async void InitialDelayedSetup()
-    {
-        await Task.Delay(300);
-
-        var yellowBehaviour = new IconTintColorBehavior
-        {
-            TintColor = AppSettings.MeeeColorYellow
-        };
-
-        var behaviour = new IconTintColorBehavior
-        {
-            TintColor = Microsoft.Maui.Graphics.Colors.White
-        };
-
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            ImgPlan.Behaviors.Add(yellowBehaviour);
-            ImgReflection.Behaviors.Add(behaviour);
-            ImgHappy.Behaviors.Add(yellowBehaviour);
-            ImgSad.Behaviors.Add(yellowBehaviour);
-        });
-
-        BuildCalendar(CalendarType.CheckIn);
-        BuildChart(CalendarType.CheckIn);
-    }
 
     private void FixAndroid()
     {
         // Android specific formatting fixes
-        BorderPlanThoughts.Margin = new Thickness(-5, 0, -5, -0);
-        BorderReflectionThoughts.Margin = new Thickness(-5, 0, -5, -0);
-        BorderExercises.Margin = new Thickness(-2, 12, -2, 0);
         BorderCalendar.Margin = new Thickness(-5, 12, -5, 0);
         BorderCalendar.Margin = new Thickness(-5, 12, -5, 0);
     }
@@ -83,6 +52,8 @@ public partial class JournalPage : ContentPage
     #endregion
 
     #region Actions
+
+    /* Tab Buttons */
 
     void TapPlan_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
     {
@@ -94,27 +65,84 @@ public partial class JournalPage : ContentPage
         FormatForReflection();
     }
 
-    void LvExercises_ItemSelected(System.Object sender, Microsoft.Maui.Controls.SelectedItemChangedEventArgs e)
+    async void GridPlanTap_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
     {
-        
-        if (e.SelectedItem != null)
-        {
-            Navigation.PushAsync(new ExercisesPage());
-            LvExercises.SelectedItem = null;
-        }
+        var grid = sender as CobaltGrid;
+        await grid.BounceOnPressAsync();
+        FormatForPlan();
     }
+
+    async void GridReflectionTap_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
+    {
+        var grid = sender as CobaltGrid;
+        await grid.BounceOnPressAsync();
+        FormatForReflection();
+    }
+
+    /* Daily Exercises and Container */
+
+    async void ImgBtnDailyExcercises_Clicked(System.Object sender, System.EventArgs e)
+    {
+        var control = sender as CobaltImageButton;
+        var grid = control.Parent as CobaltGrid;
+        await grid.BounceOnPressAsync();
+        await Navigation.PushAsync(new ExercisesPage());
+    }
+
+    async void TapDailyExercises_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
+    {
+        var grid = sender as CobaltGrid;
+        await grid.BounceOnPressAsync();
+        await Navigation.PushAsync(new ExercisesPage());
+    }
+
+    /* Check In Button and Container */
 
     async void BtnCheckIn_Clicked(System.Object sender, System.EventArgs e)
     {
+        var control = sender as CobaltImageButton;
+        var grid = control.Parent as CobaltGrid;
+        await grid.BounceOnPressAsync();
         await Navigation.PushModalAsync(new CheckInPage());
-        await Navigation.PushModalAsync(new CheckInPage());
-
     }
 
-    void BtnCheckOut_Clicked(System.Object sender, System.EventArgs e)
+    async void TapCheckIn_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
     {
-
+        var grid = sender as CobaltGrid;
+        await grid.BounceOnPressAsync();
+        await Navigation.PushModalAsync(new CheckInPage());
     }
+
+    /* Check Out Button and Container */
+
+    async void BtnCheckOut_Clicked(System.Object sender, System.EventArgs e)
+    {
+        var control = sender as CobaltImageButton;
+        var grid = control.Parent as CobaltGrid;
+        await grid.BounceOnPressAsync();
+    }
+
+    async void TapCheckOut_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
+    {
+        var grid = sender as CobaltGrid;
+        await grid.BounceOnPressAsync();
+    }
+
+    /* Editor Panels in Scroll View, Update after text changed */
+    
+    void EdtPlanThoughts_TextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
+    {
+        // This DOES work, sometimes, but scroll doesn't show scroll bar and doesn't show the text you are typing
+        Dispatcher.Dispatch(() => ScrollEdtPlan.ForceLayout());
+        
+    }
+
+    void EdtReflectionThoughts_TextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
+    {
+        Dispatcher.Dispatch(() => ScrollEdtReflection.ForceLayout());
+    }
+
+    /* Calendar Controls */
 
     void BtnPreviousMonth_Clicked(System.Object sender, System.EventArgs e)
     {
@@ -128,6 +156,18 @@ public partial class JournalPage : ContentPage
         BuildCalendar(CalendarType.CheckIn);
     }
 
+    async void ImgBtnDayBack_Clicked(System.Object sender, System.EventArgs e)
+    {
+        var control = sender as CobaltImageButton;
+        await control.BounceOnPressAsync();
+    }
+
+    async void ImgBtnDayForward_Clicked(System.Object sender, System.EventArgs e)
+    {
+        var control = sender as CobaltImageButton;
+        await control.BounceOnPressAsync();
+    }
+
     #endregion
 
     #region Formatting
@@ -136,33 +176,39 @@ public partial class JournalPage : ContentPage
     {
         ImgDay.IsVisible = true;
         ImgNight.IsVisible = false;
-        
-        
-        FramePlan.BackgroundColor = AppSettings.MeeeColorMagenta;
-        FrameReflection.BackgroundColor = AppSettings.MeeeColorGrey500;
-        BorderPlanThoughts.IsVisible = true;
-        BorderReflectionThoughts.IsVisible = false;
-        BtnCheckIn.IsVisible = true;
-        BtnCheckOut.IsVisible = false;
 
-        //BuildCalendar(CalendarType.CheckIn);
-        //BuildChart(CalendarType.CheckIn);
+        ImgPlanSelection.Source = "sun_drawing.png";
+        ImgReflectionSelection.Source = "moon_inactive.png";
+        ImgPlanUnderline.IsVisible = true;
+        ImgReflectionUnderline.IsVisible = false;
+        
+        //BorderPlanThoughts.IsVisible = true;
+        GridPlanThoughts.IsVisible = true;
+        GridCheckIn.IsVisible = true;
+        GridCheckOut.IsVisible = false;
+        GridReflectionThoughts.IsVisible = false;
+
+        BuildCalendar(CalendarType.CheckIn);
+        BuildChart(CalendarType.CheckIn);
     }
 
     private void FormatForReflection()
     {
         ImgDay.IsVisible = false;
         ImgNight.IsVisible = true;
-        
-        FrameReflection.BackgroundColor = AppSettings.MeeeColorMagenta;
-        FramePlan.BackgroundColor = AppSettings.MeeeColorGrey500;
-        BorderPlanThoughts.IsVisible = false;
-        BorderReflectionThoughts.IsVisible = true;
-        BtnCheckIn.IsVisible = false;
-        BtnCheckOut.IsVisible = true;
 
-        //BuildCalendar(CalendarType.CheckOut);
-        //BuildChart(CalendarType.CheckOut);
+        ImgPlanSelection.Source = "sun_inactive.png";
+        ImgReflectionSelection.Source = "moon.png";
+        ImgPlanUnderline.IsVisible = false;
+        ImgReflectionUnderline.IsVisible = true;
+
+        GridPlanThoughts.IsVisible = false;
+        GridReflectionThoughts.IsVisible = true;
+        GridCheckIn.IsVisible = false;
+        GridCheckOut.IsVisible = true;
+
+        BuildCalendar(CalendarType.CheckOut);
+        BuildChart(CalendarType.CheckOut);
     }
 
     #endregion
@@ -329,15 +375,10 @@ public partial class JournalPage : ContentPage
         }
     }
 
-
-    private List<CalendarEntry> GetCalendarEntries(CalendarType calendarType, DateTime date)
+    private void LoadCalendarEntries()
     {
-        // Just a bunch of dummy entries for last two months
-
-        if (calendarType == CalendarType.CheckIn)
-        {
-            var startDate = DateTime.Parse("05/01/2023");
-            return new List<CalendarEntry>()
+        var startDate = new DateTime(2023, 6, 1);
+        CalendarEntries = new List<CalendarEntry>()
             {
                 new CalendarEntry { Date = startDate, CheckInScore = 5 },
                 new CalendarEntry { Date = startDate.AddDays(1), CheckInScore = 5 },
@@ -363,13 +404,13 @@ public partial class JournalPage : ContentPage
                 new CalendarEntry { Date = startDate.AddDays(21), CheckInScore = 5 },
                 new CalendarEntry { Date = startDate.AddDays(22), CheckInScore = 5 }
             };
-        }
-        else
-        {
-        }
-
-        return new List<CalendarEntry>();
     }
+
+    private List<CalendarEntry> GetCalendarEntries(CalendarType calendarType, DateTime startDate)
+    {
+        return CalendarEntries;
+    }
+
 
     private CalendarEntry CalendarEntryForDate(List<CalendarEntry> entries, DateTime date)
     {
@@ -387,12 +428,6 @@ public partial class JournalPage : ContentPage
     #endregion
 
 
-
-    public class ExerciseListContent
-    {
-        public string LabelText { get; set; }
-    }
-
     public class CalendarEntry
     {
         public DateTime Date { get; set; }
@@ -400,5 +435,6 @@ public partial class JournalPage : ContentPage
     }
 
     
+
 
 }

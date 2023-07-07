@@ -22,7 +22,8 @@
             >
 
 
-            <Label Text="Morning Hannah!"
+            <Label x:Name="LblName"
+                    Text="Morning Hannah!"
                    TextColor="{StaticResource MeeePrimaryCyan}"
                    FontAttributes="Bold"
                    FontFamily="HandOfSean"
