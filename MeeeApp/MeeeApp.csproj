@@ -32,8 +32,8 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
-	  <CodesignProvision>Automatic:AppStore</CodesignProvision>
-	  <CodesignKey>iPhone Distribution</CodesignKey>
+	  <CodesignProvision>MauiMeeeProfile12Jul23</CodesignProvision>
+	  <CodesignKey>iPhone Developer: Created via API (7K6FT7D6V6)</CodesignKey>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
@@ -67,6 +67,28 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Syncfusion.Maui.Core" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.ListView" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.TabView" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.Inputs" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.Charts" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.DataGrid" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.Gauges" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.Scheduler" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.Sliders" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.PdfViewer" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.PdfToImageConverter" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.ProgressBar" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.Barcode" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.Calendar" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.Maps" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.DataForm" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.Popup" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.Backdrop" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.Expander" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.ImageEditor" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.DataGridExport" Version="22.1.37" />
+		<PackageReference Include="banditoth.MAUI.PreferencesExtension" Version="1.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -165,12 +187,14 @@
 	  <None Remove="Resources\Images\underline_pink.png" />
 	  <None Remove="Resources\Images\moon.png" />
 	  <None Remove="Resources\Images\edit_box.png" />
+	  <None Remove="Extensions\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Pages\" />
 	  <Folder Include="Services\" />
 	  <Folder Include="Platforms\iOS\Utils\" />
 	  <Folder Include="Classes\" />
+	  <Folder Include="Extensions\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <BundleResource Include="Resources\Images\meee_web.png" />

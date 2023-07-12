@@ -10,7 +10,7 @@
 
     <Grid>
 
-        <Image x:Name="ImgDay" Source="day.png" ZIndex="0" Aspect="AspectFill" HeightRequest="1000" Opacity="1.0" IsVisible="true" />
+        <Image x:Name="ImgDay" Source="day.png" ZIndex="0" Aspect="AspectFill" HeightRequest="1000" Opacity="1.0" IsVisible="false" />
 
         <Image x:Name="ImgNight" Source="night.png" ZIndex="0" Aspect="AspectFill" HeightRequest="1000" Opacity="1.0" IsVisible="false" />
 
@@ -139,63 +139,7 @@
 
                 <VerticalStackLayout x:Name="VsPlan" Margin="0,12,0,0">
 
-                    <Grid x:Name="GridPlanThoughts" Padding="0" Margin="12,12,12,12" WidthRequest="320">
-
-                        <Image
-                            Margin="-16"                        
-                            HeightRequest="200"
-                            Aspect="Fill"
-                            VerticalOptions="Center"
-                            Source="edit_box.png" />
-
-                        <ScrollView x:Name="ScrollEdtPlan" Orientation="Vertical" VerticalScrollBarVisibility="Always"
-                                    MinimumHeightRequest="160"
-                                    MaximumHeightRequest="160"
-                                    >
-
-                            <Editor x:Name="EdtPlanThoughts"
-                                    FontSize="Medium"
-                                    Margin="4,4,4,4"
-                                    FontFamily="OpenSanRegular"
-                                    Placeholder="My thoughts or plans are . . ."
-                                    PlaceholderColor="{StaticResource Gray300}"
-                                    AutoSize="TextChanges"
-                                    
-                                    TextChanged="EdtPlanThoughts_TextChanged"
-                                    />
-
-                         </ScrollView>
-                    </Grid>
-
-                    <Grid x:Name="GridReflectionThoughts" Padding="0" Margin="12,12,12,12" WidthRequest="320">
-
-                        <Image
-                            Margin="-16"                        
-                            HeightRequest="200"
-                            Aspect="Fill"
-                            VerticalOptions="Center"
-                            Source="edit_box.png" />
-
-                        <ScrollView x:Name="ScrollEdtReflection" Orientation="Vertical" VerticalScrollBarVisibility="Always"
-                                    MinimumHeightRequest="160"
-                                    MaximumHeightRequest="160"
-                                    >
-
-                            <Editor x:Name="EdtReflectionThoughts"
-                                    FontSize="Medium"
-                                    Margin="4,4,4,4"
-                                    VerticalOptions="FillAndExpand"
-                                    VerticalTextAlignment="Start"
-                                    FontFamily="OpenSanRegular"
-                                    Placeholder="Today I . . ."
-                                    PlaceholderColor="{StaticResource Gray300}"
-                                    AutoSize="TextChanges"
-                                    TextChanged="EdtReflectionThoughts_TextChanged"
-                                    />
-
-                         </ScrollView>
-                    </Grid>
-
+                   
 
                     <!-- Check In Button -->
 
@@ -210,7 +154,7 @@
                         </controls:CobaltImageButton>
 
                         <Label
-                            Text="check-in"
+                            Text="checking-in"
                             TextColor="White"
                             FontFamily="BearHugs"
                             VerticalOptions="Center"
@@ -281,199 +225,6 @@
                     </controls:CobaltGrid>
  
                 </VerticalStackLayout>
-
-
-                <!-- Calendar -->
-
-                <Border x:Name="BorderCalendar" Background="{StaticResource White}" Stroke="{StaticResource Gray300}" StrokeThickness="5" Padding="0,4,0,12" Margin="0,12,0,0">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="16,16,16,16" />
-                        </Border.StrokeShape>
-                    <VerticalStackLayout x:Name="VsCalendar" Padding="4">
-
-                        <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
-                            <ImageButton x:Name="BtnPreviousMonth"
-                                         Source="chevron_square_left.png"
-                                         HeightRequest="30"
-                                         WidthRequest="30"
-                                         Grid.Column="0"
-                                         VerticalOptions="Center"
-                                         HorizontalOptions="Start"
-                                         Clicked="BtnPreviousMonth_Clicked"
-                                         Scale="0.7">
-                                <ImageButton.Behaviors>
-                                    <toolkit:IconTintColorBehavior TintColor="{StaticResource Gray500}"></toolkit:IconTintColorBehavior>
-                                </ImageButton.Behaviors>
-                            </ImageButton>
-
-                            <Label x:Name="LblCalendarMonth"
-                                   Grid.Column="1"
-                                   Text="January 2000"
-                                   FontSize="Large"
-                                   FontAttributes="Bold"
-                                   HorizontalOptions="Center"
-                                   HorizontalTextAlignment="Center"
-                                   VerticalOptions="Center"
-                                   TextColor="{StaticResource MeeePrimaryBlack}" />
-
-                            <ImageButton x:Name="BtnNextMonth"
-                                         Source="chevron_square_right.png"
-                                         HeightRequest="30"
-                                         WidthRequest="30"
-                                         Grid.Column="2"
-                                         HorizontalOptions="End"
-                                         VerticalOptions="Center"
-                                         Clicked="BtnNextMonth_Clicked"
-                                         Scale="0.7">
-                                <ImageButton.Behaviors>
-                                    <toolkit:IconTintColorBehavior TintColor="{StaticResource Gray500}"></toolkit:IconTintColorBehavior>
-                                </ImageButton.Behaviors>
-                            </ImageButton>
-
-                        </Grid>
-
-                        <!-- Days -->
-                        <Grid ColumnDefinitions="*,*,*,*,*,*,*" Margin="0,6,0,0">
-                            <Label Text="M"
-                                   Grid.Column="0"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   TextColor="{StaticResource MeeePrimaryCyan}"
-                                   HorizontalTextAlignment="Center" />
-                            <Label Text="T"
-                                   Grid.Column="1"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   TextColor="{StaticResource MeeePrimaryCyan}"
-                                   HorizontalTextAlignment="Center" />
-                            <Label Text="W"
-                                   Grid.Column="2"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   TextColor="{StaticResource MeeePrimaryCyan}"
-                                   HorizontalTextAlignment="Center" />
-                            <Label Text="T"
-                                   Grid.Column="3"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   TextColor="{StaticResource MeeePrimaryCyan}"
-                                   HorizontalTextAlignment="Center" />
-                            <Label Text="F"
-                                   Grid.Column="4"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   TextColor="{StaticResource MeeePrimaryCyan}"
-                                   HorizontalTextAlignment="Center" />
-                            <Label Text="S"
-                                   Grid.Column="5"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   TextColor="{StaticResource MeeePrimaryCyan}"
-                                   HorizontalTextAlignment="Center" />
-                            <Label Text="Su"
-                                   Grid.Column="6"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   TextColor="{StaticResource MeeePrimaryCyan}"
-                                   HorizontalTextAlignment="Center" />
-                        </Grid>
-
-                        <!-- Divider -->
-
-                        <!-- <Frame BackgroundColor="{StaticResource MeeePrimaryCyan}" HeightRequest="1" MaximumHeightRequest="1" Margin="4,6,4,6"></Frame> -->
-
-                        
-
-                        <Grid ColumnDefinitions="*,*,*,*,*,*,*" Padding="0,12,0,6">
-                            <Image x:Name="ImgR1C1" IsVisible="false" Grid.Column="0" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR1C2" IsVisible="false" Grid.Column="1" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR1C3" IsVisible="false" Grid.Column="2" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR1C4" IsVisible="false" Grid.Column="3" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR1C5" IsVisible="false" Grid.Column="4" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR1C6" IsVisible="false" Grid.Column="5" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR1C7" IsVisible="false" Grid.Column="6" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                        </Grid>
-
-                        <Grid ColumnDefinitions="*,*,*,*,*,*,*" Padding="0,0,0,6">
-                            <Image x:Name="ImgR2C1" IsVisible="false" Grid.Column="0" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR2C2" IsVisible="false" Grid.Column="1" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR2C3" IsVisible="false" Grid.Column="2" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR2C4" IsVisible="false" Grid.Column="3" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR2C5" IsVisible="false" Grid.Column="4" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR2C6" IsVisible="false" Grid.Column="5" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR2C7" IsVisible="false" Grid.Column="6" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                        </Grid>
-
-                        <Grid ColumnDefinitions="*,*,*,*,*,*,*" Padding="0,0,0,6">
-                            <Image x:Name="ImgR3C1" IsVisible="false" Grid.Column="0" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR3C2" IsVisible="false" Grid.Column="1" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR3C3" IsVisible="false" Grid.Column="2" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR3C4" IsVisible="false" Grid.Column="3" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR3C5" IsVisible="false" Grid.Column="4" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR3C6" IsVisible="false" Grid.Column="5" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR3C7" IsVisible="false" Grid.Column="6" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                        </Grid>
-
-                        <Grid ColumnDefinitions="*,*,*,*,*,*,*" Padding="0,0,0,6">
-                            <Image x:Name="ImgR4C1" IsVisible="false" Grid.Column="0" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR4C2" IsVisible="false" Grid.Column="1" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR4C3" IsVisible="false" Grid.Column="2" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR4C4" IsVisible="false" Grid.Column="3" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR4C5" IsVisible="false" Grid.Column="4" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR4C6" IsVisible="false" Grid.Column="5" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR4C7" IsVisible="false" Grid.Column="6" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                        </Grid>
-
-                        <Grid x:Name="GridRow5" ColumnDefinitions="*,*,*,*,*,*,*" Padding="0,0,0,6">
-                            <Image x:Name="ImgR5C1" IsVisible="false" Grid.Column="0" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR5C2" IsVisible="false" Grid.Column="1" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR5C3" IsVisible="false" Grid.Column="2" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR5C4" IsVisible="false" Grid.Column="3" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR5C5" IsVisible="false" Grid.Column="4" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR5C6" IsVisible="false" Grid.Column="5" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR5C7" IsVisible="false" Grid.Column="6" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                        </Grid>
-
-                        <Grid x:Name="GridRow6" ColumnDefinitions="*,*,*,*,*,*,*" Padding="0,0,0,6">
-                            <Image x:Name="ImgR6C1" IsVisible="false" Grid.Column="0" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR6C2" IsVisible="false" Grid.Column="1" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR6C3" IsVisible="false" Grid.Column="2" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR6C4" IsVisible="false" Grid.Column="3" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR6C5" IsVisible="false" Grid.Column="4" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR6C6" IsVisible="false" Grid.Column="5" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                            <Image x:Name="ImgR6C7" IsVisible="false" Grid.Column="6" Source="sf_circle" WidthRequest="26" HeightRequest="26" />
-                        </Grid>
-
-
-
-                    </VerticalStackLayout>
-                </Border>
-
-                <!-- Chart -->
-
-                <Border x:Name="BorderChart" Background="{StaticResource White}" Stroke="{StaticResource Gray300}" StrokeThickness="5" Padding="0,4,0,12" Margin="0,12,0,0">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="16,16,16,16" />
-                        </Border.StrokeShape>
-
-                        <VerticalStackLayout>   
-                            <Label x:Name="LblChartTitle"
-                                       Text="Last 14 Days"
-                                       FontSize="Large"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Center"
-                                       HorizontalTextAlignment="Center"
-                                       VerticalOptions="Center"
-                                       TextColor="{StaticResource MeeePrimaryBlack}" />
-
-                            <Grid x:Name="GridChart" RowDefinitions="1*,1*,1*,1*,1*,1*,1*,1*,1*" ColumnDefinitions="Auto,*,*,*,*,*,*,*,*,*,*,*,*,*,*" HeightRequest="200" Margin="0,12,6,0">
-                                <Image Grid.Column="0" Grid.Row="8" x:Name="ImgHappy" Source="sun.png" HeightRequest="20" WidthRequest="20" Margin="4" />
-                                <Image Grid.Column="0" Grid.Row="0" x:Name="ImgSad" Source="sun.png" HeightRequest="20" WidthRequest="20" Margin="4" />
-                            </Grid>
-
-                        </VerticalStackLayout>
-                        
-                </Border>
 
             </VerticalStackLayout>
         </controls:FixedScrollView>

@@ -12,7 +12,6 @@ public partial class JournalPage : ContentPage
 {
     private DateTime calendarDate = DateTime.Now;
     private User _user;
-    private List<CalendarEntry> CalendarEntries = new List<CalendarEntry>();
 
     enum CalendarType
     {
@@ -24,7 +23,7 @@ public partial class JournalPage : ContentPage
 	{
         _user = User.UserFromPreferences();
         InitializeComponent();
-        LoadCalendarEntries();
+        AppSettings.JournalPage = this;
     }
 
     #region StartUp
@@ -34,20 +33,18 @@ public partial class JournalPage : ContentPage
         
         base.OnAppearing();
         FormatForPlan();
-
-#if ANDROID
-        FixAndroid();
-#endif
-
     }
 
 
-    private void FixAndroid()
+    #endregion
+
+    #region Returning from Check In / Check Out
+
+    public void UpdateAfterCheckInOut()
     {
-        // Android specific formatting fixes
-        BorderCalendar.Margin = new Thickness(-5, 12, -5, 0);
-        BorderCalendar.Margin = new Thickness(-5, 12, -5, 0);
+        LblDayTitle.Text = "HELLO I'VE UPDATED";
     }
+
 
     #endregion
 
@@ -103,14 +100,14 @@ public partial class JournalPage : ContentPage
         var control = sender as CobaltImageButton;
         var grid = control.Parent as CobaltGrid;
         await grid.BounceOnPressAsync();
-        await Navigation.PushModalAsync(new CheckInPage());
+        await Navigation.PushModalAsync(new NavigationPage(new CheckInPage()));
     }
 
     async void TapCheckIn_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
     {
         var grid = sender as CobaltGrid;
         await grid.BounceOnPressAsync();
-        await Navigation.PushModalAsync(new CheckInPage());
+        await Navigation.PushModalAsync(new NavigationPage(new CheckInPage()));
     }
 
     /* Check Out Button and Container */
@@ -128,33 +125,8 @@ public partial class JournalPage : ContentPage
         await grid.BounceOnPressAsync();
     }
 
-    /* Editor Panels in Scroll View, Update after text changed */
-    
-    void EdtPlanThoughts_TextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
-    {
-        // This DOES work, sometimes, but scroll doesn't show scroll bar and doesn't show the text you are typing
-        Dispatcher.Dispatch(() => ScrollEdtPlan.ForceLayout());
-        
-    }
-
-    void EdtReflectionThoughts_TextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
-    {
-        Dispatcher.Dispatch(() => ScrollEdtReflection.ForceLayout());
-    }
 
     /* Calendar Controls */
-
-    void BtnPreviousMonth_Clicked(System.Object sender, System.EventArgs e)
-    {
-        calendarDate = calendarDate.AddMonths(-1);
-        BuildCalendar(CalendarType.CheckIn);
-    }
-
-    void BtnNextMonth_Clicked(System.Object sender, System.EventArgs e)
-    {
-        calendarDate = calendarDate.AddMonths(1);
-        BuildCalendar(CalendarType.CheckIn);
-    }
 
     async void ImgBtnDayBack_Clicked(System.Object sender, System.EventArgs e)
     {
@@ -174,8 +146,8 @@ public partial class JournalPage : ContentPage
 
     private void FormatForPlan()
     {
-        ImgDay.IsVisible = true;
-        ImgNight.IsVisible = false;
+        //ImgDay.IsVisible = true;
+        //ImgNight.IsVisible = false;
 
         ImgPlanSelection.Source = "sun_drawing.png";
         ImgReflectionSelection.Source = "moon_inactive.png";
@@ -183,32 +155,22 @@ public partial class JournalPage : ContentPage
         ImgReflectionUnderline.IsVisible = false;
         
         //BorderPlanThoughts.IsVisible = true;
-        GridPlanThoughts.IsVisible = true;
         GridCheckIn.IsVisible = true;
         GridCheckOut.IsVisible = false;
-        GridReflectionThoughts.IsVisible = false;
-
-        BuildCalendar(CalendarType.CheckIn);
-        BuildChart(CalendarType.CheckIn);
     }
 
     private void FormatForReflection()
     {
-        ImgDay.IsVisible = false;
-        ImgNight.IsVisible = true;
+        //ImgDay.IsVisible = false;
+        //ImgNight.IsVisible = true;
 
         ImgPlanSelection.Source = "sun_inactive.png";
         ImgReflectionSelection.Source = "moon.png";
         ImgPlanUnderline.IsVisible = false;
         ImgReflectionUnderline.IsVisible = true;
 
-        GridPlanThoughts.IsVisible = false;
-        GridReflectionThoughts.IsVisible = true;
         GridCheckIn.IsVisible = false;
         GridCheckOut.IsVisible = true;
-
-        BuildCalendar(CalendarType.CheckOut);
-        BuildChart(CalendarType.CheckOut);
     }
 
     #endregion
@@ -216,6 +178,7 @@ public partial class JournalPage : ContentPage
     #region Calendar
 
     // We only need to build this once, since it's just for the last 14 days
+    /*
     private void BuildChart(CalendarType calendarType)
     {
         var entries = GetCalendarEntries(calendarType, DateTime.Now);
@@ -241,7 +204,9 @@ public partial class JournalPage : ContentPage
         }
 
     }
+    */
 
+    /*
     private void BuildCalendar(CalendarType calendarType)
     {
         
@@ -343,14 +308,18 @@ public partial class JournalPage : ContentPage
         }
 
     }
+    */
 
+    /*
     private CalendarEntry IsCheckedIn(List<CalendarEntry> calendarEntries, DateTime date)
     {
         var entry = calendarEntries.Where(e => e.Date.Year == date.Year && e.Date.Month == date.Month && e.Date.Day == date.Day).FirstOrDefault();
         return entry;
     }
+    */
 
     // Converts the day of week to match our columns
+    /*
     private int ConvertDayOfWeek(DayOfWeek dayOfWeek)
     {
         if (dayOfWeek == DayOfWeek.Sunday)
@@ -362,7 +331,9 @@ public partial class JournalPage : ContentPage
             return (int)dayOfWeek;
         }
     }
+    */
 
+    /*
     private void HideAllDayImages()
     {
         for (int row = 1; row < 7; row++)
@@ -374,7 +345,9 @@ public partial class JournalPage : ContentPage
             }
         }
     }
+    */
 
+    /*
     private void LoadCalendarEntries()
     {
         var startDate = new DateTime(2023, 6, 1);
@@ -405,13 +378,16 @@ public partial class JournalPage : ContentPage
                 new CalendarEntry { Date = startDate.AddDays(22), CheckInScore = 5 }
             };
     }
+    */
 
+    /*
     private List<CalendarEntry> GetCalendarEntries(CalendarType calendarType, DateTime startDate)
     {
         return CalendarEntries;
     }
+    */
 
-
+    /*
     private CalendarEntry CalendarEntryForDate(List<CalendarEntry> entries, DateTime date)
     {
         foreach (var entry in entries)
@@ -424,16 +400,17 @@ public partial class JournalPage : ContentPage
 
         return null;
     }
+    */
 
     #endregion
 
-
+    /*
     public class CalendarEntry
     {
         public DateTime Date { get; set; }
         public int CheckInScore { get; set; }
     }
-
+    */
     
 
 

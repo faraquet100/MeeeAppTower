@@ -10,8 +10,6 @@
              UnselectedTabColor="{StaticResource MeeeUnselectedGrey}"
              >
 
-    
-
 
     <NavigationPage IconImageSource="icons8_home.png" Title="Journal">
         <x:Arguments>

@@ -1,9 +1,12 @@
 ﻿using System;
+using MeeeApp.Pages;
+
 namespace MeeeApp.Services
 {
 	public static class AppSettings
 	{
 		public static ContentPage CurrentPage { get; set; }
+        public static JournalPage JournalPage { get; set; }
 
         public static Microsoft.Maui.Graphics.Color MeeeColorMagenta = Color.Parse("#D40F7D");
         public static Microsoft.Maui.Graphics.Color MeeeColorCyan = Color.Parse("#009FDF");

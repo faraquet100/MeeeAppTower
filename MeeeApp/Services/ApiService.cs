@@ -5,6 +5,8 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using MeeeApp.Models;
 using Newtonsoft.Json;
+using banditoth.MAUI.PreferencesExtension;
+using System.Net.Http.Headers;
 
 namespace MeeeApp.Services
 {
@@ -14,7 +16,8 @@ namespace MeeeApp.Services
         {
             Success = 1,
             BadRequest = 2,
-            NoInternet = 3
+            NoInternet = 3,
+            NotAuthorized = 4
         }
 
         // Base Url
@@ -24,16 +27,16 @@ namespace MeeeApp.Services
         public static string ENDPOINT_REGISTER = API_URL + "Users/Register";
         public static string ENDPOINT_LOGIN = API_URL + "Users/Login";
         public static string ENDPOINT_USERS_LIST = API_URL + ""; // Just for testing this one, should be deleted later
-        
+        public static string ENDPOINT_CHECK_IN = API_URL + "DailyRecord/CheckIn";
+        public static string ENDPOINT_CHECK_OUT = API_URL + "DailyRecord/CheckOut";
+
         // Preference Keys
-        public static string KEY_TOKEN = "access_token";
-        public static string KEY_USER_ID = "userid";
-        public static string KEY_USER_EMAIL = "useremail";
-        public static string KEY_USER_FIRST = "userfirst";
-        public static string KEY_USER_LAST = "user_second";
+        // Using banditoth.MAUI.PreferencesExtension which allows us to serialize obkects
+        public static string KEY_USER_OBJECT = "user_object";
+        public static string KEY_USER_TOKEN = "user_token";
 
         #region Users
-        
+
         public static async Task<ApiResult> LoginAsync(Login login)
         {
             var httpClient = new HttpClient();
@@ -58,6 +61,8 @@ namespace MeeeApp.Services
 
             if (result == null) return ApiResult.BadRequest;
 
+            // We need to save the token independently because we only receive it with Login and Register requests
+            Preferences.Default.Set(KEY_USER_TOKEN, result.Token);
             SaveUserDetailsToPreferences(result);
 
             return ApiResult.Success;
@@ -77,21 +82,62 @@ namespace MeeeApp.Services
 
             if (result == null) return ApiResult.BadRequest;
 
+            // We need to save the token independently because we only receive it with Login and Register requests
+            Preferences.Default.Set(KEY_USER_TOKEN, result.Token);
             SaveUserDetailsToPreferences(result);
 
             return ApiResult.Success;
         }
 
-        private static void SaveUserDetailsToPreferences(User user)
+        #endregion
+
+        #region Check In/Out
+
+        public static async Task<ApiResult> CheckIn(DailyRecord dailyRecord)
         {
-            Preferences.Set(KEY_TOKEN, user.Token);
-            Preferences.Set(KEY_USER_EMAIL, user.Email);
-            Preferences.Set(KEY_USER_ID, user.UserId);
-            Preferences.Set(KEY_USER_FIRST, user.FirstName);
-            Preferences.Set(KEY_USER_LAST, user.LastName);
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", GetToken());
+            var json = JsonConvert.SerializeObject(dailyRecord);
+            var payload = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await httpClient.PostAsync(ENDPOINT_CHECK_IN, payload);
+
+            return await ProcessUserReturnResponse(response);
         }
-        
-        
+
+        #endregion
+
+        #region Helpers
+
+        // For API calls that return the user object
+        public static async Task<ApiResult> ProcessUserReturnResponse(HttpResponseMessage response)
+        {
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return ApiResult.NotAuthorized;
+            }
+
+            if (!response.IsSuccessStatusCode) return ApiResult.BadRequest;
+
+            var jsonResult = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<User>(jsonResult);
+
+            if (result == null) return ApiResult.BadRequest;
+
+            SaveUserDetailsToPreferences(result);
+            return ApiResult.Success;
+        }
+
+        public static void SaveUserDetailsToPreferences(User user)
+        {
+            Preferences.Default.SetObject<User>(KEY_USER_OBJECT, user);
+            var user1 = Preferences.Default.GetObject<User>(ApiService.KEY_USER_OBJECT, new User());
+        }
+
+        public static string GetToken()
+        {
+            return Preferences.Default.Get(KEY_USER_TOKEN, "");
+        }
+
         #endregion
     }
 }

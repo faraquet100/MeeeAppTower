@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MeeeApp.Controls"
+             xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             x:Class="MeeeApp.Pages.CheckInPageReason"
+             Title="CHECKING-IN">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="BarButtonCancel" Text="Cancel" Clicked="BarButtonCancel_Clicked" />
+    </ContentPage.ToolbarItems>
+
+    
+
+         <controls:FixedScrollView>
+
+            <Grid RowDefinitions="*,Auto">
+                <VerticalStackLayout Margin="24,12,24,0" Grid.Row="0">
+                    <Label x:Name="LBLTitle"
+                           Text="xxx"
+                           TextColor="{StaticResource MeeePrimaryCyan}"
+                           FontAttributes="Bold"
+                           FontFamily="BearHugs"
+                           Padding="0,12,0,12"
+                           FontSize="32" />
+
+                    <inputLayout:SfTextInputLayout
+                        Margin="-4,12,-4,12"
+                        Hint="Tell us more ..."
+                        ContainerType="Outlined"
+                        Stroke="{StaticResource MeeePrimaryCyan}"
+                        FocusedStrokeThickness="3"
+                        UnfocusedStrokeThickness="2"
+                        MinimumHeightRequest="200"
+                        EnableHintAnimation="True"
+                        ContainerBackground="White"
+                        BackgroundColor="White">
+
+                    
+                        <Editor
+                            x:Name="EDTTellUsMore"
+                            AutoSize="TextChanges"
+                            />
+                    </inputLayout:SfTextInputLayout>
+
+
+                </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                                     x:Name="VSCheckinButton"
+                                     Grid.Row="1"
+                                     Padding="24"
+                                     BackgroundColor="{StaticResource MeeePrimaryMagenta}">
+
+                    <Label Text="check-in"
+                           TextColor="White"
+                           FontFamily="BearHugs"
+                           HeightRequest="40"
+                           LineHeight="1"
+                           HorizontalOptions="Center"
+                           FontSize="36" />
+
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="TapCheckIn"
+                                              NumberOfTapsRequired="1"
+                                              Tapped="TapCheckIn_Tapped" />
+                    </VerticalStackLayout.GestureRecognizers>
+
+                </VerticalStackLayout>
+             </Grid>
+        </controls:FixedScrollView>
+
+        <!-- Continue In Button -->
+
+        
+
+   
+</ContentPage>

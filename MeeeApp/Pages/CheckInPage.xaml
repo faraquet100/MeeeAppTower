@@ -2,31 +2,26 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MeeeApp.Pages.CheckInPage"
-             Title="CheckInPage">
+             Title="CHECKING-IN">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="BarButtonCancel" Text="Cancel" Clicked="BarButtonCancel_Clicked" />
+    </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto">
 
-        <!-- Cancel Button -->
-        <Button x:Name="BtnCancel"
-                Clicked="BtnCancel_Clicked"
-                Grid.Row="0"
-                BackgroundColor="Transparent"
-                HorizontalOptions="Start"
-                Text="Cancel"
-                TextColor="{StaticResource MeeePrimaryMagenta}" />
 
         <!-- Salutation -->
         <VerticalStackLayout
             Grid.Row="1"
-            Margin="24,24,24,0"
+            Margin="24,12,24,0"
             >
 
-
             <Label x:Name="LblName"
-                    Text="Morning Hannah!"
+                    Text="xxx"
                    TextColor="{StaticResource MeeePrimaryCyan}"
                    FontAttributes="Bold"
-                   FontFamily="HandOfSean"
+                   FontFamily="BearHugs"
                    Padding="0,12,0,12"
                    FontSize="32" />
 
@@ -37,27 +32,7 @@
 
         </VerticalStackLayout>
 
-        <!-- Check In Button -->
-        <VerticalStackLayout 
-                             Grid.Row="5"
-                             Padding="24"
-                             BackgroundColor="{StaticResource MeeePrimaryMagenta}">
-
-            <Label Text="CHECK IN"
-                   TextColor="White"
-                   FontFamily="HandOfSean"
-                   HeightRequest="40"
-                   LineHeight="1.4"
-                   HorizontalOptions="Center"
-                   FontSize="28" />
-
-            <VerticalStackLayout.GestureRecognizers>
-                <TapGestureRecognizer x:Name="TapCheckIn"
-                                      NumberOfTapsRequired="1"
-                                      Tapped="TapCheckIn_Tapped" />
-            </VerticalStackLayout.GestureRecognizers>
-
-        </VerticalStackLayout>
+        
 
         <!-- Slider Image -->
 
@@ -94,6 +69,30 @@
                ThumbColor="{StaticResource MeeePrimaryMagenta}"
                ValueChanged="SliderCheckIn_ValueChanged"
                />
+
+        <!-- Continue In Button -->
+
+        <VerticalStackLayout
+                             x:Name="VSContinueButton"
+                             Grid.Row="5"
+                             Padding="24"
+                             BackgroundColor="{StaticResource MeeePrimaryMagenta}">
+
+            <Label Text="continue"
+                   TextColor="White"
+                   FontFamily="BearHugs"
+                   HeightRequest="40"
+                   LineHeight="1"
+                   HorizontalOptions="Center"
+                   FontSize="36" />
+
+            <VerticalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer x:Name="TapContinue"
+                                      NumberOfTapsRequired="1"
+                                      Tapped="TapContinue_Tapped" />
+            </VerticalStackLayout.GestureRecognizers>
+
+        </VerticalStackLayout>
 
     </Grid>
 
