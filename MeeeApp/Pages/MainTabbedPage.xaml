@@ -6,30 +6,30 @@
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              android:TabbedPage.ToolbarPlacement="Bottom"
              BarBackgroundColor="{StaticResource White}"
-             SelectedTabColor="{StaticResource MeeePrimaryCyan}"
+             SelectedTabColor="{StaticResource MeeePrimaryMagenta}"
              UnselectedTabColor="{StaticResource MeeeUnselectedGrey}"
              >
 
 
-    <NavigationPage IconImageSource="icons8_home.png" Title="Journal">
+    <NavigationPage IconImageSource="tab_new_journal34.png" Title="Journal">
         <x:Arguments>
             <pages:JournalPage />
         </x:Arguments>
     </NavigationPage>
 
-    <NavigationPage IconImageSource="icons8_bookmark" Title="Resources" >
+    <NavigationPage IconImageSource="tab_new_house34" Title="Home" >
         <x:Arguments>
             <pages:TemporaryPage />
         </x:Arguments>
     </NavigationPage>
 
-    <NavigationPage IconImageSource="icons8_idea" Title="Ideas">
+    <NavigationPage IconImageSource="tab_new_lightbulb34" Title="Feed">
         <x:Arguments>
             <pages:LocationPage />
         </x:Arguments>
     </NavigationPage>
 
-    <NavigationPage IconImageSource="icons8_30gear" Title="Settings">
+    <NavigationPage IconImageSource="tab_new_hat34" Title="Course">
         <x:Arguments>
             <pages:SettingsPage Title="Settings" />
         </x:Arguments>

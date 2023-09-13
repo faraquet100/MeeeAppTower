@@ -22,13 +22,13 @@ public partial class CheckInPage : ContentPage
         switch (DateExtensions.GetPartOfDay())
         {
             case DateExtensions.PartOfDay.Morning:
-                LblName.Text = "Good Morning " + _user.FirstName;
+                LblName.Text = "Good Morning " + _user.FirstName + "!";
                 break;
             case DateExtensions.PartOfDay.Afternoon:
-                LblName.Text = "Good Afternoon " + _user.FirstName;
+                LblName.Text = "Good Afternoon " + _user.FirstName + "!";
                 break;
             case DateExtensions.PartOfDay.Evening:
-                LblName.Text = "Good Evening " + _user.FirstName;
+                LblName.Text = "Good Evening " + _user.FirstName + "!";
                 break;
         }
     }
@@ -56,6 +56,7 @@ public partial class CheckInPage : ContentPage
 
     async void TapContinue_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
     {
+        await GridContinue.BounceOnPressAsync();
         await Navigation.PushAsync(new CheckInPageReason(_user, selectedScore));
     }
 
@@ -65,4 +66,9 @@ public partial class CheckInPage : ContentPage
     }
 
     #endregion
+
+    async void BtnSkip_OnClicked(object sender, EventArgs e)
+    {
+        await Navigation.PopModalAsync(true);
+    }
 }

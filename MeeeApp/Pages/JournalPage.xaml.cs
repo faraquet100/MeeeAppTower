@@ -28,11 +28,51 @@ public partial class JournalPage : ContentPage
 
     #region StartUp
 
-    protected override void OnAppearing()
+    // OnAppearing is triggered when the tab is selected
+    protected override async void OnAppearing()
     {
-        
         base.OnAppearing();
         FormatForPlan();
+        Console.WriteLine("JournalPage.OnAppearing()");
+        
+        // We need to use this pattern to ensure the page has fully loaded before loading any modals
+        await Task.Run(async () =>
+        {
+            await Task.Delay(1000);
+
+            if (ShouldRequestCheckInTimes())
+            {
+                Dispatcher.Dispatch(() =>
+                {
+                    AppSettings.LastCheckInTimesAlert = DateTime.Now;
+                    Navigation.PushModalAsync(new NavigationPage(new SetCheckInTimes()));
+                });
+            }
+        });
+    }
+    
+    private bool ShouldRequestCheckInTimes()
+    {
+        // Does the user record already have checkin times?
+        var user = User.UserFromPreferences();
+        if (user.CheckInTime.Year > 2022)
+        {
+            return false;
+        }
+        
+        // If the user has never been asked, ask them
+        if (AppSettings.LastCheckInTimesAlert == null)
+        {
+            return true;
+        }
+
+        // If the user has been asked, but it's been more than 1 days, ask them again
+        if (AppSettings.LastCheckInTimesAlert.Value.AddDays(1) < DateTime.Now)
+        {
+            return true;
+        }
+
+        return false;
     }
 
 
@@ -42,7 +82,8 @@ public partial class JournalPage : ContentPage
 
     public void UpdateAfterCheckInOut()
     {
-        LblDayTitle.Text = "HELLO I'VE UPDATED";
+        // This works, no need for test text
+        //LblDayTitle.Text = "HELLO I'VE UPDATED";
     }
 
 

@@ -89,5 +89,16 @@ public partial class LoginPage : ContentPage
         await Navigation.PushAsync(page);
     }
 
-    
+
+    private void TxtEmail_OnFocused(object sender, FocusEventArgs e)
+    {
+        ImgEmailHighlight.IsVisible = true;
+        ImgPasswordHighlight.IsVisible = false;
+    }
+
+    private void TxtPassword_OnFocused(object sender, FocusEventArgs e)
+    {
+        ImgEmailHighlight.IsVisible = false;
+        ImgPasswordHighlight.IsVisible = true;
+    }
 }

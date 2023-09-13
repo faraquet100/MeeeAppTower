@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MeeeApp.Controls"
              x:Class="MeeeApp.Pages.CheckInPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{StaticResource FaceBackground}"
              Title="CHECKING-IN">
 
     <ContentPage.ToolbarItems>
@@ -10,6 +13,17 @@
 
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto">
 
+        <!-- Header -->
+        <HorizontalStackLayout HorizontalOptions="End" Grid.Row="0" Margin="24,0,12,-24">
+            <Button x:Name="BtnSkip"
+                    Text="skip" 
+                    FontAttributes="Bold"
+                    FontFamily="BearHugs"
+                    BackgroundColor="{StaticResource Transparent}"
+                    FontSize="32"
+                    Clicked="BtnSkip_OnClicked"
+                    TextColor="{StaticResource MeeeUnselectedGrey}"></Button>
+        </HorizontalStackLayout>
 
         <!-- Salutation -->
         <VerticalStackLayout
@@ -31,7 +45,6 @@
                    FontAttributes="Bold" />
 
         </VerticalStackLayout>
-
         
 
         <!-- Slider Image -->
@@ -66,34 +79,49 @@
                Margin="24,24,24,0"
                MinimumTrackColor="{StaticResource MeeePrimaryMagenta}"
                MaximumTrackColor="{StaticResource Gray600}"
-               ThumbColor="{StaticResource MeeePrimaryMagenta}"
+               ThumbColor="{StaticResource MeeePrimaryCyan}"
                ValueChanged="SliderCheckIn_ValueChanged"
                />
-
+        
+        <Grid Grid.Row="4" ColumnDefinitions="Auto,*,Auto" Margin="24,0,24,0">
+            <Label Grid.Column="0" 
+                   Text="1" 
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   FontFamily="BearHugs"></Label>
+            <Label Grid.Column="2" 
+                   Text="9" 
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   FontFamily="BearHugs"></Label>
+        </Grid>
+            
         <!-- Continue In Button -->
 
-        <VerticalStackLayout
-                             x:Name="VSContinueButton"
-                             Grid.Row="5"
-                             Padding="24"
-                             BackgroundColor="{StaticResource MeeePrimaryMagenta}">
+        <controls:CobaltGrid x:Name="GridContinue" Grid.Row="5">
+            <Image Source="footer_button.png" Aspect="AspectFill" MaximumHeightRequest="100"/>
+            <VerticalStackLayout
+                                 x:Name="VSContinueButton"
+                                 Padding="24"
+                                 >
 
-            <Label Text="continue"
-                   TextColor="White"
-                   FontFamily="BearHugs"
-                   HeightRequest="40"
-                   LineHeight="1"
-                   HorizontalOptions="Center"
-                   FontSize="36" />
+                <Label Text="continue"
+                       TextColor="White"
+                       FontFamily="BearHugs"
+                       Margin="0,12,0,0"
+                       HeightRequest="40"
+                       LineHeight="1"
+                       HorizontalOptions="Center"
+                       FontSize="36" />
 
-            <VerticalStackLayout.GestureRecognizers>
-                <TapGestureRecognizer x:Name="TapContinue"
-                                      NumberOfTapsRequired="1"
-                                      Tapped="TapContinue_Tapped" />
-            </VerticalStackLayout.GestureRecognizers>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="TapContinue"
+                                          NumberOfTapsRequired="1"
+                                          Tapped="TapContinue_Tapped" />
+                </VerticalStackLayout.GestureRecognizers>
 
-        </VerticalStackLayout>
-
+            </VerticalStackLayout>
+        </controls:CobaltGrid>
     </Grid>
 
 

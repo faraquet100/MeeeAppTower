@@ -50,7 +50,7 @@
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\meee_logo.svg" Color="#ffffff" BaseSize="256,256" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -190,10 +190,9 @@
 	  <None Remove="Extensions\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Pages\" />
+	  <Folder Include="Classes\" />
 	  <Folder Include="Services\" />
 	  <Folder Include="Platforms\iOS\Utils\" />
-	  <Folder Include="Classes\" />
 	  <Folder Include="Extensions\" />
 	</ItemGroup>
 	<ItemGroup>
@@ -281,5 +280,9 @@
 	  <BundleResource Include="Resources\Images\underline_pink.png" />
 	  <BundleResource Include="Resources\Images\moon.png" />
 	  <BundleResource Include="Resources\Images\edit_box.png" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<MauiImage Update="Resources\Images\slider.png" BaseSize="20,20" />
 	</ItemGroup>
 </Project>

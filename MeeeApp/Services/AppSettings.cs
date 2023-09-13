@@ -1,4 +1,5 @@
 ﻿using System;
+using MeeeApp.Models;
 using MeeeApp.Pages;
 
 namespace MeeeApp.Services
@@ -7,6 +8,8 @@ namespace MeeeApp.Services
 	{
 		public static ContentPage CurrentPage { get; set; }
         public static JournalPage JournalPage { get; set; }
+        public static DateTime? LastCheckInTimesAlert { get; set; } // When was the last time was asked to set check in/out times
+        public static DailyMoment DailyMoment { get; set; }
 
         public static Microsoft.Maui.Graphics.Color MeeeColorMagenta = Color.Parse("#D40F7D");
         public static Microsoft.Maui.Graphics.Color MeeeColorCyan = Color.Parse("#009FDF");

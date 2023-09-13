@@ -10,7 +10,6 @@
 
 
     <!-- Content -->
-
     <Grid>
 
         <!-- <Image Source="sample_background" ZIndex="0" Aspect="AspectFill" HeightRequest="1000" Opacity="0.3" /> -->
@@ -28,6 +27,16 @@
 
                 <Grid Padding="0" Margin="12,24,12,0" WidthRequest="320">
 
+                    
+                    <Image
+                        x:Name="ImgEmailHighlight"
+                        WidthRequest="320"
+                        HeightRequest="70"
+                        Aspect="Fill"
+                        IsVisible="False"
+                        VerticalOptions="Center"
+                        Source="field_highlight.png" />
+                    
                     <Image
                         WidthRequest="320"
                         HeightRequest="70"
@@ -43,6 +52,7 @@
                        VerticalOptions="Center"
                        HorizontalTextAlignment="Center"
                        Placeholder="email"
+                       Focused="TxtEmail_OnFocused"
                        Margin="24,0,24,4"
                        Keyboard="Email" >
                     </Entry>
@@ -52,12 +62,21 @@
                 <Grid Padding="0" Margin="12,0,12,0" WidthRequest="320">
 
                     <Image
+                        x:Name="ImgPasswordHighlight"
+                        WidthRequest="320"
+                        HeightRequest="70"
+                        Aspect="Fill"
+                        IsVisible="False"
+                        VerticalOptions="Center"
+                        Source="field_highlight.png" />
+                    
+                    <Image
                         WidthRequest="320"
                         HeightRequest="70"
                         Aspect="Fill"
                         VerticalOptions="Center"
                         Source="field_clear_lrg.png" />
-
+                    
                     <Entry x:Name="TxtPassword"
                            PlaceholderColor="{StaticResource Gray400}"
                            FontAttributes="Bold"
@@ -67,6 +86,7 @@
                            Margin="24,0,24,4"
                            HorizontalTextAlignment="Center"
                            Placeholder="password"
+                           Focused="TxtPassword_OnFocused"
                            IsPassword="True"  />
 
                 </Grid>

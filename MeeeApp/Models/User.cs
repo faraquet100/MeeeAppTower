@@ -12,8 +12,14 @@ public class User
     [JsonProperty("email")] public string Email { get; set; }
     [JsonProperty("firstname")] public string FirstName { get; set; }
     [JsonProperty("lastname")] public string LastName { get; set; }
-
-    [JsonProperty("dailyRecords")] public List<DailyRecord> DailyRecords = new List<DailyRecord>();
+    [JsonProperty("organisationId")] public int OrganisationId { get; set; }
+    [JsonProperty("userType")] public int UserType { get; set; }
+    [JsonProperty("gender")] public int Gender { get; set; }
+    [JsonProperty("dateOfBirth")] public DateTime DateOfBirth { get; set; }
+    [JsonProperty("appCheckinTime")] public DateTime CheckInTime { get; set; }
+    [JsonProperty("appCheckOutTime")] public DateTime CheckOutTime { get; set; }
+    
+    public List<DailyRecord> DailyRecords = new List<DailyRecord>();
 
 
     public static User UserFromPreferences()

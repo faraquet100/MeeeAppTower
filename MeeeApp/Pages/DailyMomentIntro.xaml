@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MeeeApp.Pages.DailyMomentIntro"
+             NavigationPage.HasNavigationBar="False">
+    
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto,*,Auto">
+            
+            <!-- Skip Button -->
+            <HorizontalStackLayout HorizontalOptions="End" Grid.Row="0" Margin="24,0,12,-24">
+                <Button x:Name="BtnSkip"
+                        Text="skip" 
+                        FontAttributes="Bold"
+                        FontFamily="BearHugs"
+                        BackgroundColor="{StaticResource Transparent}"
+                        FontSize="32"
+                        Clicked="BtnSkip_OnClicked"
+                        TextColor="{StaticResource MeeeUnselectedGrey}"></Button>
+            </HorizontalStackLayout>
+            
+            <!-- Title -->
+            <VerticalStackLayout
+                Grid.Row="1"
+                Margin="24,12,24,0"
+                >
+                
+                <Label x:Name="LblHeading" Text=""></Label>
+                
+            </VerticalStackLayout>
+        </Grid>
+    </ContentPage.Content>
+    
+    
+</ContentPage>

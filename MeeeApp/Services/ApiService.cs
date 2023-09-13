@@ -7,6 +7,7 @@ using MeeeApp.Models;
 using Newtonsoft.Json;
 using banditoth.MAUI.PreferencesExtension;
 using System.Net.Http.Headers;
+using System.Web;
 
 namespace MeeeApp.Services
 {
@@ -21,7 +22,7 @@ namespace MeeeApp.Services
         }
 
         // Base Url
-        public static string API_URL = "https://cobaltmeeeapi.azurewebsites.net/api/";
+        public static string API_URL = "https://meeeapi.azurewebsites.net/api/";
         
         // Endpoints
         public static string ENDPOINT_REGISTER = API_URL + "Users/Register";
@@ -29,6 +30,7 @@ namespace MeeeApp.Services
         public static string ENDPOINT_USERS_LIST = API_URL + ""; // Just for testing this one, should be deleted later
         public static string ENDPOINT_CHECK_IN = API_URL + "DailyRecord/CheckIn";
         public static string ENDPOINT_CHECK_OUT = API_URL + "DailyRecord/CheckOut";
+        public static string ENDPOINT_DAILY_MOMENT = API_URL + "DailyMoment/";
 
         // Preference Keys
         // Using banditoth.MAUI.PreferencesExtension which allows us to serialize obkects
@@ -102,6 +104,30 @@ namespace MeeeApp.Services
             var response = await httpClient.PostAsync(ENDPOINT_CHECK_IN, payload);
 
             return await ProcessUserReturnResponse(response);
+        }
+
+        public static async Task<ApiResult> GetDailyMoment(User user, int score)
+        {
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", GetToken());
+            
+            string queryString = user.UserId.ToString() + "," + DateTime.Now.ToString("yyyy-MM-dd") + "," + score.ToString();
+            string url = ENDPOINT_DAILY_MOMENT + queryString;
+            var response = await httpClient.GetAsync(url);
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return ApiResult.NotAuthorized;
+            }
+            
+            if (!response.IsSuccessStatusCode) return ApiResult.BadRequest;
+            
+            var jsonResult = await response.Content.ReadAsStringAsync();
+            var dailyMoment = JsonConvert.DeserializeObject<DailyMoment>(jsonResult);
+
+            if (dailyMoment == null) return ApiResult.BadRequest;
+
+            AppSettings.DailyMoment = dailyMoment;
+            return ApiResult.Success;
         }
 
         #endregion
