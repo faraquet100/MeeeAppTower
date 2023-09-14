@@ -1,3 +1,4 @@
+using MeeeApp.Services;
 using Newtonsoft.Json;
 
 namespace MeeeApp.Models;
@@ -17,4 +18,17 @@ public class DailyMoment
     [JsonProperty("useLikeButton")] public bool UseLikeButton { get; set; }
     [JsonProperty("useHeartButton")] public bool UseHeartButton { get; set; }
     [JsonProperty("useShareButton")] public bool UseShareButton { get; set; }
+
+    public string FullImageUrl
+    {
+        get
+        {
+            if (ImageUrl.Length > 0)
+            {
+                return AppSettings.MOMENT_IMAGE_URL + ImageUrl;
+            }
+
+            return "";
+        }
+    }
 }

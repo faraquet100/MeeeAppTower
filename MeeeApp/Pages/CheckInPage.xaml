@@ -3,27 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:MeeeApp.Controls"
              x:Class="MeeeApp.Pages.CheckInPage"
-             NavigationPage.HasNavigationBar="False"
+             NavigationPage.HasNavigationBar="True"
              BackgroundColor="{StaticResource FaceBackground}"
-             Title="CHECKING-IN">
-
-    <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="BarButtonCancel" Text="Cancel" Clicked="BarButtonCancel_Clicked" />
-    </ContentPage.ToolbarItems>
+             Title="">
+    
+    <NavigationPage.TitleView>
+        <Grid ColumnDefinitions="*,Auto">
+            <Button 
+                Grid.Column="1"
+                Text="skip" 
+                FontAttributes="Bold"
+                FontFamily="BearHugs"
+                BackgroundColor="{StaticResource Transparent}"
+                FontSize="32"
+                HorizontalOptions="End"
+                Clicked="BtnSkip_OnClicked"
+                TextColor="{StaticResource White}"></Button>
+        </Grid>
+    </NavigationPage.TitleView>
+    
 
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto">
-
-        <!-- Header -->
-        <HorizontalStackLayout HorizontalOptions="End" Grid.Row="0" Margin="24,0,12,-24">
-            <Button x:Name="BtnSkip"
-                    Text="skip" 
-                    FontAttributes="Bold"
-                    FontFamily="BearHugs"
-                    BackgroundColor="{StaticResource Transparent}"
-                    FontSize="32"
-                    Clicked="BtnSkip_OnClicked"
-                    TextColor="{StaticResource MeeeUnselectedGrey}"></Button>
-        </HorizontalStackLayout>
 
         <!-- Salutation -->
         <VerticalStackLayout

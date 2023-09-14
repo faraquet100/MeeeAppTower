@@ -10,6 +10,8 @@ namespace MeeeApp.Services
         public static JournalPage JournalPage { get; set; }
         public static DateTime? LastCheckInTimesAlert { get; set; } // When was the last time was asked to set check in/out times
         public static DailyMoment DailyMoment { get; set; }
+        
+        public static string MOMENT_IMAGE_URL = "https://meeeweb.azurewebsites.net/moment-images/";
 
         public static Microsoft.Maui.Graphics.Color MeeeColorMagenta = Color.Parse("#D40F7D");
         public static Microsoft.Maui.Graphics.Color MeeeColorCyan = Color.Parse("#009FDF");

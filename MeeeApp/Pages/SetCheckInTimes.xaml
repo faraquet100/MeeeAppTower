@@ -2,16 +2,115 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MeeeApp.Controls"
              x:Class="MeeeApp.Pages.SetCheckInTimes"
-             Title="CHECK IN TIME"
+             NavigationPage.HasNavigationBar="True"
+             Title=""
              >
     
-    <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="BarButtonSkip" Text="Cancel" Clicked="BarButtonSkip_OnClicked" />
-    </ContentPage.ToolbarItems>
-    
+    <NavigationPage.TitleView>
+        <Grid ColumnDefinitions="*,Auto">
+            <Button 
+                x:Name="SkipButton"
+                Grid.Column="1"
+                Text="skip" 
+                FontAttributes="Bold"
+                FontFamily="BearHugs"
+                BackgroundColor="{StaticResource Transparent}"
+                FontSize="32"
+                HorizontalOptions="End"
+                Clicked="SkipButton_OnClicked"
+                TextColor="{StaticResource White}"></Button>
+        </Grid>
+    </NavigationPage.TitleView>
     
     <ContentPage.Content>
-        
+        <Grid>
+            <Grid RowDefinitions="Auto,Auto,*,Auto">
+                <VerticalStackLayout Grid.Row="0" Margin="24,12,24,0">
+                    <Label x:Name="LblName"
+                           Text="hi hannah!"
+                           TextColor="{StaticResource MeeePrimaryCyan}"
+                           FontAttributes="Bold"
+                           FontFamily="BearHugs"
+                           Padding="0,12,0,12"
+                           FontSize="32" />
+
+                    <Label Text="It looks like you haven't set your daily Checking-In time."
+                           TextColor="{StaticResource Gray600}"
+                           FontSize="20"
+                           FontAttributes="Bold" />
+                    
+                    <Label Text="{Binding FirstName}"></Label>
+                </VerticalStackLayout>
+                
+                <Image Grid.Row="1" 
+                       Margin="0,24,0,0"
+                       Source="sun_drawing_hires.png"
+                       HeightRequest="120"
+                       Aspect="AspectFit"
+                       ></Image>
+                
+                <controls:CobaltGrid x:Name="GridLink"  Padding="0" Margin="24,-160,24,0" Grid.Row="2">
+
+                    <controls:CobaltImageButton x:Name="ImgBtnSelectTime"
+                                                Source="button_pink.png"
+                                                Opacity="0.8"
+                                                HeightRequest="80"
+                                                Aspect="Fill"
+                                                VerticalOptions="Center">
+                    </controls:CobaltImageButton>
+
+                    <TimePicker
+                        Time="{Binding CheckInTime, Mode=TwoWay}"
+                        HorizontalOptions="Center"
+                        FontSize="36"
+                        FontAttributes="Bold"
+                        HeightRequest="30"
+                        TextColor="White"
+                        
+                        Margin="0,0,0,4"
+                        ></TimePicker>
+
+                </controls:CobaltGrid>
+                
+                
+                <controls:CobaltGrid x:Name="GridContinue" Grid.Row="3">
+                    <Image Source="footer_button.png" Aspect="AspectFill" MaximumHeightRequest="100"/>
+                    <VerticalStackLayout
+                        x:Name="VSContinueButton"
+                        Padding="24"
+                    >
+
+                        <Label Text="set checking-in time"
+                               TextColor="White"
+                               FontFamily="BearHugs"
+                               Margin="0,12,0,0"
+                               HeightRequest="40"
+                               LineHeight="1"
+                               HorizontalOptions="Center"
+                               FontSize="36" />
+
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapContinue"
+                                                  NumberOfTapsRequired="1"
+                                                  Tapped="TapContinue_OnTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+
+                    </VerticalStackLayout>
+                </controls:CobaltGrid>
+            </Grid>
+            
+            <ActivityIndicator
+                ZIndex="3"
+                x:Name="MyActivityIndicator"
+                IsRunning="True" Color="{StaticResource MeeePrimaryCyan}"
+                Scale="3"
+                BackgroundColor="Transparent"
+                IsVisible="false" Margin="0,12,0,0"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+            />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

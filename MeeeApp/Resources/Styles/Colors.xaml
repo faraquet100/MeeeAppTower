@@ -51,6 +51,7 @@
     <Color x:Key="MeeeSecondaryRed">#DA291C</Color>
     <Color x:Key="MeeeSecondaryGreen">#009A44</Color>
     <Color x:Key="MeeeUnselectedGrey">#78909c</Color>
+    <Color x:Key="MeeeGarethCyan">#0EB5DE</Color>
     <Color x:Key="GrayLight">#FAFAFA</Color>
 
 

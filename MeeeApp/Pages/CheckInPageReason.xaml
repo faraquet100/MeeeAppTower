@@ -4,30 +4,29 @@
              xmlns:controls="clr-namespace:MeeeApp.Controls"
              xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              x:Class="MeeeApp.Pages.CheckInPageReason"
-             NavigationPage.HasNavigationBar="False"
-             Title="CHECKING-IN">
-
-    <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="BarButtonCancel" Text="Cancel" Clicked="BarButtonCancel_Clicked" />
-    </ContentPage.ToolbarItems>
+             NavigationPage.HasNavigationBar="True"
+             Title="">
     
+    
+    <NavigationPage.TitleView>
+        <Grid ColumnDefinitions="*,Auto">
+            <Button 
+                Grid.Column="1"
+                Text="skip" 
+                FontAttributes="Bold"
+                FontFamily="BearHugs"
+                BackgroundColor="{StaticResource Transparent}"
+                FontSize="32"
+                HorizontalOptions="End"
+                Clicked="BtnSkip_OnClicked"
+                TextColor="{StaticResource White}"></Button>
+        </Grid>
+    </NavigationPage.TitleView>
 
     <Grid>
          <controls:FixedScrollView>
 
             <Grid RowDefinitions="Auto,*,Auto">
-                
-                <!-- Header -->
-                <HorizontalStackLayout HorizontalOptions="End" Grid.Row="0" Margin="24,0,12,-24">
-                    <Button x:Name="BtnSkip"
-                            Text="skip" 
-                            FontAttributes="Bold"
-                            FontFamily="BearHugs"
-                            BackgroundColor="{StaticResource Transparent}"
-                            FontSize="32"
-                            Clicked="BtnSkip_OnClicked"
-                            TextColor="{StaticResource MeeeUnselectedGrey}"></Button>
-                </HorizontalStackLayout>
                 
                 <VerticalStackLayout Margin="24,12,24,0" Grid.Row="1">
                     <Label x:Name="LBLTitle"

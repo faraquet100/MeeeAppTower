@@ -2,35 +2,98 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MeeeApp.Controls"
              x:Class="MeeeApp.Pages.DailyMomentIntro"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="True">
+    
+    <NavigationPage.TitleView>
+        <Grid ColumnDefinitions="*,Auto">
+            <Button 
+                Grid.Column="1"
+                Text="skip" 
+                FontAttributes="Bold"
+                FontFamily="BearHugs"
+                BackgroundColor="{StaticResource Transparent}"
+                FontSize="32"
+                HorizontalOptions="End"
+                Clicked="BtnSkip_OnClicked"
+                TextColor="{StaticResource White}"></Button>
+        </Grid>
+    </NavigationPage.TitleView>
     
     <ContentPage.Content>
-        <Grid RowDefinitions="Auto,*,Auto">
-            
-            <!-- Skip Button -->
-            <HorizontalStackLayout HorizontalOptions="End" Grid.Row="0" Margin="24,0,12,-24">
-                <Button x:Name="BtnSkip"
-                        Text="skip" 
-                        FontAttributes="Bold"
-                        FontFamily="BearHugs"
-                        BackgroundColor="{StaticResource Transparent}"
-                        FontSize="32"
-                        Clicked="BtnSkip_OnClicked"
-                        TextColor="{StaticResource MeeeUnselectedGrey}"></Button>
-            </HorizontalStackLayout>
-            
-            <!-- Title -->
-            <VerticalStackLayout
-                Grid.Row="1"
-                Margin="24,12,24,0"
+        <controls:FixedScrollView>
+            <Grid RowDefinitions="Auto,Auto,*,Auto">
+                
+                <VerticalStackLayout
+                    Grid.Row="1"
+                    Margin="24,12,24,0"
                 >
+
+                    <Label
+                           Text="thanks for checking-in!"
+                           TextColor="{StaticResource MeeePrimaryCyan}"
+                           FontAttributes="Bold"
+                           FontFamily="BearHugs"
+                           Padding="0,12,0,12"
+                           FontSize="32" />
+
+                    <Label Text="Here's a 'Daily Moment' that we hope will help you today"
+                           TextColor="{StaticResource Gray600}"
+                           FontSize="20"
+                           FontAttributes="Bold" />
+
+                </VerticalStackLayout>
                 
-                <Label x:Name="LblHeading" Text=""></Label>
+                <!-- Image and Title -->
+                <VerticalStackLayout Grid.Row="2" Padding="0,24,0,0">
+                    
+                    <Image 
+                        x:Name="ImgMomentImage"
+                        Source="https://meeeweb.azurewebsites.net/moment-images/2f70e03f-4937-46f3-ab3a-a14872c9599e.png"
+                        HeightRequest="300"
+                        HorizontalOptions="Center"
+                        Aspect="AspectFit"
+                        />
+                    
+                    <Label
+                        x:Name="LblMomentTitle"
+                        Text="title"
+                        TextColor="{StaticResource Gray600}"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        FontFamily="BearHugs"
+                        Margin="12,12,12,0"
+                        FontSize="40" />
+
+                </VerticalStackLayout>
                 
-            </VerticalStackLayout>
-        </Grid>
+                <!-- Bottom Button -->
+                <controls:CobaltGrid x:Name="GridShowDailyMoment" Grid.Row="3">
+                    <Image Source="footer_button.png" Aspect="AspectFill" MaximumHeightRequest="100"/>
+                    <VerticalStackLayout
+                        Padding="24"
+                    >
+
+                        <Label Text="view daily moment"
+                               TextColor="White"
+                               FontFamily="BearHugs"
+                               HeightRequest="40"
+                               Margin="0,12,0,0"
+                               LineHeight="1"
+                               HorizontalOptions="Center"
+                               FontSize="36" />
+
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapViewDailyMoment"
+                                                  NumberOfTapsRequired="1"
+                                                  Tapped="TapViewDailyMoment_OnTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+
+                    </VerticalStackLayout>
+                </controls:CobaltGrid>
+                
+            </Grid>
+        </controls:FixedScrollView>
     </ContentPage.Content>
-    
-    
 </ContentPage>

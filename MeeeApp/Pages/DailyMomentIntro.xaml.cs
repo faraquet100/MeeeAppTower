@@ -23,12 +23,18 @@ public partial class DailyMomentIntro : ContentPage
     {
         base.OnAppearing();
 
-        // Salutation
-        LblHeading.Text = _dailyMoment.Heading;
+        ImgMomentImage.Source = _dailyMoment.FullImageUrl;
+        LblMomentTitle.Text = _dailyMoment.Heading.ToLower();
+        
     }
 
     async void BtnSkip_OnClicked(object sender, EventArgs e)
     {
         await Navigation.PopModalAsync(true);
+    }
+
+    async void TapViewDailyMoment_OnTapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PushAsync(new DailyMomentDetail(_dailyMoment));
     }
 }
