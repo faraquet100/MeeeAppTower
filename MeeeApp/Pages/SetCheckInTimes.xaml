@@ -41,7 +41,6 @@
                            FontSize="20"
                            FontAttributes="Bold" />
                     
-                    <Label Text="{Binding FirstName}"></Label>
                 </VerticalStackLayout>
                 
                 <Image Grid.Row="1" 
@@ -62,16 +61,19 @@
                     </controls:CobaltImageButton>
 
                     <TimePicker
+                        x:Name="TimePicker"
                         Time="{Binding CheckInTime, Mode=TwoWay}"
                         HorizontalOptions="Center"
                         FontSize="36"
+                        Opacity="1"
+                        Format="HH:mm"
                         FontAttributes="Bold"
-                        HeightRequest="30"
-                        TextColor="White"
-                        
+                        HeightRequest="40"
+                        TextColor="white"
                         Margin="0,0,0,4"
                         ></TimePicker>
-
+ 
+                    
                 </controls:CobaltGrid>
                 
                 

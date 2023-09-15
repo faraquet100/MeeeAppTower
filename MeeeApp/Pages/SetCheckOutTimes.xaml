@@ -2,8 +2,100 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MeeeApp.Pages.SetCheckOutTimes">
+             xmlns:controls="clr-namespace:MeeeApp.Controls"
+             NavigationPage.HasNavigationBar="True"
+             x:Class="MeeeApp.Pages.SetCheckOutTimes"
+             Title="">
+    
+    <NavigationPage.TitleView>
+        <Grid ColumnDefinitions="*,Auto">
+            <Button 
+                x:Name="SkipButton"
+                Grid.Column="1"
+                Text="skip" 
+                FontAttributes="Bold"
+                FontFamily="BearHugs"
+                BackgroundColor="{StaticResource Transparent}"
+                FontSize="32"
+                HorizontalOptions="End"
+                Clicked="SkipButton_OnClicked"
+                TextColor="{StaticResource White}"></Button>
+        </Grid>
+    </NavigationPage.TitleView>
+    
     <ContentPage.Content>
-        
+        <Grid RowDefinitions="Auto,Auto,*,Auto">
+                <VerticalStackLayout Grid.Row="0" Margin="24,12,24,0">
+                    <Label Text="And what time would you life for Checking-Out?"
+                           TextColor="{StaticResource Gray900}"
+                           FontAttributes="Bold"
+                           Padding="0,12,0,12"
+                           FontSize="24" />
+
+                    <Label Text="This will help to see what impacts your mood, goals and so on."
+                           TextColor="{StaticResource Gray600}"
+                           FontSize="17" />
+                    
+                </VerticalStackLayout>
+                
+                <Image Grid.Row="1" 
+                       Margin="0,36,0,0"
+                       Source="moon_hires.png"
+                       HeightRequest="120"
+                       Aspect="AspectFit"
+                       ></Image>
+                
+                <controls:CobaltGrid x:Name="GridLink"  Padding="0" Margin="24,-160,24,0" Grid.Row="2">
+
+                    <controls:CobaltImageButton x:Name="ImgBtnSelectTime"
+                                                Source="button_pink.png"
+                                                Opacity="0.8"
+                                                HeightRequest="80"
+                                                Aspect="Fill"
+                                                VerticalOptions="Center">
+                    </controls:CobaltImageButton>
+
+                    <TimePicker
+                        x:Name="TimePicker"
+                        Time="{Binding CheckOutTime, Mode=TwoWay}"
+                        HorizontalOptions="Center"
+                        FontSize="36"
+                        Opacity="1"
+                        Format="HH:mm"
+                        FontAttributes="Bold"
+                        HeightRequest="40"
+                        TextColor="white"
+                        Margin="0,0,0,4"
+                        ></TimePicker>
+ 
+                    
+                </controls:CobaltGrid>
+                
+                
+                <controls:CobaltGrid x:Name="GridContinue" Grid.Row="3">
+                    <Image Source="footer_button.png" Aspect="AspectFill" MaximumHeightRequest="100"/>
+                    <VerticalStackLayout
+                        x:Name="VSContinueButton"
+                        Padding="24"
+                    >
+
+                        <Label Text="set checking-out time"
+                               TextColor="White"
+                               FontFamily="BearHugs"
+                               Margin="0,12,0,0"
+                               HeightRequest="40"
+                               LineHeight="1"
+                               HorizontalOptions="Center"
+                               FontSize="36" />
+
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapContinue"
+                                                  NumberOfTapsRequired="1"
+                                                  Tapped="TapContinue_OnTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+
+                    </VerticalStackLayout>
+                </controls:CobaltGrid>
+            </Grid>
     </ContentPage.Content>
 </ContentPage>

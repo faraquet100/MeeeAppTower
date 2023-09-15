@@ -36,6 +36,7 @@ namespace MeeeApp.Services
         // Using banditoth.MAUI.PreferencesExtension which allows us to serialize obkects
         public static string KEY_USER_OBJECT = "user_object";
         public static string KEY_USER_TOKEN = "user_token";
+        public static string KEY_DAILYRECORDS = "dailyrecords";
 
         #region Users
 
@@ -105,6 +106,17 @@ namespace MeeeApp.Services
 
             return await ProcessUserReturnResponse(response);
         }
+        
+        public static async Task<ApiResult> CheckOut(DailyRecord dailyRecord)
+        {
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", GetToken());
+            var json = JsonConvert.SerializeObject(dailyRecord);
+            var payload = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await httpClient.PostAsync(ENDPOINT_CHECK_OUT, payload);
+
+            return await ProcessUserReturnResponse(response);
+        }
 
         public static async Task<ApiResult> GetDailyMoment(User user, int score)
         {
@@ -155,8 +167,12 @@ namespace MeeeApp.Services
 
         public static void SaveUserDetailsToPreferences(User user)
         {
+            // The Daily Records don't decode properly if we save the whole user object
+            // so we need to save them separately nd reload them in User.UserFromPreferences()
             Preferences.Default.SetObject<User>(KEY_USER_OBJECT, user);
-            var user1 = Preferences.Default.GetObject<User>(ApiService.KEY_USER_OBJECT, new User());
+            Preferences.Default.SetObject<List<DailyRecord>>(KEY_DAILYRECORDS, user.DailyRecords);
+            //var user1 = Preferences.Default.GetObject<User>(ApiService.KEY_USER_OBJECT, new User());
+            //var dailyRecords = Preferences.Default.GetObject<List<DailyRecord>>(ApiService.KEY_DAILYRECORDS, new List<DailyRecord>());
         }
 
         public static string GetToken()

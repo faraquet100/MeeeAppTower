@@ -14,4 +14,9 @@ public partial class SettingsPage : ContentPage
 		User.WipeUser();
 		Application.Current.MainPage = new NavigationPage(new LoginPage());
 	}
+
+	private void BtnWipeCheckInTimes_OnClicked(object sender, EventArgs e)
+	{
+		User.WipeCheckInOutTimes();
+	}
 }

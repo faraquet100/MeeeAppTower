@@ -12,6 +12,7 @@ public partial class JournalPage : ContentPage
 {
     private DateTime calendarDate = DateTime.Now;
     private User _user;
+    private bool planIsActive = true;   // If false then reflection is active
 
     enum CalendarType
     {
@@ -32,8 +33,11 @@ public partial class JournalPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        _user = User.UserFromPreferences(); // Reload the user on each view
+        
         FormatForPlan();
         Console.WriteLine("JournalPage.OnAppearing()");
+        UpdateAfterCheckInOut();    
         
         // We need to use this pattern to ensure the page has fully loaded before loading any modals
         await Task.Run(async () =>
@@ -54,8 +58,10 @@ public partial class JournalPage : ContentPage
     private bool ShouldRequestCheckInTimes()
     {
         // Does the user record already have checkin times?
-        var user = User.UserFromPreferences();
-        if (user.CheckInTime.Year > 2022)
+        var checkInTime = User.CheckInTimeFromPreferences();
+        var checkOutTime = User.CheckOutTimeFromPreferences();
+        
+        if (checkInTime.Year > 2022)
         {
             return false;
         }
@@ -82,8 +88,14 @@ public partial class JournalPage : ContentPage
 
     public void UpdateAfterCheckInOut()
     {
-        // This works, no need for test text
-        //LblDayTitle.Text = "HELLO I'VE UPDATED";
+        if (planIsActive)
+        {
+            FormatForPlan();
+        }
+        else
+        {
+            FormatForReflection();
+        }
     }
 
 
@@ -95,11 +107,13 @@ public partial class JournalPage : ContentPage
 
     void TapPlan_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
     {
+        planIsActive = true;
         FormatForPlan();
     }
 
     void TapReflection_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
     {
+        planIsActive = false;
         FormatForReflection();
     }
 
@@ -173,22 +187,54 @@ public partial class JournalPage : ContentPage
     {
         var control = sender as CobaltImageButton;
         await control.BounceOnPressAsync();
+        calendarDate = calendarDate.AddDays(-1);
+
+        if (planIsActive)
+        {
+            FormatForPlan();
+        }
+        else
+        {
+            FormatForReflection();
+        }
     }
 
     async void ImgBtnDayForward_Clicked(System.Object sender, System.EventArgs e)
     {
         var control = sender as CobaltImageButton;
         await control.BounceOnPressAsync();
+        
+        if (calendarDate.Year == DateTime.Now.Year && calendarDate.Month == DateTime.Now.Month && calendarDate.Day == DateTime.Now.Day)
+        {
+            return;
+        }
+        
+        calendarDate = calendarDate.AddDays(1);
+
+        if (planIsActive)
+        {
+            FormatForPlan();
+        }
+        else
+        {
+            FormatForReflection();
+        }
     }
 
     #endregion
 
     #region Formatting
 
+    // Update last Check In Label and set the day title
+    private void UpdateLastCheckInLabel()
+    {
+        LblLastCheckedIn.Text = _user.LastCheckedInLabelText();
+        LblDayTitle.Text = _user.DayTitle(calendarDate);
+    }
+    
     private void FormatForPlan()
     {
-        //ImgDay.IsVisible = true;
-        //ImgNight.IsVisible = false;
+        UpdateLastCheckInLabel();
 
         ImgPlanSelection.Source = "sun_drawing.png";
         ImgReflectionSelection.Source = "moon_inactive.png";
@@ -198,12 +244,28 @@ public partial class JournalPage : ContentPage
         //BorderPlanThoughts.IsVisible = true;
         GridCheckIn.IsVisible = true;
         GridCheckOut.IsVisible = false;
+        GridHasCheckedIn.IsVisible = false;
+        LblCheckedInReason.IsVisible = false;
+        
+        // Have they checked-in
+        DailyRecord dailyRecord = _user.DailyRecordForDate(calendarDate);
+        if (dailyRecord != null)
+        {
+            if (dailyRecord.CheckInTime.Year > 2022)
+            {
+                GridHasCheckedIn.IsVisible = true;
+                LblCheckedInReason.IsVisible = true;
+                GridCheckIn.IsVisible = false;
+                LblCheckInTime.Text = dailyRecord.CheckInTime.ToString("HH:mm") + " : " + dailyRecord.CheckInScore.ToString();
+                LblCheckedInReason.Text = "I Checked-In at a " + dailyRecord.CheckInScore.ToString() + " because " +
+                                          dailyRecord.CheckInReason;
+            }
+        }
     }
 
     private void FormatForReflection()
     {
-        //ImgDay.IsVisible = false;
-        //ImgNight.IsVisible = true;
+        UpdateLastCheckInLabel();
 
         ImgPlanSelection.Source = "sun_inactive.png";
         ImgReflectionSelection.Source = "moon.png";
@@ -212,6 +274,8 @@ public partial class JournalPage : ContentPage
 
         GridCheckIn.IsVisible = false;
         GridCheckOut.IsVisible = true;
+        GridHasCheckedIn.IsVisible = false;
+        LblCheckedInReason.IsVisible = false;
     }
 
     #endregion

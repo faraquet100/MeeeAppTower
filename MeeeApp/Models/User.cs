@@ -7,6 +7,8 @@ namespace MeeeApp.Models;
 
 public class User
 {
+    public static string KEY_CHECKIN_TIME = "user_checkin_time";
+    public static string KEY_CHECKOUT_TIME = "user_checkout_time";
     [JsonProperty("token")] public string Token { get; set; }
     [JsonProperty("id")] public int UserId { get; set; }
     [JsonProperty("email")] public string Email { get; set; }
@@ -18,13 +20,60 @@ public class User
     [JsonProperty("dateOfBirth")] public DateTime DateOfBirth { get; set; }
     [JsonProperty("appCheckinTime")] public DateTime CheckInTime { get; set; }
     [JsonProperty("appCheckOutTime")] public DateTime CheckOutTime { get; set; }
+    [JsonProperty("dailyRecords")] public List<DailyRecord> DailyRecords = new List<DailyRecord>();
+
+
+    public DailyRecord DailyRecordForDate(DateTime dateTime)
+    {
+        var record = DailyRecords.FirstOrDefault(r => r.RecordDate.Year == dateTime.Year &&
+                                                             r.RecordDate.Month == dateTime.Month &&
+                                                             r.RecordDate.Day == dateTime.Day);
+        return record;
+    }
+
+    public string LastCheckedInLabelText()
+    {
+        if (DailyRecords.Count == 0)
+        {
+            return "You have yet to Check-In";
+        }
+
+        var lastDailyRecord = DailyRecords.MaxBy(d => d.RecordDate);
+        var difference = DateTime.Now - lastDailyRecord.RecordDate;
+        var days = difference.Days;
+        
+        if (days == 0)
+        {
+            return "You last checked in today";
+        }
+        else if (days == 1)
+        {
+            return "You last checked in yesterday";
+        }
+        else
+        {
+            return $"You last checked in {days} days ago";
+        }
+    }
+
+    public string DayTitle(DateTime calendarDate)
+    {
+        // Is Today
+        if (calendarDate.Year == DateTime.Now.Year && calendarDate.Month == DateTime.Now.Month && calendarDate.Day == DateTime.Now.Day)
+        {
+            return "today";
+        }
+        else
+        {
+            return calendarDate.ToString("dd MMM yy").ToLower();
+        }
+    }
     
-    public List<DailyRecord> DailyRecords = new List<DailyRecord>();
-
-
     public static User UserFromPreferences()
     {
         var user = Preferences.Default.GetObject<User>(ApiService.KEY_USER_OBJECT, new User());
+        var dailyRecords = Preferences.Default.GetObject<List<DailyRecord>>(ApiService.KEY_DAILYRECORDS, new List<DailyRecord>());
+        user.DailyRecords = dailyRecords;
 
         // We need to save the token independently because we only receive it with Login and Register requests, so we add it to the user record here
         user.Token = ApiService.GetToken();
@@ -36,7 +85,10 @@ public class User
     {
         Preferences.Default.Set(ApiService.KEY_USER_TOKEN, "");
         Preferences.Default.SetObject<User>(ApiService.KEY_USER_OBJECT, null);
+        Preferences.Default.SetObject<List<DailyRecord>>(ApiService.KEY_DAILYRECORDS, null);
     }
+    
+    
     
     public bool IsValid
     {
@@ -52,5 +104,34 @@ public class User
             }
         }
     }
+    
+    public static void SaveCheckInTimeToPreferences(DateTime checkInTime)
+    {
+        Preferences.Default.Set(KEY_CHECKIN_TIME, checkInTime);
+    }
+    
+    public static void SaveCheckOutTimeToPreferences(DateTime checkOutTime)
+    {
+        Preferences.Default.Set(KEY_CHECKOUT_TIME, checkOutTime);
+    }
+
+    public static DateTime CheckInTimeFromPreferences()
+    {
+        var checkInTime = Preferences.Default.Get<DateTime>(KEY_CHECKIN_TIME, DateTime.MinValue);
+        return checkInTime;
+    }
+    
+    public static DateTime CheckOutTimeFromPreferences()
+    {
+        var checkInTime = Preferences.Default.Get<DateTime>(KEY_CHECKOUT_TIME, DateTime.MinValue);
+        return checkInTime;
+    }
+    
+    public static void WipeCheckInOutTimes()
+    {
+        SaveCheckInTimeToPreferences(DateTime.MinValue);
+        SaveCheckOutTimeToPreferences(DateTime.MinValue);
+    }
+    
 
 }

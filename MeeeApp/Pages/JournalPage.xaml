@@ -11,14 +11,13 @@
     <Grid>
 
         <Image x:Name="ImgDay" Source="day.png" ZIndex="0" Aspect="AspectFill" HeightRequest="1000" Opacity="1.0" IsVisible="false" />
-
         <Image x:Name="ImgNight" Source="night.png" ZIndex="0" Aspect="AspectFill" HeightRequest="1000" Opacity="1.0" IsVisible="false" />
 
         <controls:FixedScrollView ZIndex="2">
 
             <VerticalStackLayout VerticalOptions="Start" Padding="24">
 
-                <Grid ColumnDefinitions="1*,Auto,1*" WidthRequest="160" HorizontalOptions="Start">
+                <Grid ColumnDefinitions="1*,Auto,1*" WidthRequest="200" HorizontalOptions="Start">
 
                     <controls:CobaltImageButton
                         x:Name="ImgBtnDayBack"
@@ -53,7 +52,8 @@
                 </Grid>
 
                 <HorizontalStackLayout HorizontalOptions="Start">
-                        <Label Text="You last checked in 2 days ago."
+                        <Label x:Name="LblLastCheckedIn"
+                               Text="You last checked in 2 days ago."
                                TextColor="{StaticResource Gray600}"
                                FontFamily="OpenSansRegular"
                                Margin="0,4,0,0"/>
@@ -138,10 +138,8 @@
                 <!-- Plan Content -->
 
                 <VerticalStackLayout x:Name="VsPlan" Margin="0,12,0,0">
-
-                   
-
-                    <!-- Check In Button -->
+                    
+                    <!-- Check In Button - Not Checked In -->
 
                     <controls:CobaltGrid x:Name="GridCheckIn" Padding="0" Margin="0,12,0,0">
 
@@ -169,6 +167,76 @@
                    
                     </controls:CobaltGrid>
 
+                    <!-- Check In Review - Has Checked In -->
+                    
+                    <controls:CobaltGrid x:Name="GridHasCheckedIn" Padding="0" Margin="0,12,0,0">
+
+                        <controls:CobaltImageButton x:Name="ImgBtnHasCheckedIn"
+                                                    Source="button_pink.png"
+                                                    HeightRequest="70"
+                                                    Aspect="Fill"
+                                                    Clicked="BtnCheckIn_Clicked"
+                                                    VerticalOptions="Center">
+                        </controls:CobaltImageButton>
+
+                        <HorizontalStackLayout HorizontalOptions="Center">
+                            <Label
+                                Text="checked-in"
+                                TextColor="White"
+                                FontFamily="BearHugs"
+                                VerticalOptions="Center"
+                                FontSize="32"
+                                HorizontalOptions="Center"
+                                Margin="0,0,0,4"
+                            />
+                            <Label x:Name="LblCheckInTime"
+                                   Text="8:30 : 5"
+                                   Margin="12,14,12,12"
+                                   FontSize="32"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                            ></Label>
+                            <Image Source="tickwhite.png" WidthRequest="30" HeightRequest="30"></Image>
+                        </HorizontalStackLayout>
+                        
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapCheckIn_Tapped" />
+                        </Grid.GestureRecognizers>
+                   
+                    </controls:CobaltGrid>
+                    
+                    <Label x:Name="LblCheckedInReason"
+                           Margin="24,0,24,24"
+                           Text="I Checked-In at a 5 because . . . "
+                           ></Label>
+                    
+                    <!--
+                    <Border x:Name="BorderCheckedInDetails" 
+                            BackgroundColor="{StaticResource MeeeGarethMagenta}"
+                            >
+                        
+                        <HorizontalStackLayout HorizontalOptions="Center">
+                            <Label 
+                                   Text="checked-in at"
+                                   Margin="12,12,12,12"
+                                   FontFamily="BearHugs"
+                                   FontSize="28"
+                                   TextColor="White"
+                            ></Label>
+                            
+                        </HorizontalStackLayout>
+                        
+                        
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16"></RoundRectangle>
+                        </Border.StrokeShape>
+                    </Border>
+                    -->
+                    
+                    
+                    <!-- Check Out Button - Not Checked Out -->
+                    
                     <controls:CobaltGrid x:Name="GridCheckOut" Padding="0" Margin="0,12,0,0">
 
                         <controls:CobaltImageButton x:Name="ImgBtnCheckOut"
