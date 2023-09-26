@@ -45,41 +45,10 @@
                 <Image 
                     x:Name="ImgMomentImage"
                     Margin="0,12,0,0"
-                    Source="https://meeeweb.azurewebsites.net/moment-images/2f70e03f-4937-46f3-ab3a-a14872c9599e.png"
                     HeightRequest="300"
                     HorizontalOptions="Center"
                     Aspect="AspectFit"
                 />
-                
-                <!-- Call to Action Button -->
-                <controls:CobaltGrid x:Name="GridLink"  Padding="0" Margin="0,-80,0,0">
-
-                    <controls:CobaltImageButton x:Name="ImgBtnLink"
-                                                Source="button_pink.png"
-                                                Opacity="0.8"
-                                                HeightRequest="70"
-                                                Aspect="Fill"
-                                                Clicked="ImgBtnLink_OnClicked"
-                                                VerticalOptions="Center">
-                    </controls:CobaltImageButton>
-
-                    <Label
-                        x:Name="LblLinkText"
-                        Text="call to action"
-                        TextColor="White"
-                        VerticalOptions="Center"
-                        HeightRequest="70"
-                        VerticalTextAlignment="Center"
-                        FontSize="20"
-                        HorizontalOptions="Center"
-                        Margin="0,0,0,4"
-                    />
-
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer x:Name="TapLink" Tapped="TapLink_OnTapped" />
-                    </Grid.GestureRecognizers>
-                   
-                </controls:CobaltGrid>
                 
                 <!-- Icons -->
                 
@@ -165,8 +134,46 @@
                     
                 </Grid>
                 
+                <!-- Call to Action Button -->
+                <controls:CobaltGrid x:Name="GridLink"  Padding="0" Margin="12,0,12,0">
+
+                    <controls:CobaltImageButton x:Name="ImgBtnLink"
+                                                Source="button_pink.png"
+                                                Opacity="0.8"
+                                                HeightRequest="70"
+                                                Aspect="Fill"
+                                                Clicked="ImgBtnLink_OnClicked"
+                                                VerticalOptions="Center">
+                    </controls:CobaltImageButton>
+
+                    <Label
+                        x:Name="LblLinkText"
+                        Text="call to action"
+                        TextColor="White"
+                        VerticalOptions="Center"
+                        HeightRequest="70"
+                        VerticalTextAlignment="Center"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Margin="0,0,0,4"
+                    />
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="TapLink" Tapped="TapLink_OnTapped" />
+                    </Grid.GestureRecognizers>
+                   
+                </controls:CobaltGrid>
+                
+                <Label x:Name="LblCallToAction" 
+                       Text="Test Test" 
+                       HorizontalOptions="Center" 
+                       HorizontalTextAlignment="Center"
+                       Margin="12,12,12,12"
+                       FontSize="17" 
+                       FontAttributes="Bold"></Label>
+                
                 <!-- Daily Moment Text -->
-                <Grid RowDefinitions="*" Margin="0,24,0,0">
+                <Grid RowDefinitions="*" Margin="0,8,0,0">
                     <Image Source="dm_back2.png" Aspect="Fill" VerticalOptions="Start" HeightRequest="40" WidthRequest="500"></Image>
                     
                     <VerticalStackLayout 
@@ -193,11 +200,17 @@
                         
                         <Label 
                             x:Name="LblContent" 
-                            Text="Quote text here" 
-                            TextColor="White"
-                            FontSize="15"
-                            LineHeight="1.1"
+                            IsVisible="False"
+                            TextType="Html"
+                            Text="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body style='font-size: 13px; text-align:justify; text-justify: inter-word; color: white; font-family: Arial, sans-serif;'&gt;&lt;body&gt;&lt;/html&gt;"
                             Margin="0,24,0,128"></Label>
+                        
+                        <WebView x:Name="WebViewContent" MinimumHeightRequest="2000" Margin="-12,24,-12,128">
+                            <WebView.Source>
+                                <HtmlWebViewSource x:Name="WebViewSource" Html="Hello"></HtmlWebViewSource>
+                            </WebView.Source>
+                        </WebView>
+                        
                     </VerticalStackLayout>
                     
                     

@@ -16,6 +16,7 @@ public partial class DailyMomentDetail : ContentPage
     {
         InitializeComponent();
         _dailyMoment = dailyMoment;
+        
     }
     
     protected override void OnAppearing()
@@ -23,11 +24,24 @@ public partial class DailyMomentDetail : ContentPage
         base.OnAppearing();
         LblMomentTitle.Text = _dailyMoment.Heading.ToLower();
         LblLinkText.Text = _dailyMoment.CallToActionText;
+        LblCallToAction.Text = _dailyMoment.CallToActionText;
         ImgMomentImage.Source = _dailyMoment.FullImageUrl;
         LblQuote.Text = "\"" + _dailyMoment.QuoteText + "\"";
         LblQuoteAuthor.Text = _dailyMoment.QuoteAuthor;
-        LblContent.Text = _dailyMoment.Content;
+        LblContent.Text = _dailyMoment.ContentWithHtml; // This loads but doesn't format correctly, is fixed is the delayed setup
+        WebViewSource.Html = _dailyMoment.ContentWithHtml;
 
+        if (_dailyMoment.LinkUrl.Length < 2)
+        {
+            GridLink.IsVisible = false;
+            LblCallToAction.IsVisible = true;
+        }
+        else
+        {
+            GridLink.IsVisible = true;
+            LblCallToAction.IsVisible = false;
+        }
+        
         if (!_dailyMoment.UseShareButton)
         {
             ImgBtnShare.IsVisible = false;
@@ -44,8 +58,22 @@ public partial class DailyMomentDetail : ContentPage
             ImgBtnLike.IsVisible = false;
             ImgBtnLikePressed.IsVisible = false;
         }
-        
+
     }
+
+    /*
+    async void DelayedSetup()
+    {
+        await Task.Delay(1000);
+        
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            LblContent.Text = _dailyMoment.ContentWithHtml;
+        });
+    }
+    */
+    
+    
     async void BtnSkip_OnClicked(object sender, EventArgs e)
     {
         await Navigation.PopModalAsync(true);

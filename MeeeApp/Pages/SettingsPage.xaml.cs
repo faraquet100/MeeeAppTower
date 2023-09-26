@@ -19,4 +19,9 @@ public partial class SettingsPage : ContentPage
 	{
 		User.WipeCheckInOutTimes();
 	}
+
+	async void BtnDailyMoments_OnClicked(object sender, EventArgs e)
+	{
+		await Navigation.PushModalAsync(new NavigationPage(new DailyMomentTester()));
+	}
 }

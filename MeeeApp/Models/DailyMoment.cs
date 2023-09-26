@@ -31,4 +31,15 @@ public class DailyMoment
             return "";
         }
     }
+    
+    public string ContentWithHtml
+    {
+        get
+        {
+            var htmlContent = Content ?? "";
+            var htmlHeader = "<html><head><meta name='viewport' content='width=300, initial-scale=1.0' /></head><body style='text-align:left; color: white; line-height: 1.2; font-family: Arial, sans-serif; background-color: #0EB5DE;'>";
+            var html = htmlHeader + htmlContent + "<body></html>";
+            return html;
+        }
+    }
 }

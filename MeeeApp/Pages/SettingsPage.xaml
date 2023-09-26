@@ -10,6 +10,10 @@
                 Margin="0,12,0,12"
                 Text="Wipe Check In Times"
                 Clicked="BtnWipeCheckInTimes_OnClicked"></Button>
+        <Button x:Name="BtnDailyMoments"
+                Margin="0,12,0,12"
+                Text="Test Daily Moments"
+                Clicked="BtnDailyMoments_OnClicked"></Button>
         <Button x:Name="BtnLogout"
                 Text="Logout"
                 Clicked="BtnLogout_OnClicked"></Button>

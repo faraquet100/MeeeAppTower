@@ -50,7 +50,6 @@
                     
                     <Image 
                         x:Name="ImgMomentImage"
-                        Source="https://meeeweb.azurewebsites.net/moment-images/2f70e03f-4937-46f3-ab3a-a14872c9599e.png"
                         HeightRequest="300"
                         HorizontalOptions="Center"
                         Aspect="AspectFit"

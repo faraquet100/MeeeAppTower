@@ -118,6 +118,7 @@ namespace MeeeApp.Services
             return await ProcessUserReturnResponse(response);
         }
 
+        // Get the Daily Moment for the current day
         public static async Task<ApiResult> GetDailyMoment(User user, int score)
         {
             var httpClient = new HttpClient();
@@ -141,6 +142,31 @@ namespace MeeeApp.Services
             AppSettings.DailyMoment = dailyMoment;
             return ApiResult.Success;
         }
+        
+        // Get all Daily Moments - For Testing Only
+        public static async Task<ApiResult> GetAllDailyMoments()
+        {
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", GetToken());
+
+            string url = ENDPOINT_DAILY_MOMENT;
+            var response = await httpClient.GetAsync(url);
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return ApiResult.NotAuthorized;
+            }
+            
+            if (!response.IsSuccessStatusCode) return ApiResult.BadRequest;
+            
+            var jsonResult = await response.Content.ReadAsStringAsync();
+            var dailyMoments = JsonConvert.DeserializeObject<List<DailyMoment>>(jsonResult);
+
+            if (dailyMoments == null) return ApiResult.BadRequest;
+
+            AppSettings.DailyMoments = dailyMoments;
+            return ApiResult.Success;
+        }
+
 
         #endregion
 

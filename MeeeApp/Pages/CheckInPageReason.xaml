@@ -7,7 +7,6 @@
              NavigationPage.HasNavigationBar="True"
              Title="">
     
-    
     <NavigationPage.TitleView>
         <Grid ColumnDefinitions="*,Auto">
             <Button 
