@@ -191,8 +191,9 @@
                             />
                             <Label x:Name="LblCheckInTime"
                                    Text="8:30 : 5"
-                                   Margin="12,14,12,12"
-                                   FontSize="32"
+                                   Margin="12,16,12,12"
+                                   FontSize="28"
+                                   FontFamily="Juicebox"
                                    FontAttributes="Bold"
                                    TextColor="White"
                             ></Label>
@@ -206,33 +207,17 @@
                    
                     </controls:CobaltGrid>
                     
-                    <Label x:Name="LblCheckedInReason"
-                           Margin="24,0,24,24"
-                           Text="I Checked-In at a 5 because . . . "
+                    <Label x:Name="LblCheckedInReasonTitle"
+                           Margin="24,12,24,24"
+                           Text="I Checked-In at a 5 because:"
+                           FontAttributes="Bold"
                            ></Label>
                     
-                    <!--
-                    <Border x:Name="BorderCheckedInDetails" 
-                            BackgroundColor="{StaticResource MeeeGarethMagenta}"
-                            >
-                        
-                        <HorizontalStackLayout HorizontalOptions="Center">
-                            <Label 
-                                   Text="checked-in at"
-                                   Margin="12,12,12,12"
-                                   FontFamily="BearHugs"
-                                   FontSize="28"
-                                   TextColor="White"
-                            ></Label>
-                            
-                        </HorizontalStackLayout>
-                        
-                        
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="16"></RoundRectangle>
-                        </Border.StrokeShape>
-                    </Border>
-                    -->
+                    <Label x:Name="LblCheckedInReason"
+                           Margin="24,-18,24,24"
+                           Text=""
+                           FontAttributes="Italic"
+                    ></Label>
                     
                     
                     <!-- Check Out Button - Not Checked Out -->
@@ -248,7 +233,7 @@
                         </controls:CobaltImageButton>
 
                         <Label
-                            Text="check-out"
+                            Text="checking-out"
                             TextColor="White"
                             FontFamily="BearHugs"
                             VerticalOptions="Center"
@@ -262,10 +247,75 @@
                         </Grid.GestureRecognizers>
                    
                     </controls:CobaltGrid>
+                    
+                    <!-- Check Out Review - Has Checked In -->
+                    
+                    <controls:CobaltGrid x:Name="GridHasCheckedOut" Padding="0" Margin="0,12,0,0">
 
+                        <controls:CobaltImageButton x:Name="ImgBtnHasCheckedOut"
+                                                    Source="button_pink.png"
+                                                    HeightRequest="70"
+                                                    Aspect="Fill"
+                                                    Clicked="BtnCheckOut_Clicked"
+                                                    VerticalOptions="Center">
+                        </controls:CobaltImageButton>
+
+                        <HorizontalStackLayout HorizontalOptions="Center">
+                            <Label
+                                Text="checked-out"
+                                TextColor="White"
+                                FontFamily="BearHugs"
+                                VerticalOptions="Center"
+                                FontSize="32"
+                                HorizontalOptions="Center"
+                                Margin="0,0,0,4"
+                            />
+                            <Label x:Name="LblCheckOutTime"
+                                   Text="8:30 : 5"
+                                   Margin="12,16,12,12"
+                                   FontSize="28"
+                                   FontFamily="Juicebox"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                            ></Label>
+                            <Image Source="tickwhite.png" WidthRequest="30" HeightRequest="30"></Image>
+                        </HorizontalStackLayout>
+                        
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapCheckOut_Tapped" />
+                        </Grid.GestureRecognizers>
+                   
+                    </controls:CobaltGrid>
+                    
+                    <Label x:Name="LblCheckedOutReasonTitle"
+                           Margin="24,12,24,24"
+                           Text="I Checked-Out at a 5 because:"
+                           FontAttributes="Bold"
+                    ></Label>
+                    
+                    <Label x:Name="LblCheckedOutReason"
+                           Margin="24,-18,24,24"
+                           Text=""
+                           FontAttributes="Italic"
+                    ></Label>
+
+                    <toolkit:MediaElement
+                        x:Name="MeMomentVideo"
+                        Margin="0,12,0,0"
+                        Source="example_animation.m4v"
+                        HeightRequest="225"
+                        WidthRequest="320"
+                        BackgroundColor="White"
+                        Aspect="AspectFill"
+                        HorizontalOptions="Center"
+                        ShouldAutoPlay="True"
+                        ShouldLoopPlayback="False"
+                    ></toolkit:MediaElement>
 
                     <!-- Daily Exercises -->
 
+                    <!--
                     <controls:CobaltGrid x:Name="GridDailyExercises" Padding="0" Margin="0,0,0,0">
 
                         <controls:CobaltImageButton x:Name="ImgBtnDailyExcercises"
@@ -291,6 +341,7 @@
                         </Grid.GestureRecognizers>
                    
                     </controls:CobaltGrid>
+                    -->
  
                 </VerticalStackLayout>
 

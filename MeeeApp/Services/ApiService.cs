@@ -30,7 +30,10 @@ namespace MeeeApp.Services
         public static string ENDPOINT_USERS_LIST = API_URL + ""; // Just for testing this one, should be deleted later
         public static string ENDPOINT_CHECK_IN = API_URL + "DailyRecord/CheckIn";
         public static string ENDPOINT_CHECK_OUT = API_URL + "DailyRecord/CheckOut";
+        public static string ENDPOINT_SAVE_JOURNAL_EXERCISE = API_URL + "DailyRecord/SaveExerciseAndJournal";
         public static string ENDPOINT_DAILY_MOMENT = API_URL + "DailyMoment/";
+        public static string ENDPOINT_ONTHISDAY = API_URL + "OnThisDay?";
+        public static string ENDPOINT_DAILY_RECORDS = API_URL + "DailyRecord/";
 
         // Preference Keys
         // Using banditoth.MAUI.PreferencesExtension which allows us to serialize obkects
@@ -63,6 +66,10 @@ namespace MeeeApp.Services
             var result = JsonConvert.DeserializeObject<User>(jsonResult);
 
             if (result == null) return ApiResult.BadRequest;
+            
+            // Get this users Daily Records, they aren't returned at login (but are for other ops)
+            var dailyRecords = await DailyRecords(result.UserId, result.Token);
+            result.DailyRecords = dailyRecords;
 
             // We need to save the token independently because we only receive it with Login and Register requests
             Preferences.Default.Set(KEY_USER_TOKEN, result.Token);
@@ -90,6 +97,27 @@ namespace MeeeApp.Services
             SaveUserDetailsToPreferences(result);
 
             return ApiResult.Success;
+        }
+
+        // We only need to get the daily records after login
+        // In all other cases we get them with the user object
+        public static async Task<List<DailyRecord>> DailyRecords(int userId, string token)
+        {
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+            
+            string url = ENDPOINT_DAILY_RECORDS + userId.ToString();
+            var response = await httpClient.GetAsync(url);
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized || !response.IsSuccessStatusCode)
+            {
+                return new List<DailyRecord>();
+            }
+            
+            var jsonResult = await response.Content.ReadAsStringAsync();
+            var dailyRecords = JsonConvert.DeserializeObject<List<DailyRecord>>(jsonResult);
+
+            if (dailyRecords == null) return new List<DailyRecord>();
+            return dailyRecords;
         }
 
         #endregion
@@ -143,6 +171,27 @@ namespace MeeeApp.Services
             return ApiResult.Success;
         }
         
+        // Get the OnThisDay for the current day
+        public static async Task<OnThisDay> GetOnThisDay(DateTime date)
+        {
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", GetToken());
+            
+            string queryString = "month=" + date.Month.ToString() + "&day=" + date.Day.ToString();
+            string url = ENDPOINT_ONTHISDAY + queryString;
+            var response = await httpClient.GetAsync(url);
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized || !response.IsSuccessStatusCode)
+            {
+                return new OnThisDay();
+            }
+            
+            var jsonResult = await response.Content.ReadAsStringAsync();
+            var onThisDay = JsonConvert.DeserializeObject<OnThisDay>(jsonResult);
+
+            if (onThisDay == null) return new OnThisDay();
+            return onThisDay;
+        }
+        
         // Get all Daily Moments - For Testing Only
         public static async Task<ApiResult> GetAllDailyMoments()
         {
@@ -167,6 +216,17 @@ namespace MeeeApp.Services
             return ApiResult.Success;
         }
 
+
+        public static async Task<ApiResult> SaveJournalAndExercise(DailyRecord dailyRecord)
+        {
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", GetToken());
+            var json = JsonConvert.SerializeObject(dailyRecord);
+            var payload = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await httpClient.PostAsync(ENDPOINT_SAVE_JOURNAL_EXERCISE, payload);
+
+            return await ProcessUserReturnResponse(response);
+        }
 
         #endregion
 

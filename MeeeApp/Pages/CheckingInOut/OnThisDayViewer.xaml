@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             NavigationPage.HasNavigationBar="True"
+             x:Class="MeeeApp.Pages.OnThisDayViewer">
+    
+    <NavigationPage.TitleView>
+        <Grid ColumnDefinitions="80,*,80">
+            <Label
+                Grid.Column="1"
+                Margin="0,2,0,0"
+                Text="on this day!"
+                TextColor="{StaticResource White}"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                FontFamily="BearHugs"
+                FontSize="32" />
+            <Button 
+                x:Name="BtnClose"
+                Grid.Column="2"
+                Text="done" 
+                FontAttributes="Bold"
+                FontFamily="BearHugs"
+                BackgroundColor="{StaticResource Transparent}"
+                FontSize="24"
+                HorizontalOptions="End"
+                Clicked="BtnClose_OnClicked"
+                TextColor="{StaticResource White}"></Button>
+        </Grid>
+    </NavigationPage.TitleView>
+    
+    <ContentPage.Content>
+        <VerticalStackLayout Padding="12,12,12,48">
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label x:Name="LblDay" 
+                       FontSize="32"
+                       Padding="0,0,2,0"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       FontAttributes="Bold"
+                       FontFamily="Juicebox">12</Label>
+                <Label x:Name="LblMonth" 
+                       FontSize="32"
+                       Padding="2,2,0,0"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       FontAttributes="Bold"
+                       FontFamily="BearHugs">june</Label>
+            </HorizontalStackLayout>
+            
+        </VerticalStackLayout>
+        
+    </ContentPage.Content>
+</ContentPage>

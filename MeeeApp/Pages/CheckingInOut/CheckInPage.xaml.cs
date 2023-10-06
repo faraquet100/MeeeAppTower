@@ -7,12 +7,22 @@ public partial class CheckInPage : ContentPage
 {
     private User _user;
     private int selectedScore = 5;
+    private CheckingDirection _direction;
+    private DateTime _calendarDate;
 
-	public CheckInPage()
+    public enum CheckingDirection
+    {
+        In,
+        Out
+    }
+
+	public CheckInPage(CheckingDirection direction, DateTime calendarDate)
 	{
         InitializeComponent();
         _user = User.UserFromPreferences();
-	}
+        _direction = direction;
+        _calendarDate = calendarDate;
+    }
 
     protected override void OnAppearing()
     {
@@ -30,6 +40,27 @@ public partial class CheckInPage : ContentPage
             case DateExtensions.PartOfDay.Evening:
                 LblName.Text = "Good Evening " + _user.FirstName + "!";
                 break;
+        }
+
+        if (_direction == CheckingDirection.Out)
+        {
+            LblNavTitle.Text = "checking-out";
+            LblWelcome.Text = "Are you ready for Checking-Out?";
+        }
+
+        var dailyRecord = _user.DailyRecordForDate(_calendarDate);
+        if (dailyRecord != null)
+        {
+            if (_direction == CheckingDirection.In)
+            {
+                selectedScore = dailyRecord.CheckInScore;
+            }
+            else
+            {
+                selectedScore = dailyRecord.CheckOutScore;
+            }
+            
+            SliderCheckIn.Value = selectedScore;
         }
     }
 
@@ -57,7 +88,7 @@ public partial class CheckInPage : ContentPage
     async void TapContinue_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
     {
         await GridContinue.BounceOnPressAsync();
-        await Navigation.PushAsync(new CheckInPageReason(_user, selectedScore));
+        await Navigation.PushAsync(new CheckInPageReason(_user, selectedScore, _direction, _calendarDate));
     }
 
     async void BarButtonCancel_Clicked(System.Object sender, System.EventArgs e)

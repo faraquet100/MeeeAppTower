@@ -64,30 +64,32 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="2.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="Syncfusion.Maui.Core" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.ListView" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.TabView" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.Inputs" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.Charts" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.DataGrid" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.Gauges" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.Scheduler" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.Sliders" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.PdfViewer" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.PdfToImageConverter" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.ProgressBar" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.Barcode" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.Calendar" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.Maps" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.DataForm" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.Popup" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.Backdrop" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.Expander" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.ImageEditor" Version="22.1.37" />
-		<PackageReference Include="Syncfusion.Maui.DataGridExport" Version="22.1.37" />
+		<PackageReference Include="Syncfusion.Maui.Buttons" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.Core" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.ListView" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.TabView" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.Inputs" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.Charts" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.DataGrid" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.Gauges" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.Scheduler" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.Sliders" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.PdfViewer" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.PdfToImageConverter" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.ProgressBar" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.Barcode" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.Calendar" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.Maps" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.DataForm" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.Popup" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.Backdrop" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.Expander" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.ImageEditor" Version="23.1.39" />
+		<PackageReference Include="Syncfusion.Maui.DataGridExport" Version="23.1.39" />
 		<PackageReference Include="banditoth.MAUI.PreferencesExtension" Version="1.0.0" />
 	</ItemGroup>
 
@@ -284,5 +286,165 @@
 	
 	<ItemGroup>
 		<MauiImage Update="Resources\Images\slider.png" BaseSize="20,20" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <MauiXaml Update="Pages\Home\HomePage.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Home\JournalPage.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\CheckingInOut\CheckingOutThanks.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\CheckingInOut\CheckInPage.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\CheckingInOut\CheckInPageReason.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Scrap\ExercisesPage.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\DailyMoment\DailyMomentDetail.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\DailyMoment\DailyMomentIntro.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\DailyMoment\DailyMomentList.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\DailyMoment\DailyMomentTester.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Scrap\LocationPage.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\LoginRegister\LoginPage.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Common\MainTabbedPage.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Common\MeeeWebView.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\LoginRegister\RegisterPage.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Scrap\ResourcesPage.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Common\SetCheckInTimes.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Common\SetCheckOutTimes.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Settings\SettingsPage.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Scrap\TemporaryPage.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Scrap\TestPage.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\CheckingInOut\OnThisDayViewer.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Compile Update="Pages\Home\HomePage.xaml.cs">
+	    <DependentUpon>HomePage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\Home\JournalPage.xaml.cs">
+	    <DependentUpon>JournalPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\CheckingInOut\CheckingOutThanks.xaml.cs">
+	    <DependentUpon>CheckingOutThanks.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\CheckingInOut\CheckInPage.xaml.cs">
+	    <DependentUpon>CheckInPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\CheckingInOut\CheckInPageReason.xaml.cs">
+	    <DependentUpon>CheckInPageReason.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\Scrap\ExercisesPage.xaml.cs">
+	    <DependentUpon>ExercisesPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\DailyMoment\DailyMomentDetail.xaml.cs">
+	    <DependentUpon>DailyMomentDetail.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\DailyMoment\DailyMomentIntro.xaml.cs">
+	    <DependentUpon>DailyMomentIntro.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\DailyMoment\DailyMomentList.xaml.cs">
+	    <DependentUpon>DailyMomentList.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\DailyMoment\DailyMomentTester.xaml.cs">
+	    <DependentUpon>DailyMomentTester.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\Scrap\LocationPage.xaml.cs">
+	    <DependentUpon>LocationPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\LoginRegister\LoginPage.xaml.cs">
+	    <DependentUpon>LoginPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\Common\MainTabbedPage.xaml.cs">
+	    <DependentUpon>MainTabbedPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\Common\MeeeWebView.xaml.cs">
+	    <DependentUpon>MeeeWebView.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\LoginRegister\RegisterPage.xaml.cs">
+	    <DependentUpon>RegisterPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\Scrap\ResourcesPage.xaml.cs">
+	    <DependentUpon>ResourcesPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\Common\SetCheckInTimes.xaml.cs">
+	    <DependentUpon>SetCheckInTimes.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\Common\SetCheckOutTimes.xaml.cs">
+	    <DependentUpon>SetCheckOutTimes.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\Settings\SettingsPage.xaml.cs">
+	    <DependentUpon>SettingsPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\Scrap\TemporaryPage.xaml.cs">
+	    <DependentUpon>TemporaryPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\Scrap\TestPage.xaml.cs">
+	    <DependentUpon>TestPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Pages\CheckingInOut\OnThisDayViewer.xaml.cs">
+	    <DependentUpon>OnThisDayViewer.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
 	</ItemGroup>
 </Project>

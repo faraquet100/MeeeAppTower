@@ -41,19 +41,54 @@ public class User
         var lastDailyRecord = DailyRecords.MaxBy(d => d.RecordDate);
         var difference = DateTime.Now - lastDailyRecord.RecordDate;
         var days = difference.Days;
+
+        if (lastDailyRecord.CheckInTime.Year > 2000)
+        {
+            if (days == 0)
+            {
+                return "You last Checked-In today";
+            }
+            else if (days == 1)
+            {
+                return "You last Checked-In yesterday";
+            }
+            else
+            {
+                return $"You last Checked-In {days} days ago";
+            }
+        }
         
-        if (days == 0)
+        return "You have yet to Check-In";
+    }
+    
+    public string LastCheckedOutLabelText()
+    {
+        if (DailyRecords.Count == 0)
         {
-            return "You last checked in today";
+            return "You have yet to Check-Out";
         }
-        else if (days == 1)
+
+        var lastDailyRecord = DailyRecords.MaxBy(d => d.RecordDate);
+        var difference = DateTime.Now - lastDailyRecord.RecordDate;
+        var days = difference.Days;
+
+        if (lastDailyRecord.CheckOutTime.Year > 2000)
         {
-            return "You last checked in yesterday";
+            if (days == 0)
+            {
+                return "You last Checked-Out today";
+            }
+            else if (days == 1)
+            {
+                return "You last Checked-Out yesterday";
+            }
+            else
+            {
+                return $"You last Checked-Out {days} days ago";
+            }
         }
-        else
-        {
-            return $"You last checked in {days} days ago";
-        }
+        
+        return "You have yet to Check-Out";
     }
 
     public string DayTitle(DateTime calendarDate)

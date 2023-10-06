@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MeeeApp.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="Daily Moments"
+             x:Class="MeeeApp.Pages.DailyMomentList">
+    
+    <ContentPage.Content>
+        <Grid BackgroundColor="{StaticResource Gray100}">
+        
+            <Border BackgroundColor="White" Margin="12,12,12,12">
+                <ListView x:Name="LvDailyMoments"
+                          BackgroundColor="Transparent"
+                          HasUnevenRows="True"
+                          ItemSelected="LvDailyMoments_OnItemSelected"
+                          Margin="0,0,0,0"
+                          >
+                
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <VerticalStackLayout Padding="12,12,12,12">
+                                        <controls:CobaltGrid x:Name="GridSavedMoments" ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+                                                <Image Grid.Column="0" Source="{Binding FullImageUrl}" WidthRequest="60" HeightRequest="60" />
+                                                <VerticalStackLayout Grid.Column="1" Padding="12,0,12,0" VerticalOptions="Center">
+                                                        <Label FontSize="16" FontAttributes="Bold" Text="{Binding Heading}"></Label>
+                                                        
+                                                </VerticalStackLayout>
+                                                <Image Grid.Column="2" Source="chevron_right_small.png" WidthRequest="30">
+                                                        <ImageButton.Behaviors>
+                                                                <toolkit:IconTintColorBehavior TintColor="{StaticResource Gray600}"></toolkit:IconTintColorBehavior>
+                                                        </ImageButton.Behaviors>
+                                                </Image>
+                                                
+                                                
+                                        </controls:CobaltGrid>
+                                </VerticalStackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    
+                    
+                </ListView>
+                
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"></RoundRectangle>
+                </Border.StrokeShape>
+            </Border>
+            
+            <ActivityIndicator
+                ZIndex="3"
+                x:Name="MyActivityIndicator"
+                IsRunning="True" Color="{StaticResource MeeePrimaryCyan}"
+                Scale="3"
+                BackgroundColor="Transparent"
+                IsVisible="false" Margin="0,12,0,0"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+            />
+        </Grid>
+    </ContentPage.Content>
+    
+</ContentPage>

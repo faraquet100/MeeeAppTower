@@ -11,12 +11,13 @@
              >
 
 
-    <NavigationPage IconImageSource="tab_new_journal34.png" Title="Journal">
+    <NavigationPage IconImageSource="icons8_home.png" Title="Home">
         <x:Arguments>
             <pages:JournalPage />
         </x:Arguments>
     </NavigationPage>
 
+    <!--
     <NavigationPage IconImageSource="tab_new_house34" Title="Home" >
         <x:Arguments>
             <pages:TemporaryPage />
@@ -28,8 +29,9 @@
             <pages:LocationPage />
         </x:Arguments>
     </NavigationPage>
+    -->
 
-    <NavigationPage IconImageSource="tab_new_hat34" Title="Course">
+    <NavigationPage IconImageSource="icons8_30gear.png" Title="Settings">
         <x:Arguments>
             <pages:SettingsPage Title="Settings" />
         </x:Arguments>

@@ -9,6 +9,8 @@ namespace MeeeApp.Pages;
 
 public partial class DailyMomentIntro : ContentPage
 {
+    // WE NO LONGER USE THIS PAGE
+    
     private User _user;
     private DailyMoment _dailyMoment;
     
@@ -35,6 +37,6 @@ public partial class DailyMomentIntro : ContentPage
 
     async void TapViewDailyMoment_OnTapped(object sender, TappedEventArgs e)
     {
-        await Navigation.PushAsync(new DailyMomentDetail(_dailyMoment));
+        //await Navigation.PushAsync(new DailyMomentDetail(_dailyMoment));
     }
 }

@@ -12,6 +12,7 @@ public partial class DailyMomentTester : ContentPage
 {
     private List<DailyMoment> _dailyMoments = new List<DailyMoment>();
     private int _currentDailyMomentIndex = 0;
+    private OnThisDay _onThisDay = new OnThisDay();
     
     public DailyMomentTester()
     {
@@ -34,6 +35,7 @@ public partial class DailyMomentTester : ContentPage
     async void LoadDailyMoments()
     {
         var result = await ApiService.GetAllDailyMoments();
+        _onThisDay = await ApiService.GetOnThisDay(DateTime.Now);
 
         switch (result)
         {
@@ -78,7 +80,7 @@ public partial class DailyMomentTester : ContentPage
     async void BtnView_OnClicked(object sender, EventArgs e)
     {
         var moment = AppSettings.DailyMoments[_currentDailyMomentIndex];
-        await Navigation.PushAsync(new DailyMomentDetail(moment));
+        await Navigation.PushAsync(new DailyMomentDetail(moment, _onThisDay, DateTime.Now));
     }
 
     private void BtnNext_OnClicked(object sender, EventArgs e)

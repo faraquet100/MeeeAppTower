@@ -35,7 +35,8 @@ namespace MeeeApp.Controls
                 }
                 */
                 //Margin = new Thickness(0, 300);
-                Margin = new Thickness(0, 0, 0, 300);
+                
+                Margin = new Thickness(0, 0, 0, 320);
             }
         }
         private void OnKeyboardHiding(object sender, UIKeyboardEventArgs args)

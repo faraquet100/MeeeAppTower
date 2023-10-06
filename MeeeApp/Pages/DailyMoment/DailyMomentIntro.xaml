@@ -7,14 +7,23 @@
              NavigationPage.HasNavigationBar="True">
     
     <NavigationPage.TitleView>
-        <Grid ColumnDefinitions="*,Auto">
-            <Button 
+        <Grid ColumnDefinitions="80,*,80">
+            <Label
                 Grid.Column="1"
-                Text="skip" 
+                Margin="0,2,0,0"
+                Text="checking-in"
+                TextColor="{StaticResource White}"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                FontFamily="BearHugs"
+                FontSize="32" />
+            <Button 
+                Grid.Column="2"
+                Text="next" 
                 FontAttributes="Bold"
                 FontFamily="BearHugs"
                 BackgroundColor="{StaticResource Transparent}"
-                FontSize="32"
+                FontSize="24"
                 HorizontalOptions="End"
                 Clicked="BtnSkip_OnClicked"
                 TextColor="{StaticResource White}"></Button>

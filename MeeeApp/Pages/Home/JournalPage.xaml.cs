@@ -108,12 +108,14 @@ public partial class JournalPage : ContentPage
     void TapPlan_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
     {
         planIsActive = true;
+        MeMomentVideo.Play();
         FormatForPlan();
     }
 
     void TapReflection_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
     {
         planIsActive = false;
+        MeMomentVideo.Play();
         FormatForReflection();
     }
 
@@ -121,6 +123,8 @@ public partial class JournalPage : ContentPage
     {
         var grid = sender as CobaltGrid;
         await grid.BounceOnPressAsync();
+        planIsActive = true;
+        PlayIntroVideo();
         FormatForPlan();
     }
 
@@ -128,7 +132,17 @@ public partial class JournalPage : ContentPage
     {
         var grid = sender as CobaltGrid;
         await grid.BounceOnPressAsync();
+        planIsActive = false;
+        MeMomentVideo.Play();
         FormatForReflection();
+        PlayIntroVideo();
+    }
+    
+    private void PlayIntroVideo()
+    {
+        MeMomentVideo.Source = "";
+        MeMomentVideo.Source = "example_animation.m4v";
+        MeMomentVideo.Play();
     }
 
     /* Daily Exercises and Container */
@@ -155,14 +169,14 @@ public partial class JournalPage : ContentPage
         var control = sender as CobaltImageButton;
         var grid = control.Parent as CobaltGrid;
         await grid.BounceOnPressAsync();
-        await Navigation.PushModalAsync(new NavigationPage(new CheckInPage()));
+        await Navigation.PushModalAsync(new NavigationPage(new CheckInPage(CheckInPage.CheckingDirection.In, calendarDate)));
     }
 
     async void TapCheckIn_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
     {
         var grid = sender as CobaltGrid;
         await grid.BounceOnPressAsync();
-        await Navigation.PushModalAsync(new NavigationPage(new CheckInPage()));
+        await Navigation.PushModalAsync(new NavigationPage(new CheckInPage(CheckInPage.CheckingDirection.In, calendarDate)));
     }
 
     /* Check Out Button and Container */
@@ -172,12 +186,14 @@ public partial class JournalPage : ContentPage
         var control = sender as CobaltImageButton;
         var grid = control.Parent as CobaltGrid;
         await grid.BounceOnPressAsync();
+        await Navigation.PushModalAsync(new NavigationPage(new CheckInPage(CheckInPage.CheckingDirection.Out, calendarDate)));
     }
 
     async void TapCheckOut_Tapped(System.Object sender, Microsoft.Maui.Controls.TappedEventArgs e)
     {
         var grid = sender as CobaltGrid;
         await grid.BounceOnPressAsync();
+        await Navigation.PushModalAsync(new NavigationPage(new CheckInPage(CheckInPage.CheckingDirection.Out, calendarDate)));
     }
 
 
@@ -228,7 +244,15 @@ public partial class JournalPage : ContentPage
     // Update last Check In Label and set the day title
     private void UpdateLastCheckInLabel()
     {
-        LblLastCheckedIn.Text = _user.LastCheckedInLabelText();
+        if (planIsActive)
+        {
+            LblLastCheckedIn.Text = _user.LastCheckedInLabelText();
+        }
+        else
+        {
+            LblLastCheckedIn.Text = _user.LastCheckedOutLabelText();
+        }
+
         LblDayTitle.Text = _user.DayTitle(calendarDate);
     }
     
@@ -246,6 +270,10 @@ public partial class JournalPage : ContentPage
         GridCheckOut.IsVisible = false;
         GridHasCheckedIn.IsVisible = false;
         LblCheckedInReason.IsVisible = false;
+        GridHasCheckedOut.IsVisible = false;
+        LblCheckedOutReason.IsVisible = false;
+        LblCheckedOutReasonTitle.IsVisible = false;
+        LblCheckedInReasonTitle.IsVisible = false;
         
         // Have they checked-in
         DailyRecord dailyRecord = _user.DailyRecordForDate(calendarDate);
@@ -254,11 +282,24 @@ public partial class JournalPage : ContentPage
             if (dailyRecord.CheckInTime.Year > 2022)
             {
                 GridHasCheckedIn.IsVisible = true;
-                LblCheckedInReason.IsVisible = true;
+               
                 GridCheckIn.IsVisible = false;
-                LblCheckInTime.Text = dailyRecord.CheckInTime.ToString("HH:mm") + " : " + dailyRecord.CheckInScore.ToString();
-                LblCheckedInReason.Text = "I Checked-In at a " + dailyRecord.CheckInScore.ToString() + " because " +
-                                          dailyRecord.CheckInReason;
+                LblCheckInTime.Text = dailyRecord.CheckInTime.ToString("hh:mmtt").ToLower() + " : " + dailyRecord.CheckInScore.ToString();
+
+                LblCheckedInReasonTitle.Text = "I Checked-In at a " + dailyRecord.CheckInScore.ToString() + " because:";
+                LblCheckedInReason.Text = dailyRecord.CheckInReason;
+
+                if (dailyRecord.CheckInReason.Length > 0)
+                {
+                    LblCheckedInReason.IsVisible = true;
+                    LblCheckedInReasonTitle.IsVisible = true;
+                }
+                else
+                {
+                    LblCheckedInReason.IsVisible = false;
+                    LblCheckedInReasonTitle.IsVisible = false;
+                    LblCheckedInReason.Text = "";
+                }
             }
         }
     }
@@ -276,6 +317,38 @@ public partial class JournalPage : ContentPage
         GridCheckOut.IsVisible = true;
         GridHasCheckedIn.IsVisible = false;
         LblCheckedInReason.IsVisible = false;
+        GridHasCheckedOut.IsVisible = false;
+        LblCheckedOutReason.IsVisible = false;
+        LblCheckedOutReasonTitle.IsVisible = false;
+        LblCheckedInReasonTitle.IsVisible = false;
+        
+        // Have they checked-out
+        DailyRecord dailyRecord = _user.DailyRecordForDate(calendarDate);
+        if (dailyRecord != null)
+        {
+            if (dailyRecord.CheckOutTime.Year > 2022)
+            {
+                GridHasCheckedOut.IsVisible = true;
+               
+                GridCheckOut.IsVisible = false;
+                LblCheckOutTime.Text = dailyRecord.CheckOutTime.ToString("hh:mmtt").ToLower() + " : " + dailyRecord.CheckOutScore.ToString();
+                
+                LblCheckedOutReasonTitle.Text = "I Checked-Out at a " + dailyRecord.CheckOutScore.ToString() + " because:";
+                LblCheckedOutReason.Text = dailyRecord.CheckOutReason;
+
+                if (dailyRecord.CheckOutReason.Length > 0)
+                {
+                    LblCheckedOutReason.IsVisible = true;
+                    LblCheckedOutReasonTitle.IsVisible = true;
+                }
+                else
+                {
+                    LblCheckedOutReason.IsVisible = false;
+                    LblCheckedOutReasonTitle.IsVisible = false;
+                    LblCheckedOutReason.Text = "";
+                }
+            }
+        }
     }
 
     #endregion

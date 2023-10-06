@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:controls="clr-namespace:MeeeApp.Controls"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="MeeeApp.Pages.Exercises.ExcerciseStart">
+    
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto,*,Auto">
+            
+            <!-- Skip Button -->
+            
+            <Grid ColumnDefinitions="80,*,80" Grid.Row="0">
+                
+                <Button 
+                    Grid.Column="2"
+                    Text="skip" 
+                    FontAttributes="Bold"
+                    FontFamily="BearHugs"
+                    BackgroundColor="{StaticResource Transparent}"
+                    FontSize="24"
+                    HorizontalOptions="End"
+                    Clicked="Button_OnClicked"
+                    TextColor="{StaticResource MeeePrimaryCyan}"></Button>
+            </Grid>
+            
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout Margin="12,24,12,0">
+                    
+                    <!-- What am I grateful for? -->
+                    
+                    <VerticalStackLayout>
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label 
+                                Grid.Column="0"
+                                Margin="24,0,24,0"
+                                Text="What am I grateful for?" 
+                                FontAttributes="Bold" 
+                                FontSize="18" 
+                                VerticalOptions="Center"
+                                TextColor="{StaticResource Gray600}">
+                            </Label>
+                            
+                            <buttons:SfButton 
+                                Grid.Column="1"
+                                x:Name="BtnAddGratitude"
+                                Text="Add"
+                                FontAttributes="Bold"
+                                ShowIcon="False"
+                                FontSize="14"
+                                HeightRequest="30"
+                                WidthRequest="80"
+                                TextColor="Black"
+                                Background="{StaticResource MeeePrimaryYellow}"
+                                HorizontalOptions="End"
+                                ImageSource="plus.png"
+                                ImageAlignment="End"
+                                Stroke="Transparent"
+                                Clicked="BtnAddGratitude_OnClicked" />
+                        </Grid>
+                    
+                        <Label
+                            x:Name="LblGratefulHint"
+                            Margin="24,12,24,0"
+                            Text="Tap the add button to add something you are grateful for today . . ."
+                            TextColor="{StaticResource Gray500}">
+                        </Label>
+                        
+                    </VerticalStackLayout>
+                    
+                    <StackLayout x:Name="LayoutGratitudes" BindableLayout.ItemsSource="{Binding Gratitudes}" Orientation="Vertical">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <HorizontalStackLayout Margin="12,12,12,0">
+                                    <Image Source="heart_sparkles.png" WidthRequest="40" HeightRequest="40"></Image>
+                                    <buttons:SfButton 
+                                        Text="{Binding}"
+                                        FontAttributes="Bold"
+                                        FontSize="15"
+                                        HeightRequest="40"
+                                        TextColor="{StaticResource Gray900}"
+                                        MinimumWidthRequest="200"
+                                        Background="{StaticResource Transparent}"
+                                        ImageSource="plus.png"
+                                        ImageAlignment="End"
+                                        BackgroundImageSource="field_highlight.png"
+                                        Stroke="Transparent"
+                                        Clicked="GratefulButton_OnClicked"
+                                         />
+                                </HorizontalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                        
+                    </StackLayout>
+                    
+                    
+                </VerticalStackLayout>
+            </ScrollView>
+            
+            
+            <!-- Submit Button -->
+
+            <controls:CobaltGrid x:Name="GridSubmit" Grid.Row="2">
+                <Image Source="footer_button_blue.png" Aspect="AspectFill" MaximumHeightRequest="100"/>
+                <VerticalStackLayout
+                    x:Name="VSContinueButton"
+                    Padding="24"
+                >
+
+                    <Label Text="submit"
+                           TextColor="White"
+                           FontFamily="BearHugs"
+                           Margin="0,12,0,0"
+                           HeightRequest="40"
+                           LineHeight="1"
+                           HorizontalOptions="Center"
+                           FontSize="36" />
+
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="TapSubmit"
+                                              NumberOfTapsRequired="1"
+                                                Tapped="TapSubmit_OnTapped"
+                                               />
+                    </VerticalStackLayout.GestureRecognizers>
+
+                </VerticalStackLayout>
+            </controls:CobaltGrid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

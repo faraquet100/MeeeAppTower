@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MeeeApp.Controls"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="MeeeApp.Pages.CheckingOutThanks">
+    
+    <NavigationPage.TitleView>
+        <Grid ColumnDefinitions="80,*,80">
+            <Label
+                Grid.Column="1"
+                Margin="0,2,0,0"
+                Text="checking-out"
+                TextColor="{StaticResource White}"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                FontFamily="BearHugs"
+                FontSize="32" />
+            <Button 
+                Grid.Column="2"
+                Text="skip" 
+                FontAttributes="Bold"
+                FontFamily="BearHugs"
+                BackgroundColor="{StaticResource Transparent}"
+                FontSize="24"
+                HorizontalOptions="End"
+                Clicked="Button_OnClicked"
+                TextColor="{StaticResource White}"></Button>
+        </Grid>
+    </NavigationPage.TitleView>
+    
+    <ContentPage.Content>
+        
+        <Grid RowDefinitions="Auto,Auto,*,Auto">
+            
+            <Grid ColumnDefinitions="80,*,80" Grid.Row="0">
+                
+                <Button 
+                    Grid.Column="2"
+                    Text="skip" 
+                    FontAttributes="Bold"
+                    FontFamily="BearHugs"
+                    BackgroundColor="{StaticResource Transparent}"
+                    FontSize="24"
+                    HorizontalOptions="End"
+                    Clicked="Button_OnClicked"
+                    TextColor="{StaticResource MeeePrimaryCyan}"></Button>
+            </Grid>
+            
+            <VerticalStackLayout Grid.Row="1" Margin="0,0,0,100">
+                    
+                <Label
+                    HorizontalOptions="Start"
+                    Margin="24,12,24,0"
+                    Text="thanks for checking-out!"
+                    TextColor="{StaticResource MeeePrimaryCyan}"
+                    FontAttributes="Bold"
+                    FontFamily="BearHugs"
+                    FontSize="32" />
+                
+                <Label
+                    HorizontalOptions="Start"
+                    Margin="24,0,24,0"
+                    Text="Here are your 3 short exercises to end your day."
+                    FontSize="17"
+                    FontAttributes="Bold"
+                ></Label>
+                
+                <Image
+                    Margin="0,48,0,0"
+                    Source="heart_sparkles.png"
+                    WidthRequest="300"
+                    HeightRequest="300"
+                    ></Image>
+                
+            </VerticalStackLayout>
+            
+            <!-- Continue In Button -->
+
+            <controls:CobaltGrid x:Name="GridContinue" Grid.Row="3">
+                <Image Source="footer_button_blue.png" Aspect="AspectFill" MaximumHeightRequest="100"/>
+                <VerticalStackLayout
+                    x:Name="VSContinueButton"
+                    Padding="24"
+                >
+
+                    <Label Text="start exercises"
+                           TextColor="White"
+                           FontFamily="BearHugs"
+                           Margin="0,12,0,0"
+                           HeightRequest="40"
+                           LineHeight="1"
+                           HorizontalOptions="Center"
+                           FontSize="36" />
+
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="TapContinue"
+                                              NumberOfTapsRequired="1"
+                                              Tapped="TapContinue_OnTapped" />
+                    </VerticalStackLayout.GestureRecognizers>
+
+                </VerticalStackLayout>
+            </controls:CobaltGrid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

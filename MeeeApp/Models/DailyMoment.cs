@@ -1,10 +1,13 @@
 using MeeeApp.Services;
 using Newtonsoft.Json;
+using banditoth.MAUI.PreferencesExtension;
 
 namespace MeeeApp.Models;
 
 public class DailyMoment
 {
+    public static string KEY_FAVOURITE_DAILY_MOMENTS = "dm_favourites";
+    
     [JsonProperty("id")] public int Id { get; set; }
     [JsonProperty("heading")] public string Heading { get; set; } = "";
     [JsonProperty("quoteText")] public string QuoteText { get; set; } = "";
@@ -42,4 +45,42 @@ public class DailyMoment
             return html;
         }
     }
+
+    public void AddToFavourites()
+    {
+        var favourites = Preferences.Default.GetObject<List<int>>(KEY_FAVOURITE_DAILY_MOMENTS, new List<int>());
+        if (!favourites.Contains(Id))
+        {
+            favourites.Add(Id);
+            Preferences.Default.SetObject(KEY_FAVOURITE_DAILY_MOMENTS, favourites);
+        }
+    }
+
+    public void RemoveFromFavourites()
+    {
+        var favourites = Preferences.Default.GetObject<List<int>>(KEY_FAVOURITE_DAILY_MOMENTS, new List<int>());
+        if (favourites.Contains(Id))
+        {
+            favourites.Remove(Id);
+            Preferences.Default.SetObject(KEY_FAVOURITE_DAILY_MOMENTS, favourites);
+        }
+    }
+
+    public static List<int> GetFavourites()
+    {
+        var favourites = Preferences.Default.GetObject<List<int>>(KEY_FAVOURITE_DAILY_MOMENTS, new List<int>());
+        return favourites;
+    }
+    
+    public bool ImageIsVideo()
+    {
+        if (ImageUrl.Length > 0)
+        {
+            return ImageUrl.Contains(".mp4") || ImageUrl.Contains(".m4v");
+        }
+
+        return false;
+    }
+    
+    
 }

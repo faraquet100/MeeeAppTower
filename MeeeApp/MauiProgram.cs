@@ -13,13 +13,14 @@ public static class MauiProgram
 	{
 		// Register SyncFusion Licence
         Syncfusion.Licensing.SyncfusionLicenseProvider
-			.RegisterLicense("Mgo+DSMBPh8sVXJ2S0d+X1VPd11dXmJWd1p/THNYflR1fV9DaUwxOX1dQl9gSXlSdkVlW3dceHVdRmU=;ORg4AjUWIQA/Gnt2V1hhQlJAfV5AQmBIYVp/TGpJfl96cVxMZVVBJAtUQF1hSn5Ud0VjX31WcnxUT2RZ;MjU1ODYzMUAzMjMyMmUzMDJlMzBEWjFJb210aTUzbG1tSTJYdXR4cDA0SkwzVkVnaWVlMndGdTQxNERFSzF3PQ==");
-
+			//.RegisterLicense("Mgo+DSMBPh8sVXJ2S0d+X1VPd11dXmJWd1p/THNYflR1fV9DaUwxOX1dQl9gSXlSdkVlW3dceHVdRmU=;ORg4AjUWIQA/Gnt2V1hhQlJAfV5AQmBIYVp/TGpJfl96cVxMZVVBJAtUQF1hSn5Ud0VjX31WcnxUT2RZ;MjU1ODYzMUAzMjMyMmUzMDJlMzBEWjFJb210aTUzbG1tSTJYdXR4cDA0SkwzVkVnaWVlMndGdTQxNERFSzF3PQ==");
+			.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NHaF5cXmpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdgWH9ednVWRGNZUkx/WkM=");
 
         var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
+			.UseMauiCommunityToolkitMediaElement()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

@@ -13,6 +13,7 @@ namespace MeeeApp.Services
         public static List<DailyMoment> DailyMoments { get; set; }
         
         public static string MOMENT_IMAGE_URL = "https://meeeweb.azurewebsites.net/moment-images/";
+        
 
         public static Microsoft.Maui.Graphics.Color MeeeColorMagenta = Color.Parse("#D40F7D");
         public static Microsoft.Maui.Graphics.Color MeeeColorCyan = Color.Parse("#009FDF");
@@ -21,6 +22,25 @@ namespace MeeeApp.Services
         public static Microsoft.Maui.Graphics.Color MeeeColorRed = Color.Parse("#DA291C");
         public static Microsoft.Maui.Graphics.Color MeeeColorYellow = Color.Parse("#FAE100");
 
+        public static string TimeOfDay
+        {
+	        get
+	        {
+		        var hour = DateTime.Now.Hour;
+		        if (hour >= 0 && hour < 12)
+		        {
+			        return "morning";
+		        }
+		        else if (hour >= 12 && hour < 18)
+		        {
+			        return "afternoon";
+		        }
+		        else
+		        {
+			        return "evening";
+		        }
+	        }
+        }
     }
 }
 
