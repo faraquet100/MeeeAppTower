@@ -7,13 +7,14 @@
              NavigationPage.HasNavigationBar="True">
     
     <NavigationPage.TitleView>
-        <Grid ColumnDefinitions="80,*,80">
+        <Grid ColumnDefinitions="90,*,90">
             <Label
                 Grid.Column="1"
-                Margin="0,2,0,0"
+                Margin="0,0,0,0"
                 Text="checking-in"
                 TextColor="{StaticResource White}"
                 FontAttributes="Bold"
+                VerticalOptions="Center"
                 HorizontalOptions="Center"
                 FontFamily="BearHugs"
                 FontSize="32" />
@@ -21,6 +22,7 @@
                 Grid.Column="2"
                 Text="next" 
                 FontAttributes="Bold"
+                VerticalOptions="Center"
                 FontFamily="BearHugs"
                 BackgroundColor="{StaticResource Transparent}"
                 FontSize="24"

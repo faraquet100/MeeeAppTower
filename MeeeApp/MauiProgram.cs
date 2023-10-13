@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
 using MeeeApp.Controls;
+using Plugin.LocalNotification;
 using Syncfusion.Maui.Core.Hosting;
 
 namespace MeeeApp;
@@ -21,6 +22,7 @@ public static class MauiProgram
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
 			.UseMauiCommunityToolkitMediaElement()
+			.UseLocalNotification()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -49,6 +51,8 @@ public static class MauiProgram
                 });
         */
 #endif
+		
+		
 
         // Borderless Entry Handler
         Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(nameof(BorderlessEntry), (handler, view) =>
@@ -60,6 +64,20 @@ public static class MauiProgram
 			handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #endif
 		});
+
+        // Remove the underline from the TimePicker
+        Microsoft.Maui.Handlers.TimePickerHandler.Mapper.AppendToMapping("MyTimePickerCustomisation",
+	        (handler, view) =>
+	        {
+		        if (view is TimePicker)
+		        {
+#if ANDROID
+
+					handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+#endif
+		        }
+
+	        });
 
 
 #if DEBUG

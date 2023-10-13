@@ -9,22 +9,25 @@
              x:Class="MeeeApp.Pages.DailyMomentDetail">
     
     <NavigationPage.TitleView>
-        <Grid ColumnDefinitions="80,*,80">
+        <Grid ColumnDefinitions="90,*,90">
             <Label
+                x:Name="LblNavTitle"
                 Grid.Column="1"
-                Margin="0,2,0,0"
+                Margin="0,0,0,0"
                 Text="daily moment!"
                 TextColor="{StaticResource White}"
                 FontAttributes="Bold"
+                VerticalOptions="Center"
                 HorizontalOptions="Center"
                 FontFamily="BearHugs"
-                FontSize="32" />
+                FontSize="30" />
             <Button 
                 x:Name="BtnNext"
                 Grid.Column="2"
                 Text="done" 
                 FontAttributes="Bold"
                 FontFamily="BearHugs"
+                VerticalOptions="Center"
                 BackgroundColor="{StaticResource Transparent}"
                 FontSize="24"
                 HorizontalOptions="End"
@@ -35,7 +38,7 @@
     
     <ContentPage.Content>
         <controls:FixedScrollView x:Name="FixedScrollView" Orientation="Vertical" >
-            <VerticalStackLayout Margin="0,0,0,100">
+            <VerticalStackLayout Margin="0,0,0,500">
                 
                 <Label
                     HorizontalOptions="Start"
@@ -54,13 +57,16 @@
                     FontAttributes="Bold"
                     ></Label>
                 
-                <Image 
-                    x:Name="ImgMomentImage"
-                    Margin="0,12,0,0"
-                    HeightRequest="225"
-                    HorizontalOptions="Center"
-                    Aspect="AspectFit"
-                />
+                <Grid ColumnDefinitions="*,Auto,*" HorizontalOptions="Center">
+                    <Image 
+                        Grid.Column="1"
+                        x:Name="ImgMomentImage"
+                        Margin="0,12,0,0"
+                        HeightRequest="225"
+                        Aspect="AspectFit"
+                    />
+                </Grid>
+                
                 
                 <toolkit:MediaElement
                     x:Name="MeMomentVideo"
@@ -83,6 +89,7 @@
                     Text=""
                     TextColor="{StaticResource Black}"
                     FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"
                     FontFamily="BearHugs"
                     FontSize="32" />
                 
@@ -90,6 +97,7 @@
                 
                 <Label x:Name="LblCallToAction" 
                        Text="Test Test" 
+                       IsVisible="False"
                        HorizontalOptions="Center" 
                        HorizontalTextAlignment="Center"
                        Margin="12,12,12,0"
@@ -178,15 +186,21 @@
                 
                 <VerticalStackLayout 
                     Grid.Row="0" 
+                    HorizontalOptions="Center"
                     Padding="24,0,24,0"
                     Margin="0,24,0,12">
+                    
                     <Label 
+                        Grid.Column="1"
                         x:Name="LblQuote" 
-                        Text="labels are for filing.  Labels are for clothing."
+                        Text=""
                         FontSize="17"
+                        LineBreakMode="WordWrap"
                         FontAttributes="Italic"
                         HorizontalOptions="Center"
-                        ></Label>
+                        HorizontalTextAlignment="Center"
+                    ></Label>
+                    
                     <Label 
                         x:Name="LblQuoteAuthor" 
                         Text="Martina Navratilova"
@@ -200,8 +214,17 @@
                         x:Name="LblContent" 
                         HorizontalTextAlignment="Center"
                         FontAttributes="Bold"
+                        FontSize="15"
+                        LineHeight="1.1"
                         Text=""
                         Margin="0,24,0,12"></Label>
+                    
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        HorizontalOptions="Center"
+                        FontSize="12"
+                        Text="© Meee 2023 All Rights Reserved"
+                        ></Label>
                     
                     
                     <!--

@@ -26,7 +26,7 @@
     <ContentPage.Content>
         <Grid RowDefinitions="Auto,Auto,*,Auto">
                 <VerticalStackLayout Grid.Row="0" Margin="24,12,24,0">
-                    <Label Text="And what time would you life for Checking-Out?"
+                    <Label Text="And what time would you like for Checking-Out?"
                            TextColor="{StaticResource Gray900}"
                            FontAttributes="Bold"
                            Padding="0,12,0,12"

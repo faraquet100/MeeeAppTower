@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:controls="clr-namespace:MeeeApp.Controls"
+             NavigationPage.HasNavigationBar="True"
+             x:Class="MeeeApp.Pages.Scrap.ExerciseSummary">
+    
+    <NavigationPage.TitleView>
+        <Grid ColumnDefinitions="90,*,90">
+            <Label
+                x:Name="LblNavTitle"
+                Grid.Column="1"
+                Margin="0,0,0,0"
+                Text=""
+                TextColor="{StaticResource White}"
+                FontAttributes="Bold"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                FontFamily="BearHugs"
+                FontSize="32" />
+            <Button 
+                Grid.Column="2"
+                Text="done" 
+                FontAttributes="Bold"
+                FontFamily="BearHugs"
+                BackgroundColor="{StaticResource Transparent}"
+                FontSize="24"
+                VerticalOptions="Center"
+                HorizontalOptions="End"
+                Clicked="BtnDone_OnClicked"
+                TextColor="{StaticResource White}"></Button>
+        </Grid>
+    </NavigationPage.TitleView>
+    
+    <ContentPage.Content>
+        
+        <!-- Content Grid -->
+        <Grid RowDefinitions="Auto, Auto, *">
+            
+            <!-- Tab Bar, Top Line -->
+            <Grid Grid.Row="0" RowDefinitions="Auto,Auto" ColumnDefinitions="*,*" Margin="0,12,0,0">
+
+                    <!-- Gratiude -->
+                    <controls:CobaltGrid x:Name="GridTabGratitude" Grid.Row="0" Grid.Column="0">
+                        <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,30,0">
+                            <Image x:Name="ImgTabGratitude"
+                                   Source="exercise_heart_filled.png"
+                                   VerticalOptions="Center"
+                                   Aspect="AspectFit"
+                                   HeightRequest="20"
+                                   WidthRequest="20" />
+
+                            <Label x:Name="LblTabGratitude"
+                                   Text="Gratitude"
+                                   Margin="6,0,0,0"
+                                   FontFamily="OpenSansSemibold"
+                                   VerticalOptions="Center"
+                                   FontAttributes="Bold"
+                                   FontSize="18" />
+
+                        </HorizontalStackLayout>
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapGratitude" Tapped="TapGratitude_OnTapped"  />
+                        </Grid.GestureRecognizers>
+                    </controls:CobaltGrid>
+
+                    <Image x:Name="ImgGratitudeUnderline"
+                           Source="underline_yellow.png"
+                           Grid.Column="0"
+                           Grid.Row="1"
+                           Aspect="Fill"
+                           WidthRequest="80"
+                           HeightRequest="10"
+                           Margin="50,0,0,0"
+                           />
+
+                    <!-- Achievements -->
+                    <controls:CobaltGrid x:Name="GridTabAchievements" Grid.Row="0" Grid.Column="1">
+                        <HorizontalStackLayout HorizontalOptions="Start">
+
+                            <Image x:Name="ImgTabAchievements"
+                                   Source="star_blue.png"
+                                   VerticalOptions="Center"
+                                   Margin="0,0,0,0"
+                                   Aspect="AspectFit"
+                                   HeightRequest="24"
+                                   WidthRequest="24" />
+
+                            <Label x:Name="LblTabAchievements"
+                                   Text="Achievements"
+                                   Margin="4,0,0,0"
+                                   FontFamily="OpenSansSemibold"
+                                   VerticalOptions="Center"
+                                   FontAttributes="Bold"
+                                   FontSize="18" />
+
+                        </HorizontalStackLayout>
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapAchievements" Tapped="TapAchievements_OnTapped"  />
+                        </Grid.GestureRecognizers>
+                    </controls:CobaltGrid>
+
+                    <Image x:Name="ImgAchievementsUnderline"
+                           Source="underline_blue.png"
+                           Grid.Column="1"
+                           Grid.Row="1"
+                           Aspect="Fill"
+                           WidthRequest="80"
+                           HeightRequest="10"
+                           Margin="0,0,10,0"
+                           />
+                </Grid>
+            
+            <!-- Tab Bar, Bottom Line -->
+            <Grid Grid.Row="1" RowDefinitions="Auto,Auto" Margin="0,12,0,0">
+
+                    <!-- Looking Forward -->
+                    <controls:CobaltGrid x:Name="GridTabLookingForward" Grid.Row="0">
+                        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,30,0">
+                            <Image x:Name="ImgTabLookingForward"
+                                   Source="carrot_pink.png"
+                                   VerticalOptions="Center"
+                                   Aspect="AspectFit"
+                                   HeightRequest="28"
+                                   WidthRequest="28" />
+
+                            <Label x:Name="LblTabLookingForward"
+                                   Text="Looking Forward"
+                                   Margin="6,0,0,0"
+                                   FontFamily="OpenSansSemibold"
+                                   VerticalOptions="Center"
+                                   FontAttributes="Bold"
+                                   FontSize="18" />
+
+                        </HorizontalStackLayout>
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapLookingForward" Tapped="TapLookingForward_OnTapped"  />
+                        </Grid.GestureRecognizers>
+                    </controls:CobaltGrid>
+
+                    <Image x:Name="ImgLookingForwardUnderline"
+                           Source="underline_pink.png"
+                           Grid.Column="0"
+                           Grid.Row="1"
+                           Aspect="Fill"
+                           WidthRequest="80"
+                           HeightRequest="10"
+                           Margin="0,4,0,0"
+                           />
+                    
+                </Grid>
+            
+            <!-- Scroll View -->
+            <ScrollView Grid.Row="2">
+                <VerticalStackLayout>
+                    
+                    <!-- Gratitude Daily Record List -->
+                    <StackLayout x:Name="LayoutRecordsGratitude" Orientation="Vertical" Margin="12,24,24,0">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                
+                                <Grid ColumnDefinitions="40,*" RowDefinitions="Auto,Auto" Margin="0,0,0,24">
+                                    
+                                    <!-- Gratitude Header -->
+                                    <Image 
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        HeightRequest="24"
+                                        WidthRequest="24"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Center"
+                                        Source="exercise_heart_unfilled">
+                                    </Image>
+                                    
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        VerticalOptions="Center"
+                                        Text="{Binding DayDescription}"
+                                        FontAttributes="Bold"
+                                        FontSize="17"
+                                        ></Label>
+                                    
+                                    <BoxView 
+                                        HorizontalOptions="Center"
+                                        WidthRequest="1"
+                                        Margin="0,12,0,0"
+                                        Color="{StaticResource Gray500}" 
+                                        Grid.Row="1" 
+                                        Grid.Column="0">
+                                    </BoxView>
+                                
+                                    <!-- Gratitude Items -->
+                                    <StackLayout Grid.Column="1" Grid.Row="1" BindableLayout.ItemsSource="{Binding GratitudeList}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+
+                                                <Border 
+                                                    Stroke="{StaticResource MeeePrimaryYellow}"
+                                                    BackgroundColor="{StaticResource MeeePrimaryYellow}"
+                                                    Margin="0,12,0,0"
+                                                    HorizontalOptions="Start">
+                                                    
+                                                    <Label Text="{Binding}"
+                                                           FontSize="15"
+                                                           Padding="12,8,12,8"
+                                                           BackgroundColor="{StaticResource MeeePrimaryYellow}"
+                                                           LineBreakMode="WordWrap"
+                                                           VerticalOptions="Center"
+                                                           HorizontalOptions="Start"
+                                                           FontAttributes="None"></Label>
+                                                    
+                                                    <Border.StrokeShape>
+                                                        <RoundRectangle CornerRadius="12"></RoundRectangle>
+                                                    </Border.StrokeShape>
+                                                </Border>
+                                                
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                        
+                        <!-- Gratitude Empty View -->
+                        <BindableLayout.EmptyViewTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="40,*" RowDefinitions="Auto,Auto" Margin="0,0,0,24">
+                                    
+                                    <!-- Gratitude Header -->
+                                    <Image 
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        HeightRequest="24"
+                                        WidthRequest="24"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Center"
+                                        Source="exercise_heart_unfilled">
+                                    </Image>
+                                    
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        VerticalOptions="Center"
+                                        Text="{Binding DayDescription}"
+                                        FontAttributes="Bold"
+                                        FontSize="17"
+                                        ></Label>
+                                    
+                                    <BoxView 
+                                        HorizontalOptions="Center"
+                                        WidthRequest="1"
+                                        Margin="0,12,0,0"
+                                        Color="{StaticResource Gray500}" 
+                                        Grid.Row="1" 
+                                        Grid.Column="0">
+                                    </BoxView>
+                                
+                                    <!-- Gratitude Items -->
+                                    <StackLayout Grid.Column="1" Grid.Row="1" BindableLayout.ItemsSource="{Binding AchievementsList}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+
+                                                <Border 
+                                                    Stroke="{StaticResource MeeePrimaryYellow}"
+                                                    BackgroundColor="{StaticResource MeeePrimaryYellow}"
+                                                    Margin="0,12,0,0"
+                                                    HorizontalOptions="Start">
+                                                    
+                                                    <Label Text="{Binding}"
+                                                           FontSize="15"
+                                                           Padding="12,8,12,8"
+                                                           BackgroundColor="{StaticResource MeeePrimaryYellow}"
+                                                           LineBreakMode="WordWrap"
+                                                           VerticalOptions="Center"
+                                                           HorizontalOptions="Start"
+                                                           FontAttributes="None"></Label>
+                                                    
+                                                    <Border.StrokeShape>
+                                                        <RoundRectangle CornerRadius="12"></RoundRectangle>
+                                                    </Border.StrokeShape>
+                                                </Border>
+                                                
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+                                </Grid>
+                            </DataTemplate>    
+                        </BindableLayout.EmptyViewTemplate>
+                    </StackLayout>
+                
+                    <!-- Achievements Daily Record List -->
+                    <StackLayout x:Name="LayoutRecordsAchievements" Orientation="Vertical"  Margin="12,24,12,0">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                
+                                <Grid ColumnDefinitions="40,*" RowDefinitions="Auto,Auto" Margin="0,0,0,24">
+                                    
+                                    <!-- Achievments Header -->
+                                    <Image 
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        HeightRequest="24"
+                                        WidthRequest="24"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Center"
+                                        Source="star_blue_unfilled.png">
+                                    </Image>
+                                    
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        VerticalOptions="Center"
+                                        Text="{Binding DayDescription}"
+                                        FontAttributes="Bold"
+                                        FontSize="17"
+                                        ></Label>
+                                    
+                                    <BoxView 
+                                        HorizontalOptions="Center"
+                                        WidthRequest="1"
+                                        Margin="0,12,0,0"
+                                        Color="{StaticResource Gray500}" 
+                                        Grid.Row="1" 
+                                        Grid.Column="0">
+                                    </BoxView>
+                                
+                                    <!-- Achievement Items -->
+                                    <StackLayout Grid.Column="1" Grid.Row="1" BindableLayout.ItemsSource="{Binding AchievementList}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+
+                                                <Border 
+                                                    Stroke="{StaticResource MeeeGarethCyan}"
+                                                    BackgroundColor="{StaticResource MeeeGarethCyan}"
+                                                    Margin="0,12,0,0"
+                                                    HorizontalOptions="Start">
+                                                    
+                                                    <Label Text="{Binding}"
+                                                           FontSize="15"
+                                                           Padding="12,8,12,8"
+                                                           BackgroundColor="{StaticResource MeeeGarethCyan}"
+                                                           LineBreakMode="WordWrap"
+                                                           VerticalOptions="Center"
+                                                           HorizontalOptions="Start"
+                                                           FontAttributes="None"></Label>
+                                                    
+                                                    <Border.StrokeShape>
+                                                        <RoundRectangle CornerRadius="12"></RoundRectangle>
+                                                    </Border.StrokeShape>
+                                                </Border>
+                                                
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                        
+                        <!-- Achievements Empty View -->
+                        <BindableLayout.EmptyViewTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout Margin="24,48,24,0">
+                                    <Label 
+                                        Text="You have not yet entered any values for your Achievements exercise."
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        LineHeight="1.4"
+                                    ></Label>
+                                </VerticalStackLayout>
+                            </DataTemplate>    
+                        </BindableLayout.EmptyViewTemplate>
+                    </StackLayout>
+                    
+                    <!-- Looking Forward Daily Record List -->
+                    <StackLayout x:Name="LayoutRecordsLookingForward" Orientation="Vertical"  Margin="12,24,12,0">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                
+                                <Grid ColumnDefinitions="40,*" RowDefinitions="Auto,Auto" Margin="0,0,0,24">
+                                    
+                                    <!-- Looking Forward Header -->
+                                    <Image 
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        HeightRequest="26"
+                                        WidthRequest="26"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Center"
+                                        Source="carrot_pink_unfilled.png">
+                                    </Image>
+                                    
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        VerticalOptions="Center"
+                                        Text="{Binding DayDescription}"
+                                        FontAttributes="Bold"
+                                        FontSize="17"
+                                        ></Label>
+                                    
+                                    <BoxView 
+                                        HorizontalOptions="Center"
+                                        WidthRequest="1"
+                                        Margin="0,12,0,0"
+                                        Color="{StaticResource Gray500}" 
+                                        Grid.Row="1" 
+                                        Grid.Column="0">
+                                    </BoxView>
+                                
+                                    <!-- Looking Forward Items -->
+                                    <StackLayout Grid.Column="1" Grid.Row="1" BindableLayout.ItemsSource="{Binding LookingForwardList}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+
+                                                <Border 
+                                                    Stroke="{StaticResource MeeeGarethMagenta}"
+                                                    BackgroundColor="{StaticResource MeeeGarethMagenta}"
+                                                    Margin="0,12,0,0"
+                                                    HorizontalOptions="Start">
+                                                    
+                                                    <Label Text="{Binding}"
+                                                           FontSize="15"
+                                                           Padding="12,8,12,8"
+                                                           BackgroundColor="{StaticResource MeeeGarethMagenta}"
+                                                           LineBreakMode="WordWrap"
+                                                           VerticalOptions="Center"
+                                                           HorizontalOptions="Start"
+                                                           FontAttributes="None"></Label>
+                                                    
+                                                    <Border.StrokeShape>
+                                                        <RoundRectangle CornerRadius="12"></RoundRectangle>
+                                                    </Border.StrokeShape>
+                                                </Border>
+                                                
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                        
+                        <!-- Looking Forward Empty View -->
+                        <BindableLayout.EmptyViewTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout Margin="24,48,24,0">
+                                    <Label 
+                                        Text="You have not yet entered any values for your Looking Forward exercise."
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        LineHeight="1.4"
+                                    ></Label>
+                                </VerticalStackLayout>
+                            </DataTemplate>    
+                        </BindableLayout.EmptyViewTemplate>
+                    </StackLayout>
+                
+                </VerticalStackLayout>
+            </ScrollView>
+
+        </Grid>
+        
+        
+    </ContentPage.Content>
+</ContentPage>

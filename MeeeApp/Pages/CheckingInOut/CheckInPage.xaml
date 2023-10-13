@@ -8,24 +8,27 @@
              Title="">
     
     <NavigationPage.TitleView>
-        <Grid ColumnDefinitions="80,*,80">
+        <Grid ColumnDefinitions="90,*,90">
             <Label
                 x:Name="LblNavTitle"
                 Grid.Column="1"
-                Margin="0,2,0,0"
+                Margin="0,0,0,0"
                 Text="checking-in"
                 TextColor="{StaticResource White}"
                 FontAttributes="Bold"
+                VerticalOptions="Center"
                 HorizontalOptions="Center"
                 FontFamily="BearHugs"
-                FontSize="32" />
+                FontSize="30" />
             <Button 
+                x:Name="BtnNavCancel"
                 Grid.Column="2"
                 Text="cancel" 
                 FontAttributes="Bold"
                 FontFamily="BearHugs"
                 BackgroundColor="{StaticResource Transparent}"
                 FontSize="24"
+                VerticalOptions="Center"
                 HorizontalOptions="End"
                 Clicked="BtnSkip_OnClicked"
                 TextColor="{StaticResource White}"></Button>

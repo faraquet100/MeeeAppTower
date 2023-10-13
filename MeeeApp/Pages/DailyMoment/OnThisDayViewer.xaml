@@ -7,22 +7,24 @@
              x:Class="MeeeApp.Pages.OnThisDayViewer">
     
     <NavigationPage.TitleView>
-        <Grid ColumnDefinitions="80,*,80">
+        <Grid ColumnDefinitions="90,*,90">
             <Label
                 Grid.Column="1"
-                Margin="0,2,0,0"
+                Margin="0,0,0,0"
                 Text="on this day!"
                 TextColor="{StaticResource White}"
                 FontAttributes="Bold"
+                VerticalOptions="Center"
                 HorizontalOptions="Center"
                 FontFamily="BearHugs"
-                FontSize="32" />
+                FontSize="30" />
             <Button 
                 x:Name="BtnClose"
                 Grid.Column="2"
                 Text="done" 
                 FontAttributes="Bold"
                 FontFamily="BearHugs"
+                VerticalOptions="Center"
                 BackgroundColor="{StaticResource Transparent}"
                 FontSize="24"
                 HorizontalOptions="End"
@@ -32,23 +34,47 @@
     </NavigationPage.TitleView>
     
     <ContentPage.Content>
-        <VerticalStackLayout Padding="12,12,12,48">
+        <VerticalStackLayout Padding="24,12,24,48">
             <HorizontalStackLayout HorizontalOptions="Center">
                 <Label x:Name="LblDay" 
-                       FontSize="32"
+                       FontSize="40"
+                       Text="12"
+                       TextColor="{StaticResource MeeeGarethCyan}"
                        Padding="0,0,2,0"
                        HorizontalOptions="Center"
                        VerticalOptions="Center"
                        FontAttributes="Bold"
-                       FontFamily="Juicebox">12</Label>
+                       FontFamily="Juicebox"></Label>
                 <Label x:Name="LblMonth" 
-                       FontSize="32"
+                       FontSize="40"
+                       Text="June"
                        Padding="2,2,0,0"
+                       TextColor="{StaticResource MeeeGarethCyan}"
                        VerticalOptions="Center"
                        HorizontalOptions="Center"
                        FontAttributes="Bold"
-                       FontFamily="BearHugs">june</Label>
+                       FontFamily="BearHugs"></Label>
             </HorizontalStackLayout>
+            
+            <Label 
+                x:Name="LblTitle" 
+                HorizontalTextAlignment="Center"
+                FontAttributes="Bold"
+                TextColor="{StaticResource MeeeGarethMagenta}"
+                FontSize="32"
+                LineHeight="1.1"
+                FontFamily="BearHugs"
+                Text="This is the title but need to check what happens if it is really long"
+                Margin="0,24,0,12"></Label>
+            
+            <Label 
+                x:Name="LblContent" 
+                HorizontalTextAlignment="Center"
+                FontAttributes="Bold"
+                FontSize="17"
+                LineHeight="1.1"
+                Text="This is the content"
+                Margin="0,24,0,12"></Label>
             
         </VerticalStackLayout>
         

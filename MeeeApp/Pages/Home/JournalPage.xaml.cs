@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Behaviors;
+using CommunityToolkit.Maui.Views;
 using MeeeApp.Controls;
 using MeeeApp.Models;
 using MeeeApp.Services;
@@ -36,6 +37,7 @@ public partial class JournalPage : ContentPage
         _user = User.UserFromPreferences(); // Reload the user on each view
         
         FormatForPlan();
+        //PlayIntroVideo();
         Console.WriteLine("JournalPage.OnAppearing()");
         UpdateAfterCheckInOut();    
         
@@ -140,9 +142,18 @@ public partial class JournalPage : ContentPage
     
     private void PlayIntroVideo()
     {
+        // couldn't get android to play video from local source
+        // so hard coded the url for now
+        
+        /*
         MeMomentVideo.Source = "";
+        
+        //var source = MediaSource.FromResource("example_animation.m4v");
+        //var source = MediaSource.FromResource("MeeeApp.Resources.intro_animation.m4v");
+        
         MeMomentVideo.Source = "example_animation.m4v";
         MeMomentVideo.Play();
+        */
     }
 
     /* Daily Exercises and Container */

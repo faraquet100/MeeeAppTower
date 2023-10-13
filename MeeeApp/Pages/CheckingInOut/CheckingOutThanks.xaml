@@ -7,16 +7,17 @@
              x:Class="MeeeApp.Pages.CheckingOutThanks">
     
     <NavigationPage.TitleView>
-        <Grid ColumnDefinitions="80,*,80">
+        <Grid ColumnDefinitions="90,*,90">
             <Label
                 Grid.Column="1"
-                Margin="0,2,0,0"
+                Margin="0,0,0,0"
                 Text="checking-out"
                 TextColor="{StaticResource White}"
                 FontAttributes="Bold"
+                VerticalOptions="Center"
                 HorizontalOptions="Center"
                 FontFamily="BearHugs"
-                FontSize="32" />
+                FontSize="30" />
             <Button 
                 Grid.Column="2"
                 Text="skip" 
@@ -24,6 +25,7 @@
                 FontFamily="BearHugs"
                 BackgroundColor="{StaticResource Transparent}"
                 FontSize="24"
+                VerticalOptions="Center"
                 HorizontalOptions="End"
                 Clicked="Button_OnClicked"
                 TextColor="{StaticResource White}"></Button>

@@ -1,6 +1,7 @@
 ﻿using MeeeApp.Controls;
 using MeeeApp.Models;
 using MeeeApp.Services;
+using Plugin.LocalNotification;
 
 namespace MeeeApp.Pages;
 
@@ -9,6 +10,12 @@ public partial class SettingsPage : ContentPage
 	public SettingsPage()
 	{
 		InitializeComponent();
+	}
+
+	async protected override void OnAppearing()
+	{
+		base.OnAppearing();
+		
 	}
 
 	private void BtnLogout_OnClicked(object sender, EventArgs e)
@@ -92,5 +99,41 @@ public partial class SettingsPage : ContentPage
 		}
 
 		return false;
+	}
+
+	async void TapTestCheckInNotification_OnTapped(object sender, TappedEventArgs e)
+	{
+		var grid = sender as CobaltGrid;
+		await grid.BounceOnPressAsync();
+		
+		var request = NotificationHelper.CheckInTestNotification();
+		if (await LocalNotificationCenter.Current.AreNotificationsEnabled())
+		{
+			LocalNotificationCenter.Current.Clear(NotificationHelper.NOTIFICATION_ID_CHECKIN_TEST);
+			await LocalNotificationCenter.Current.Show(request);
+			await DisplayAlert("Notifications Scheduled", "Your notification has been sent", "OK");
+		}
+		else
+		{
+			await DisplayAlert("Notifications Disabled", "You have disabled notifications for this app.  Please enable them in your device settings.", "OK");
+		}
+	}
+
+	async void TapTestCheckPutNotification_OnTapped(object sender, TappedEventArgs e)
+	{
+		var grid = sender as CobaltGrid;
+		await grid.BounceOnPressAsync();
+		
+		var request = NotificationHelper.CheckOutTestNotification();
+		if (await LocalNotificationCenter.Current.AreNotificationsEnabled())
+		{
+			LocalNotificationCenter.Current.Clear(NotificationHelper.NOTIFICAITON_ID_CHECKOUT_TEST);
+			await LocalNotificationCenter.Current.Show(request);
+			await DisplayAlert("Notifications Scheduled", "Your notification has been sent", "OK");
+		}
+		else
+		{
+			await DisplayAlert("Notifications Disabled", "You have disabled notifications for this app.  Please enable them in your device settings.", "OK");
+		}
 	}
 }

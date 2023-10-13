@@ -2,7 +2,15 @@
 namespace MeeeApp.Controls
 {
 	public class CobaltImageButton : ImageButton
-	{
+    {
+        public static readonly BindableProperty TagProperty = BindableProperty.Create("Tag", typeof(string), typeof(CobaltImageButton), "");
+
+        public string Tag
+        {
+            get => (string)GetValue(TagProperty);
+            set => SetValue(TagProperty, value);
+        }
+        
         public async Task<bool> BounceOnPressAsync()
         {
             var currentOpacity = this.Opacity;

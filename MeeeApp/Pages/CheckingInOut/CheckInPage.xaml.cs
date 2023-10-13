@@ -27,6 +27,7 @@ public partial class CheckInPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        FixAndroid();
 
         // Salutation
         switch (DateExtensions.GetPartOfDay())
@@ -53,15 +54,26 @@ public partial class CheckInPage : ContentPage
         {
             if (_direction == CheckingDirection.In)
             {
-                selectedScore = dailyRecord.CheckInScore;
+                if (dailyRecord.CheckInTime.Year > 2000)
+                {
+                    selectedScore = dailyRecord.CheckInScore;
+                }
             }
             else
             {
-                selectedScore = dailyRecord.CheckOutScore;
+                if (dailyRecord.CheckOutTime.Year > 2000)
+                {
+                    selectedScore = dailyRecord.CheckOutScore;
+                }
             }
             
             SliderCheckIn.Value = selectedScore;
         }
+    }
+
+    private void FixAndroid()
+    {
+        
     }
 
 

@@ -1,5 +1,6 @@
 ﻿using MeeeApp.Models;
 using MeeeApp.Services;
+using KeyboardExtensions = CommunityToolkit.Maui.Core.Platform.KeyboardExtensions;
 
 namespace MeeeApp.Pages;
 
@@ -24,6 +25,7 @@ public partial class CheckInPageReason : ContentPage
         base.OnAppearing();
         MyActivityIndicator.IsVisible = false;
         var dailyRecord = _user.DailyRecordForDate(_calendarDate);
+        FixAndroid();
 
         // Salutation
         if (_direction == CheckInPage.CheckingDirection.In)
@@ -68,6 +70,14 @@ public partial class CheckInPageReason : ContentPage
                 EDTTellUsMore.Text = dailyRecord.CheckOutReason;
             }
         }
+    }
+
+    private void FixAndroid()
+    {
+        // Because Android puts the grid view after the back button
+        #if ANDROID 
+            LblNavTitle.Margin = new Thickness(-70, 0, 0, 0);
+        #endif
     }
 
     async void BarButtonCancel_Clicked(System.Object sender, System.EventArgs e)
@@ -231,5 +241,15 @@ public partial class CheckInPageReason : ContentPage
             MyActivityIndicator.IsVisible = busy;
             EDTTellUsMore.IsEnabled = !busy;
         });
+    }
+
+    async void EDTTellUsMore_OnFocused(object sender, FocusEventArgs e)
+    {
+        if (KeyboardExtensions.IsSoftKeyboardShowing(EDTTellUsMore))
+        {
+            FixedScrollView.Margin = new Thickness(0, 0, 0, 320);
+            //await FixedScrollView.ScrollToAsync(EDTTellUsMore, ScrollToPosition.Start, true);
+            //await FixedScrollView.ScrollToAsync(GridCheckIn, ScrollToPosition.End, true);
+        }
     }
 }

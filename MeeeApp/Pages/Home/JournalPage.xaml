@@ -7,6 +7,10 @@
              NavigationPage.HasNavigationBar="False"
              NavigationPage.BackButtonTitle="Back"
              Title="Journal">
+    
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource MeeePrimaryMagenta}"></toolkit:StatusBarBehavior>
+    </ContentPage.Behaviors>
 
     <Grid>
 
@@ -17,15 +21,15 @@
 
             <VerticalStackLayout VerticalOptions="Start" Padding="24">
 
-                <Grid ColumnDefinitions="1*,Auto,1*" WidthRequest="200" HorizontalOptions="Start">
-
+                <Grid ColumnDefinitions="Auto,*,Auto" WidthRequest="280" HorizontalOptions="Start">
+                    
                     <controls:CobaltImageButton
                         x:Name="ImgBtnDayBack"
                         Grid.Column="0"        
-                        Source="back_arrow.png"
-                        HeightRequest="20"
-                        WidthRequest="16"
-                        Aspect="Fill"
+                        Source="back_arrow_padding.png"
+                        HeightRequest="40"
+                        WidthRequest="40"
+                        Aspect="AspectFit"
                         Clicked="ImgBtnDayBack_Clicked"
                         HorizontalOptions="Start"
                         VerticalOptions="Center">
@@ -33,18 +37,21 @@
 
                     <Label x:Name="LblDayTitle"
                            Text="today"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
                            Grid.Column="1"
-                           FontSize="36"
+                           Margin="12,0"
+                           FontSize="40"
                            FontFamily="BearHugs"
                            FontAttributes="Bold" />
 
                     <controls:CobaltImageButton
                         x:Name="ImgBtnDayForward"
                         Grid.Column="2"        
-                        Source="next_arrow.png"
-                        HeightRequest="20"
-                        WidthRequest="16"
-                        Aspect="Fill"
+                        Source="next_arrow_padding.png"
+                        HeightRequest="40"
+                        WidthRequest="40"
+                        Aspect="AspectFit"
                         Clicked="ImgBtnDayForward_Clicked"
                         HorizontalOptions="End"
                         VerticalOptions="Center">
@@ -56,15 +63,16 @@
                                Text="You last checked in 2 days ago."
                                TextColor="{StaticResource Gray600}"
                                FontFamily="OpenSansRegular"
+                               FontSize="17"
                                Margin="0,4,0,0"/>
                     </HorizontalStackLayout>
 
                 <!-- Main Tab Buttons -->
 
-                 <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*" Margin="0,12,0,0">
+                 <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*" Margin="0,24,0,0">
 
                     <controls:CobaltGrid x:Name="GridPlanSelection" Grid.Row="0" Grid.Column="0">
-                        <HorizontalStackLayout HorizontalOptions="End" Margin="0,0,30,0">
+                        <HorizontalStackLayout HorizontalOptions="End" Margin="0,0,50,0">
                             <Image x:Name="ImgPlanSelection"
                                    Source="sun_drawing.png"
                                    VerticalOptions="Center"
@@ -78,7 +86,7 @@
                                    FontFamily="OpenSansSemibold"
                                    VerticalOptions="Center"
                                    FontAttributes="Bold"
-                                   FontSize="18" />
+                                   FontSize="22" />
 
                         </HorizontalStackLayout>
 
@@ -94,7 +102,7 @@
                            Aspect="Fill"
                            WidthRequest="80"
                            HeightRequest="10"
-                           Margin="40,0,0,0"
+                           Margin="10,0,0,0"
                            />
 
                     <controls:CobaltGrid x:Name="GridReflectionSelection" Grid.Row="0" Grid.Column="1">
@@ -114,7 +122,7 @@
                                    FontFamily="OpenSansSemibold"
                                    VerticalOptions="Center"
                                    FontAttributes="Bold"
-                                   FontSize="18" />
+                                   FontSize="22" />
 
                         </HorizontalStackLayout>
 
@@ -130,7 +138,7 @@
                            Aspect="Fill"
                            WidthRequest="80"
                            HeightRequest="10"
-                           Margin="0,0,30,0"
+                           Margin="0,0,10,0"
                            />
 
                 </Grid>
@@ -141,7 +149,7 @@
                     
                     <!-- Check In Button - Not Checked In -->
 
-                    <controls:CobaltGrid x:Name="GridCheckIn" Padding="0" Margin="0,12,0,0">
+                    <controls:CobaltGrid x:Name="GridCheckIn" Padding="0" Margin="0,24,0,0">
 
                         <controls:CobaltImageButton x:Name="ImgBtnCheckIn"
                                  Source="button_pink.png"
@@ -169,7 +177,7 @@
 
                     <!-- Check In Review - Has Checked In -->
                     
-                    <controls:CobaltGrid x:Name="GridHasCheckedIn" Padding="0" Margin="0,12,0,0">
+                    <controls:CobaltGrid x:Name="GridHasCheckedIn" Padding="0" Margin="0,24,0,0">
 
                         <controls:CobaltImageButton x:Name="ImgBtnHasCheckedIn"
                                                     Source="button_pink.png"
@@ -210,19 +218,21 @@
                     <Label x:Name="LblCheckedInReasonTitle"
                            Margin="24,12,24,24"
                            Text="I Checked-In at a 5 because:"
+                           FontSize="17"
                            FontAttributes="Bold"
                            ></Label>
                     
                     <Label x:Name="LblCheckedInReason"
                            Margin="24,-18,24,24"
                            Text=""
+                           FontSize="17"
                            FontAttributes="Italic"
                     ></Label>
                     
                     
                     <!-- Check Out Button - Not Checked Out -->
                     
-                    <controls:CobaltGrid x:Name="GridCheckOut" Padding="0" Margin="0,12,0,0">
+                    <controls:CobaltGrid x:Name="GridCheckOut" Padding="0" Margin="0,24,0,0">
 
                         <controls:CobaltImageButton x:Name="ImgBtnCheckOut"
                                  Source="button_pink.png"
@@ -250,7 +260,7 @@
                     
                     <!-- Check Out Review - Has Checked In -->
                     
-                    <controls:CobaltGrid x:Name="GridHasCheckedOut" Padding="0" Margin="0,12,0,0">
+                    <controls:CobaltGrid x:Name="GridHasCheckedOut" Padding="0" Margin="0,24,0,0">
 
                         <controls:CobaltImageButton x:Name="ImgBtnHasCheckedOut"
                                                     Source="button_pink.png"
@@ -292,25 +302,27 @@
                            Margin="24,12,24,24"
                            Text="I Checked-Out at a 5 because:"
                            FontAttributes="Bold"
+                           FontSize="17"
                     ></Label>
                     
                     <Label x:Name="LblCheckedOutReason"
                            Margin="24,-18,24,24"
                            Text=""
                            FontAttributes="Italic"
+                           FontSize="17"
                     ></Label>
 
                     <toolkit:MediaElement
                         x:Name="MeMomentVideo"
                         Margin="0,12,0,0"
-                        Source="example_animation.m4v"
+                        Source="https://meeeweb.azurewebsites.net/moment-images/e12858d5-04bb-4db5-9d8b-2817e5941f3a.m4v"
                         HeightRequest="225"
                         WidthRequest="320"
                         BackgroundColor="White"
                         Aspect="AspectFill"
                         HorizontalOptions="Center"
                         ShouldAutoPlay="True"
-                        ShouldLoopPlayback="False"
+                        ShouldLoopPlayback="True"
                     ></toolkit:MediaElement>
 
                     <!-- Daily Exercises -->

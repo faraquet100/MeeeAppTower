@@ -9,6 +9,8 @@
              x:Class="MeeeApp.Pages.Exercises.ExcerciseStart">
     
     <ContentPage.Content>
+        
+        <Grid>
         <Grid RowDefinitions="Auto,*,Auto">
             
             <!-- Skip Button -->
@@ -28,7 +30,8 @@
             </Grid>
             
             <ScrollView Grid.Row="1">
-                <VerticalStackLayout Margin="12,24,12,0">
+                
+                <VerticalStackLayout Padding="24,24,24,76">
                     
                     <!-- What am I grateful for? -->
                     
@@ -36,7 +39,7 @@
                         <Grid ColumnDefinitions="Auto,*">
                             <Label 
                                 Grid.Column="0"
-                                Margin="24,0,24,0"
+                                Margin="0,0,0,0"
                                 Text="What am I grateful for?" 
                                 FontAttributes="Bold" 
                                 FontSize="18" 
@@ -64,7 +67,7 @@
                     
                         <Label
                             x:Name="LblGratefulHint"
-                            Margin="24,12,24,0"
+                            Margin="0,12,0,0"
                             Text="Tap the add button to add something you are grateful for today . . ."
                             TextColor="{StaticResource Gray500}">
                         </Label>
@@ -74,23 +77,201 @@
                     <StackLayout x:Name="LayoutGratitudes" BindableLayout.ItemsSource="{Binding Gratitudes}" Orientation="Vertical">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <HorizontalStackLayout Margin="12,12,12,0">
-                                    <Image Source="heart_sparkles.png" WidthRequest="40" HeightRequest="40"></Image>
+                                <Grid ColumnDefinitions="Auto,Auto,*,30" Margin="0,12,0,0">
+                                    <Image Grid.Column="0" Source="exercise_heart_filled.png" WidthRequest="36" HeightRequest="36"></Image>
+                                    
                                     <buttons:SfButton 
+                                        Grid.Column="1"
                                         Text="{Binding}"
                                         FontAttributes="Bold"
                                         FontSize="15"
-                                        HeightRequest="40"
+                                        HeightRequest="44"
                                         TextColor="{StaticResource Gray900}"
-                                        MinimumWidthRequest="200"
+                                        WidthRequest="260"
+                                        Margin="12,0,0,0"
                                         Background="{StaticResource Transparent}"
-                                        ImageSource="plus.png"
-                                        ImageAlignment="End"
-                                        BackgroundImageSource="field_highlight.png"
+                                        BackgroundImageSource="field_highlight_yellow_sized.png"
                                         Stroke="Transparent"
                                         Clicked="GratefulButton_OnClicked"
                                          />
-                                </HorizontalStackLayout>
+                                    
+                                    <controls:CobaltImageButton x:Name="BtnDeleteGratitude"
+                                                 HorizontalOptions="End"
+                                                 Grid.Column="3"
+                                                 Tag="{Binding}"
+                                                 MaximumWidthRequest="20"
+                                                 MaximumHeightRequest="20"
+                                                 Clicked="BtnDeleteGratitude_OnClicked"
+                                                 Source="trash_can_outline.png">
+                                        <ImageButton.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="{StaticResource MeeePrimaryCyan}"></toolkit:IconTintColorBehavior>
+                                        </ImageButton.Behaviors>
+                                    </controls:CobaltImageButton>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                        
+                    </StackLayout>
+                    
+                    <!-- What have I achieved today? -->
+                    
+                    <VerticalStackLayout Margin="0,48,0,0">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <Label 
+                                Grid.Column="0"
+                                
+                                Text="What have I achieved today?" 
+                                FontAttributes="Bold" 
+                                FontSize="18" 
+                                VerticalOptions="Center"
+                                TextColor="{StaticResource Gray600}">
+                            </Label>
+                            
+                            <buttons:SfButton 
+                                Grid.Column="1"
+                                x:Name="BtnAddAchievement"
+                                Text="Add"
+                                FontAttributes="Bold"
+                                ShowIcon="False"
+                                FontSize="14"
+                                HeightRequest="30"
+                                WidthRequest="80"
+                                TextColor="Black"
+                                Background="{StaticResource MeeePrimaryCyan}"
+                                HorizontalOptions="End"
+                                ImageSource="plus.png"
+                                ImageAlignment="End"
+                                Stroke="Transparent"
+                                Clicked="BtnAddAchievement_OnClicked" />
+                            
+                        </Grid>
+                    
+                        <Label
+                            x:Name="LblAchievedHint"
+                            Margin="0,12,0,0"
+                            Text="Tap the add button to add something you have achieved today . . ."
+                            TextColor="{StaticResource Gray500}">
+                        </Label>
+                        
+                    </VerticalStackLayout>
+                    
+                    <StackLayout x:Name="LayoutAchievements" BindableLayout.ItemsSource="{Binding Achievements}" Orientation="Vertical">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="Auto,Auto,*,30" Margin="0,12,0,0">
+                                    <Image Grid.Column="0" Source="star_blue.png" WidthRequest="40" HeightRequest="40"></Image>
+                                    <buttons:SfButton 
+                                        Grid.Column="1"
+                                        x:Name="AchievementButton"
+                                        Text="{Binding}"
+                                        FontAttributes="Bold"
+                                        FontSize="15"
+                                        HeightRequest="44"
+                                        TextColor="{StaticResource Gray900}"
+                                        WidthRequest="260"
+                                        Margin="12,0,0,0"
+                                        Background="{StaticResource Transparent}"
+                                        ImageSource="plus.png"
+                                        ImageAlignment="End"
+                                        BackgroundImageSource="field_highlight_blue_sized.png"
+                                        Stroke="Transparent"
+                                        Clicked="AchievementButton_OnClicked"
+                                         />
+                                    <controls:CobaltImageButton x:Name="BtnDeleteAchievement"
+                                                                HorizontalOptions="End"
+                                                                Grid.Column="3"
+                                                                Tag="{Binding}"
+                                                                MaximumWidthRequest="20"
+                                                                MaximumHeightRequest="20"
+                                                                Clicked="BtnDeleteAchievement_OnClicked"
+                                                                Source="trash_can_outline.png">
+                                        <ImageButton.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="{StaticResource MeeePrimaryCyan}"></toolkit:IconTintColorBehavior>
+                                        </ImageButton.Behaviors>
+                                    </controls:CobaltImageButton>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                        
+                    </StackLayout>
+                    
+                    <!-- What am I looking forward to? -->
+                    
+                    <VerticalStackLayout Margin="0,48,0,0">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label 
+                                Grid.Column="0"
+                                Text="What am I looking forward to?" 
+                                FontAttributes="Bold" 
+                                FontSize="18" 
+                                VerticalOptions="Center"
+                                TextColor="{StaticResource Gray600}">
+                            </Label>
+                            
+                            <buttons:SfButton 
+                                Grid.Column="1"
+                                x:Name="BtnLookingForward"
+                                Text="Add"
+                                FontAttributes="Bold"
+                                ShowIcon="False"
+                                FontSize="14"
+                                HeightRequest="30"
+                                WidthRequest="80"
+                                TextColor="Black"
+                                Background="{StaticResource MeeePrimaryMagenta}"
+                                HorizontalOptions="End"
+                                ImageSource="plus.png"
+                                ImageAlignment="End"
+                                Stroke="Transparent"
+                                Clicked="BtnLookingForward_OnClicked" />
+                        </Grid>
+                    
+                        <Label
+                            x:Name="LblLookingForwardHint"
+                            Margin="0,12,0,0"
+                            Text="Tap the add button to add something you looking forward to . . ."
+                            TextColor="{StaticResource Gray500}">
+                        </Label>
+                        
+                    </VerticalStackLayout>
+                    
+                    <StackLayout x:Name="LayoutLookingForward"  Orientation="Vertical">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="Auto,Auto,*,30" Margin="0,12,0,0">
+                                    <Image Grid.Column="0" Source="carrot_pink.png" WidthRequest="40" HeightRequest="40"></Image>
+                                    <buttons:SfButton 
+                                        Grid.Column="1"
+                                        x:Name="LookingForwardButton"
+                                        Text="{Binding}"
+                                        FontAttributes="Bold"
+                                        FontSize="15"
+                                        HeightRequest="44"
+                                        TextColor="{StaticResource Gray900}"
+                                        WidthRequest="260"
+                                        Margin="12,0,0,0"
+                                        Background="{StaticResource Transparent}"
+                                        ImageSource="plus.png"
+                                        ImageAlignment="End"
+                                        BackgroundImageSource="field_highlight_pink_sized.png"
+                                        Stroke="Transparent"
+                                        Clicked="LookingForwardButton_OnClicked"
+                                         />
+                                    
+                                    <controls:CobaltImageButton x:Name="BtnDeleteLookingForward"
+                                                                HorizontalOptions="End"
+                                                                Grid.Column="3"
+                                                                Tag="{Binding}"
+                                                                MaximumWidthRequest="20"
+                                                                MaximumHeightRequest="20"
+                                                                Clicked="BtnDeleteLookingForward_OnClicked"
+                                                                Source="trash_can_outline.png">
+                                        <ImageButton.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="{StaticResource MeeePrimaryCyan}"></toolkit:IconTintColorBehavior>
+                                        </ImageButton.Behaviors>
+                                    </controls:CobaltImageButton>
+                                    
+                                </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                         
@@ -98,6 +279,7 @@
                     
                     
                 </VerticalStackLayout>
+
             </ScrollView>
             
             
@@ -128,6 +310,19 @@
 
                 </VerticalStackLayout>
             </controls:CobaltGrid>
+        </Grid>
+            
+            <ActivityIndicator
+                ZIndex="3"
+                x:Name="MyActivityIndicator"
+                IsRunning="True" Color="{StaticResource MeeePrimaryCyan}"
+                Scale="3"
+                BackgroundColor="Transparent"
+                IsVisible="false" Margin="0,0,0,0"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+            />
+            
         </Grid>
     </ContentPage.Content>
 </ContentPage>

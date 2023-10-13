@@ -35,6 +35,26 @@ public class DailyMoment
         }
     }
     
+    public string FullImageUrlForListView
+    {
+        get
+        {
+            if (!ImageIsVideo())
+            {
+                if (ImageUrl.Length > 0)
+                {
+                    return AppSettings.MOMENT_IMAGE_URL + ImageUrl;
+                }
+            }
+            else
+            {
+                return "play_green.png";
+            }
+
+            return "";
+        }
+    }
+    
     public string ContentWithHtml
     {
         get

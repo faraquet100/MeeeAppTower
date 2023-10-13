@@ -11,4 +11,10 @@ public class OnThisDay
     [JsonProperty("content")] public string Content { get; set; }
     [JsonProperty("dateShort")] public string DateShort { get; set; }
     [JsonProperty("displayDateFormatted")] public string DisplayDateFormatted { get; set; }
+    
+    // Get the month name from the month number
+    public string DisplayMonthName()
+    {
+        return new DateTime(2021, DisplayMonth, 1).ToString("MMMM");
+    }
 }

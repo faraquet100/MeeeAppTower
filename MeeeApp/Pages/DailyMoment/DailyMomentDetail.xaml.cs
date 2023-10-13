@@ -38,6 +38,7 @@ public partial class DailyMomentDetail : ContentPage
     {
         base.OnAppearing();
         FormatMoment();
+        FixAndroid();
 
         if (_isReview)
         {
@@ -48,32 +49,32 @@ public partial class DailyMomentDetail : ContentPage
         {
             EDTTellUsMore.Text = _dailyRecord.CheckOutJournalEntry;
         }
+        
+        DelayedSetup();
+    }
+
+    private void FixAndroid()
+    {
+        // Because Android puts the grid view after the back button
+#if ANDROID 
+            LblNavTitle.Margin = new Thickness(-70, 0, 0, 0);
+#endif
     }
 
     private void FormatMoment()
     {
         var favouriteMoments = DailyMoment.GetFavourites();
         
+        ImgMomentImage.Source = _dailyMoment.FullImageUrl;
         LblMomentTitle.Text = _dailyMoment.Heading.ToLower();
         LblCallToAction.Text = _dailyMoment.CallToActionText;
         
-        LblQuote.Text = "\"" + _dailyMoment.QuoteText + "\"";
+        LblQuote.Text = "\"" + _dailyMoment.QuoteText.Replace("\"", "") + "\"";
         LblQuoteAuthor.Text = _dailyMoment.QuoteAuthor;
         LblContent.Text = _dailyMoment.Content;
         //WebViewSource.Html = _dailyMoment.ContentWithHtml;
 
-        if (_dailyMoment.ImageIsVideo())
-        {
-            MeMomentVideo.Source = _dailyMoment.FullImageUrl;
-            ImgMomentImage.IsVisible = false;
-            MeMomentVideo.IsVisible = true;
-        }
-        else
-        {
-            ImgMomentImage.Source = _dailyMoment.FullImageUrl;
-            ImgMomentImage.IsVisible = true;
-            MeMomentVideo.IsVisible = false;
-        }
+        FormatImageVideo();
 
         if (!_dailyMoment.UseShareButton)
         {
@@ -106,18 +107,33 @@ public partial class DailyMomentDetail : ContentPage
         }
     }
 
-    /*
+    private void FormatImageVideo()
+    {
+        if (_dailyMoment.ImageIsVideo())
+        {
+            MeMomentVideo.Source = _dailyMoment.FullImageUrl;
+            ImgMomentImage.IsVisible = false;
+            MeMomentVideo.IsVisible = true;
+        }
+        else
+        {
+            ImgMomentImage.Source = _dailyMoment.FullImageUrl;
+            ImgMomentImage.IsVisible = true;
+            MeMomentVideo.IsVisible = false;
+        }
+    }
+    
     async void DelayedSetup()
     {
         await Task.Delay(1000);
+        FormatImageVideo();
         
+        // Sometimes the image doesn't load, this is a fallback to reload after a delay
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            LblContent.Text = _dailyMoment.ContentWithHtml;
+            FormatImageVideo();
         });
     }
-    */
-    
     
     async void BtnSkip_OnClicked(object sender, EventArgs e)
     {
@@ -190,7 +206,7 @@ public partial class DailyMomentDetail : ContentPage
         // then scroll to the control
         if (KeyboardExtensions.IsSoftKeyboardShowing(EDTTellUsMore))
         {
-            FixedScrollView.Margin = new Thickness(0, 0, 0, 320);
+            FixedScrollView.Margin = new Thickness(0, 0, 0, 360);
             await FixedScrollView.ScrollToAsync(GridJournal, ScrollToPosition.Start, true);
             //await FixedScrollView.ScrollToAsync(GridCheckIn, ScrollToPosition.End, true);
         }

@@ -5,9 +5,9 @@
              xmlns:pages="clr-namespace:MeeeApp.Pages"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              android:TabbedPage.ToolbarPlacement="Bottom"
-             BarBackgroundColor="{StaticResource White}"
-             SelectedTabColor="{StaticResource MeeePrimaryMagenta}"
-             UnselectedTabColor="{StaticResource MeeeUnselectedGrey}"
+             BarBackgroundColor="{StaticResource MeeeGarethMagenta}"
+             SelectedTabColor="{StaticResource White}"
+             UnselectedTabColor="{StaticResource Gray300}"
              >
 
 

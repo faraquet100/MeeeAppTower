@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MeeeApp.Models;
 using MeeeApp.Services;
+using Plugin.LocalNotification;
 
 namespace MeeeApp.Pages;
 
@@ -28,6 +29,13 @@ public partial class SetCheckOutTimes : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        FixAndroid();
+    }
+    
+    private void FixAndroid()
+    {
+        TimePicker.HeightRequest = 60;
+        TimePicker.Margin = new Thickness(0, 0, 0, -4);
     }
 
     async void SkipButton_OnClicked(object sender, EventArgs e)
@@ -41,8 +49,28 @@ public partial class SetCheckOutTimes : ContentPage
         var selectedTimeSpan = CheckOutTime;
         var checkOutDateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, selectedTimeSpan.Hours, selectedTimeSpan.Minutes, selectedTimeSpan.Seconds);
         User.SaveCheckOutTimeToPreferences(checkOutDateTime);
-        //TODO: Create (or update) the Local Notification
-        // Then move to check out time
+        
+        // Create the notification
+        var nextCheckOutTime = checkOutDateTime;
+        if (nextCheckOutTime < DateTime.Now)
+        {
+            nextCheckOutTime = checkOutDateTime.AddDays(1);
+        }
+        
+        //var request = NotificationHelper.CheckInNotification(nextCheckOutTime);
+        var secondsDiff = (nextCheckOutTime - DateTime.Now).TotalSeconds;
+        var request = NotificationHelper.CheckOutNotification(secondsDiff);
+        
+        if (await LocalNotificationCenter.Current.AreNotificationsEnabled())
+        {
+            LocalNotificationCenter.Current.Clear(NotificationHelper.NOTIFICAITON_ID_CHECKOUT);
+            await LocalNotificationCenter.Current.Show(request);
+        }
+        else
+        {
+            await DisplayAlert("Notifications Disabled", "You have disabled notifications for this app.  Please enable them in your device settings.", "OK");
+        }
+
         await Navigation.PopModalAsync(true);
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MeeeApp.Models;
 using MeeeApp.Services;
+using MeeeApp.Controls;
 
 namespace MeeeApp.Pages;
 
@@ -20,7 +21,19 @@ public partial class DailyMomentList : ContentPage
     {
         base.OnAppearing();
         _onThisDay = await ApiService.GetOnThisDay(DateTime.Now);
-        LvDailyMoments.ItemsSource = AppSettings.DailyMoments;
+
+        if (AppSettings.DailyMoments.Count > 0)
+        {
+            LvDailyMoments.ItemsSource = AppSettings.DailyMoments;
+            BordList.IsVisible = true;
+            VsNoData.IsVisible = false;
+        }
+        else
+        {
+            BordList.IsVisible = false;
+            VsNoData.IsVisible = true;
+        }
+        
     }
 
     async void LvDailyMoments_OnItemSelected(object sender, SelectedItemChangedEventArgs e)

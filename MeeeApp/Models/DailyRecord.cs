@@ -20,7 +20,28 @@ namespace MeeeApp.Models
         [JsonProperty("exerciseGrateful")] public string ExerciseGrateful { get; set; } = "";
         [JsonProperty("exerciseAchieved")] public string ExerciseAchieved { get; set; } = "";
         [JsonProperty("exerciseLookingForward")] public string ExerciseLookingForward { get; set; } = "";
+
+        public string DayDescription
+        {
+	        get
+	        {
+		        if (RecordDate.Year == DateTime.Now.Year && RecordDate.Month == DateTime.Now.Month && RecordDate.Day == DateTime.Now.Day)
+		        {
+			        return "Today";
+		        }
+		        else if (RecordDate.Year == DateTime.Now.Year && RecordDate.Month == DateTime.Now.Month && RecordDate.Day == DateTime.Now.Day - 1)
+		        {
+			        return "Yesterday";
+		        }
+		        else
+		        {
+			        int days = (RecordDate - DateTime.Now).Days;
+			        return Math.Abs(days).ToString() + " days ago";
+		        }
+	        }
+        }
         
+        // Exercises - Add an Item
         public void AddGratitude(string gratitude)
 		{
 			if (ExerciseGrateful.Length > 0)
@@ -32,6 +53,32 @@ namespace MeeeApp.Models
 				ExerciseGrateful = gratitude;
 			}
 		}
+        
+        public void AddAchievement(string achievement)
+        {
+	        if (ExerciseAchieved.Length > 0)
+	        {
+		        ExerciseAchieved += "," + achievement;
+	        }
+	        else
+	        {
+		        ExerciseAchieved = achievement;
+	        }
+        }
+        
+        public void AddLookingForward(string lookingForward)
+        {
+	        if (ExerciseLookingForward.Length > 0)
+	        {
+		        ExerciseLookingForward += "," + lookingForward;
+	        }
+	        else
+	        {
+		        ExerciseLookingForward = lookingForward;
+	        }
+        }
+        
+        // Exercises - Remove an Item
 
         public void RemoveGratitude(string gratitude)
         {
@@ -50,7 +97,53 @@ namespace MeeeApp.Models
 			        }
 		        }
 	        }
+
+	        ExerciseGrateful = newString;
         }
+        
+        public void RemoveAchievement(string achievement)
+        {
+	        var newString = "";
+	        foreach (var word in ExerciseAchievementList())
+	        {
+		        if (word != achievement)
+		        {
+			        if (newString.Length > 0)
+			        {
+				        newString += "," + word;
+			        }
+			        else
+			        {
+				        newString = word;
+			        }
+		        }
+	        }
+
+	        ExerciseAchieved = newString;
+        }
+        
+        public void RemoveLookingForward(string lookingForward)
+        {
+	        var newString = "";
+	        foreach (var word in ExerciseLookingFowardList())
+	        {
+		        if (word != lookingForward)
+		        {
+			        if (newString.Length > 0)
+			        {
+				        newString += "," + word;
+			        }
+			        else
+			        {
+				        newString = word;
+			        }
+		        }
+	        }
+
+	        ExerciseLookingForward = newString;
+        }
+        
+        // Exercises - Edit an Item
 
         public void EditGratitude(string oldWord, string newWord)
         {
@@ -84,6 +177,72 @@ namespace MeeeApp.Models
 	        ExerciseGrateful = newString;
         }
         
+        public void EditAchievement(string oldWord, string newWord)
+        {
+	        var newString = "";
+	        foreach (var word in ExerciseAchievementList())
+	        {
+		        if (word == oldWord)
+		        {
+			        if (newString.Length > 0)
+			        {
+				        newString += "," + newWord;
+			        }
+			        else
+			        {
+				        newString = newWord;
+			        }
+		        }
+		        else
+		        {
+			        if (newString.Length > 0)
+			        {
+				        newString += "," + word;
+			        }
+			        else
+			        {
+				        newString = word;
+			        }
+		        }
+	        }
+
+	        ExerciseAchieved = newString;
+        }
+        
+        public void EditLookingForward(string oldWord, string newWord)
+        {
+	        var newString = "";
+	        foreach (var word in ExerciseLookingFowardList())
+	        {
+		        if (word == oldWord)
+		        {
+			        if (newString.Length > 0)
+			        {
+				        newString += "," + newWord;
+			        }
+			        else
+			        {
+				        newString = newWord;
+			        }
+		        }
+		        else
+		        {
+			        if (newString.Length > 0)
+			        {
+				        newString += "," + word;
+			        }
+			        else
+			        {
+				        newString = word;
+			        }
+		        }
+	        }
+
+	        ExerciseLookingForward = newString;
+        }
+        
+        // Exercise - Items as Lists
+        
         public List<string> ExerciseGratefulList()
 		{
 			if (ExerciseGrateful.Length < 1)
@@ -95,6 +254,51 @@ namespace MeeeApp.Models
 				return ExerciseGrateful.Split(',').ToList();
 			}
 		}
-    }
+
+        public List<string> GratitudeList
+        {
+	        get
+	        {
+		        return ExerciseGratefulList();
+	        }
+        }
+        
+        public List<string> ExerciseAchievementList()
+        {
+	        if (ExerciseAchieved.Length < 1)
+	        {
+		        return new List<string>();
+	        }
+	        else
+	        {
+		        return ExerciseAchieved.Split(',').ToList();
+	        }
+        }
+        
+        public List<string> AchievementList
+		{
+	        get
+	        {
+		        return ExerciseAchievementList();
+	        }
+		}
+        
+        public List<string> ExerciseLookingFowardList()
+        {
+	        if (ExerciseLookingForward.Length < 1)
+	        {
+		        return new List<string>();
+	        }
+	        else
+	        {
+		        return ExerciseLookingForward.Split(',').ToList();
+	        }
+        }
+
+        public List<string> LookingForwardList
+        {
+	        get { return ExerciseLookingFowardList(); }
+        }
+	}
 }
 

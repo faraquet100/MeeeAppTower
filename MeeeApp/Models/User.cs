@@ -2,6 +2,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using MeeeApp.Services;
 using Newtonsoft.Json;
 using banditoth.MAUI.PreferencesExtension;
+using Syncfusion.Pdf.Barcode;
+using Syncfusion.XlsIO.Implementation.PivotAnalysis;
 
 namespace MeeeApp.Models;
 
@@ -29,6 +31,12 @@ public class User
                                                              r.RecordDate.Month == dateTime.Month &&
                                                              r.RecordDate.Day == dateTime.Day);
         return record;
+    }
+
+    public List<DailyRecord> LastDailyRecords(int max)
+    {
+        var dailyRecords = DailyRecords.OrderByDescending(d => d.RecordDate).Take(max).ToList();
+        return dailyRecords;
     }
 
     public string LastCheckedInLabelText()

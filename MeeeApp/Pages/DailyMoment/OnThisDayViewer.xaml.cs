@@ -14,7 +14,10 @@ public partial class OnThisDayViewer : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        
+        LblDay.Text = _onThisDay.DisplayDay.ToString();
+        LblMonth.Text = _onThisDay.DisplayMonthName();
+        LblContent.Text = _onThisDay.Content;
+        LblTitle.Text = _onThisDay.Title;
     }
 
     public OnThisDayViewer(OnThisDay onThisDay)
