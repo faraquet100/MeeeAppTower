@@ -92,6 +92,17 @@
                            Placeholder="password"
                            Focused="TxtPassword_OnFocused"
                            IsPassword="True"  />
+                    
+                    
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,0,12,0">
+                        <controls:CobaltImageButton x:Name="ImgBtnEye"
+                                                    Source="eye.png"
+                                                    HorizontalOptions="End"
+                                                    WidthRequest="24"
+                                                    Clicked="ImgBtnEye_OnClicked"
+                                                    HeightRequest="24"
+                        ></controls:CobaltImageButton>
+                    </Grid>
 
                 </Grid>
 
@@ -107,13 +118,13 @@
                     </controls:CobaltImageButton>
 
                     <Label
-                        Text="sign in"
+                        Text="sign-in"
                         TextColor="White"
                         FontFamily="BearHugs"
                         VerticalOptions="Center"
                         FontSize="36"
                         HorizontalOptions="Center"
-                        Margin="0,0,0,4"
+                        Margin="0,0,0,0"
                         />
 
                     <Grid.GestureRecognizers>
@@ -146,7 +157,7 @@
                            />
 
                     <controls:CobaltButton x:Name="BtnRegister"
-                            Text="sign up"
+                            Text="sign-up"
                             Margin="24,0,24,0"
                             Grid.Column="2"
                             HorizontalOptions="Center"

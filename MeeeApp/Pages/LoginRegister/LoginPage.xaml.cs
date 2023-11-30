@@ -6,6 +6,8 @@ namespace MeeeApp.Pages;
 
 public partial class LoginPage : ContentPage
 {
+    private bool _showPassword = false;
+    
 	public LoginPage()
 	{
         InitializeComponent();
@@ -100,5 +102,21 @@ public partial class LoginPage : ContentPage
     {
         ImgEmailHighlight.IsVisible = false;
         ImgPasswordHighlight.IsVisible = true;
+    }
+
+    private void ImgBtnEye_OnClicked(object sender, EventArgs e)
+    {
+        if (!_showPassword)
+        {
+            TxtPassword.IsPassword = false;
+            ImgBtnEye.Source = "eyeoff.png";
+            _showPassword = true;
+        }
+        else
+        {
+            TxtPassword.IsPassword = true;
+            ImgBtnEye.Source = "eye.png";
+            _showPassword = false;
+        }
     }
 }

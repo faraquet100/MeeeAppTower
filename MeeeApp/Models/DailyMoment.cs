@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using MeeeApp.Services;
 using Newtonsoft.Json;
 using banditoth.MAUI.PreferencesExtension;
@@ -21,6 +22,69 @@ public class DailyMoment
     [JsonProperty("useLikeButton")] public bool UseLikeButton { get; set; }
     [JsonProperty("useHeartButton")] public bool UseHeartButton { get; set; }
     [JsonProperty("useShareButton")] public bool UseShareButton { get; set; }
+
+    [NotMapped]
+    public DailyRecord DailyRecord { get; set; } // For use with the list, the daily record of the day this was presented to the user
+
+    public bool IsFavouritesView { get; set; } = false; // So we know whether to show the review date or now
+
+    // Properties for the list
+    
+    public string ReviewedDateFormatted
+    {
+        get
+        {
+            if (DailyRecord == null)
+            {
+                return "";
+            }
+            else
+            {
+                return "Viewed on " + DailyRecord.RecordDate.ToString("dd MMM yyyy");
+            }
+        }
+    }
+
+    public string ReviewedJournalText
+    {
+        get
+        {
+            if (DailyRecord == null)
+            {
+                return "";
+            }
+            else
+            {
+                return DailyRecord.CheckOutJournalEntry;
+            }
+        }
+    }
+
+    
+
+    // We want to save and reuse the Daily Moment for the day, so we need a key to save it with
+    // The key uses today's date so we know if we have one for that day
+    public static string TodaysMomentKey()
+    {
+        return "TODAY_MOMENT_" + DateTime.Now.ToString("yyyy-MM-dd");
+    }
+
+    public void SaveToPreferences()
+    {
+        Preferences.Default.SetObject<DailyMoment>(TodaysMomentKey(), this);
+    }
+
+    public static DailyMoment MomentFromPreferencesOrDefault(DailyMoment existingMoment)
+    {
+        var moment = Preferences.Default.GetObject<DailyMoment>(TodaysMomentKey(), null);
+        if (moment == null)
+        {
+            moment = existingMoment;
+            moment.SaveToPreferences();
+        }
+        
+        return moment;
+    }
 
     public string FullImageUrl
     {

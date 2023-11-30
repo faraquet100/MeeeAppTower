@@ -65,7 +65,7 @@
 
         <VerticalStackLayout Grid.Row="2">
             <Image x:Name="ImgFace"
-               Source="face5.png"
+               Source="newface5.png"
                Margin="0,62,0,28"
                HeightRequest="120"
                WidthRequest="120"
@@ -86,8 +86,8 @@
 
        <Slider
                 x:Name="SliderCheckIn"
-                Minimum="1"
-               Maximum="9"
+                Minimum="0"
+               Maximum="10"
                Value="5"
                Grid.Row="3"
                Margin="24,24,24,0"
@@ -99,12 +99,12 @@
         
         <Grid Grid.Row="4" ColumnDefinitions="Auto,*,Auto" Margin="24,0,24,0">
             <Label Grid.Column="0" 
-                   Text="1" 
+                   Text="0" 
                    FontSize="20"
                    FontAttributes="Bold"
                    FontFamily="BearHugs"></Label>
             <Label Grid.Column="2" 
-                   Text="9" 
+                   Text="10" 
                    FontSize="20"
                    FontAttributes="Bold"
                    FontFamily="BearHugs"></Label>

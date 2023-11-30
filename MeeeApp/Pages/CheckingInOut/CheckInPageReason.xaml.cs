@@ -1,4 +1,6 @@
-﻿using MeeeApp.Models;
+﻿using MeeeApp.Controls;
+using MeeeApp.Models;
+using MeeeApp.Pages.Common;
 using MeeeApp.Services;
 using KeyboardExtensions = CommunityToolkit.Maui.Core.Platform.KeyboardExtensions;
 
@@ -25,6 +27,11 @@ public partial class CheckInPageReason : ContentPage
         base.OnAppearing();
         MyActivityIndicator.IsVisible = false;
         var dailyRecord = _user.DailyRecordForDate(_calendarDate);
+        if (User.TestModeFromPreferences())
+        {
+            dailyRecord = null;
+        }
+        
         FixAndroid();
 
         // Salutation
@@ -59,7 +66,9 @@ public partial class CheckInPageReason : ContentPage
             InputLayoutReason.Hint = "Why was this?";
         }
 
-        if (dailyRecord != null)
+        // If we are returning from a modal text entry we don't want to overwrite the text
+        
+        if (dailyRecord != null && AppSettings.CurrentEditor != EDTTellUsMore)
         {
             if (_direction == CheckInPage.CheckingDirection.In)
             {
@@ -70,6 +79,9 @@ public partial class CheckInPageReason : ContentPage
                 EDTTellUsMore.Text = dailyRecord.CheckOutReason;
             }
         }
+
+        AppSettings.CurrentEditor = null;
+        
     }
 
     private void FixAndroid()
@@ -106,6 +118,11 @@ public partial class CheckInPageReason : ContentPage
         daily.CheckInScore = _score;
         daily.CheckInReason = reason;
         daily.RecordDate = _calendarDate;
+        
+        if (User.TestModeFromPreferences())
+        {
+            daily.RecordDate = _calendarDate.AddYears(-5);
+        }
 
         FormatForBusy(true);
         var result = await ApiService.CheckIn(daily);
@@ -130,7 +147,7 @@ public partial class CheckInPageReason : ContentPage
                 // Update the Journal Page view
                 AppSettings.JournalPage.UpdateAfterCheckInOut();
                 // Get today's Daily Moment
-                await GetDailyMomentAndContinue(_score);
+                await GetDailyMomentAndContinue();
                 break;
         }
     }
@@ -145,6 +162,12 @@ public partial class CheckInPageReason : ContentPage
         daily.CheckOutReason = reason;
         daily.CheckOutTime = DateTime.Now;
         daily.RecordDate = _calendarDate;
+
+        if (User.TestModeFromPreferences())
+        {
+            daily.CheckOutTime = DateTime.Now.AddYears(-5);
+            daily.RecordDate = _calendarDate.AddYears(-5);
+        }
 
         FormatForBusy(true);
         var result = await ApiService.CheckOut(daily);
@@ -168,10 +191,10 @@ public partial class CheckInPageReason : ContentPage
             case ApiService.ApiResult.Success:
                 // Update the Journal Page view
                 AppSettings.JournalPage.UpdateAfterCheckInOut();
-                // Get today's Daily Moment
+                
                 if (_direction == CheckInPage.CheckingDirection.In)
                 {
-                    await GetDailyMomentAndContinue(_score);
+                    await GetDailyMomentAndContinue();
                 }
                 else
                 {
@@ -182,28 +205,12 @@ public partial class CheckInPageReason : ContentPage
         }
     }
 
-    async Task GetDailyMomentAndContinue(int score)
+    async Task GetDailyMomentAndContinue()
     {
-        var result = await ApiService.GetDailyMoment(_user, score); // Daily moment is stored in AppSettings
-        switch (result)
-        {
-            case ApiService.ApiResult.BadRequest:
-                await DisplayAlert("Unexpected Error", "An unexpected error occured whilst communicating with the server.  Please try again later", "OK");
-                break;
-            case ApiService.ApiResult.NotAuthorized:
-                await DisplayAlert("Login Expired", "Your login credentials have expired.  Continue to re-enter your credentials.", "OK");
-                User.WipeUser();
-                Application.Current.MainPage = new NavigationPage(new LoginPage());
-                break;
-            case ApiService.ApiResult.NoInternet:
-                await DisplayAlert("No Network", "We can't communicate with the Internet at this time, please check your network connection and try again.", "OK");
-                break;
-            case ApiService.ApiResult.Success:
-                var onThisDay = await ApiService.GetOnThisDay(DateTime.Now);
-                await Navigation.PushAsync(new DailyMomentDetail(AppSettings.DailyMoment, onThisDay, _calendarDate));
-                break;
-        }
-        
+        _user = User.UserFromPreferences(); // Needs reloading with the new data
+        var onThisDay = await ApiService.GetOnThisDay(_calendarDate);
+        var dailyRecord = _user.DailyRecordForDate(_calendarDate);
+        await Navigation.PushAsync(new DailyMomentDetail(dailyRecord.DailyMoment, onThisDay, _calendarDate));
         FormatForBusy(false);
     }
     
@@ -251,5 +258,17 @@ public partial class CheckInPageReason : ContentPage
             //await FixedScrollView.ScrollToAsync(EDTTellUsMore, ScrollToPosition.Start, true);
             //await FixedScrollView.ScrollToAsync(GridCheckIn, ScrollToPosition.End, true);
         }
+    }
+
+    async void GridReasonTap_OnTapped(object sender, TappedEventArgs e)
+    {
+        AppSettings.CurrentEditor = EDTTellUsMore;
+        InputLayoutReason.Opacity = 0.5;
+        
+        string title = _direction == CheckInPage.CheckingDirection.In ? "checking-in" : "checking-out";
+        string placeholder = _direction == CheckInPage.CheckingDirection.In ? "Tell us more . . ." : "Why was this?";
+        
+        await Navigation.PushModalAsync(new NavigationPage(new TextEditor(title, placeholder, EDTTellUsMore.Text)));
+        InputLayoutReason.Opacity = 1.0;
     }
 }

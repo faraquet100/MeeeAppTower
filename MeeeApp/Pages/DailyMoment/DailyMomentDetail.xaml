@@ -14,7 +14,7 @@
                 x:Name="LblNavTitle"
                 Grid.Column="1"
                 Margin="0,0,0,0"
-                Text="daily moment!"
+                Text="daily moment"
                 TextColor="{StaticResource White}"
                 FontAttributes="Bold"
                 VerticalOptions="Center"
@@ -38,10 +38,10 @@
     
     <ContentPage.Content>
         <controls:FixedScrollView x:Name="FixedScrollView" Orientation="Vertical" >
-            <VerticalStackLayout Margin="0,0,0,500">
+            <VerticalStackLayout Margin="0,0,0,24">
                 
                 <Label
-                    HorizontalOptions="Start"
+                    HorizontalOptions="Center"
                     Margin="24,12,24,0"
                     Text="thanks for checking-in!"
                     TextColor="{StaticResource MeeePrimaryCyan}"
@@ -50,9 +50,9 @@
                     FontSize="32" />
                 
                 <Label
-                    HorizontalOptions="Start"
+                    HorizontalOptions="Center"
                     Margin="24,0,24,0"
-                    Text="Here's a 'Daily Moment' that we hope will help you today"
+                    Text="Here's a 'Daily Moment' to brighten your day."
                     FontSize="17"
                     FontAttributes="Bold"
                     ></Label>
@@ -105,8 +105,8 @@
                        FontAttributes="Bold"></Label>
                 
                 <!-- Icons -->
-                
-                <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="-12">
+
+                <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="8">
                     
                     <ImageButton 
                         x:Name="ImgBtnShare"
@@ -125,7 +125,7 @@
                     <ImageButton 
                         x:Name="ImgBtnHeart"
                         Source="heart_outline.png"
-                        Aspect="Fill"
+                        Aspect="AspectFit"
                         Margin="0,0,0,0"
                         Padding="0,0,0,0"
                         MaximumHeightRequest="24" 
@@ -139,7 +139,7 @@
                     <ImageButton 
                         x:Name="ImgBtnHeartPressed"
                         Source="heart.png"
-                        Aspect="Fill"
+                        Aspect="AspectFill"
                         IsVisible="False"
                         Margin="0,0,0,0"
                         Padding="0,0,0,0"
@@ -181,6 +181,7 @@
                     </ImageButton>
                     
                 </HorizontalStackLayout>
+
                 
                 <!-- Daily Moment Text -->
                 
@@ -196,7 +197,7 @@
                         Text=""
                         FontSize="17"
                         LineBreakMode="WordWrap"
-                        FontAttributes="Italic"
+                        FontAttributes = "Bold,Italic"
                         HorizontalOptions="Center"
                         HorizontalTextAlignment="Center"
                     ></Label>
@@ -204,7 +205,7 @@
                     <Label 
                         x:Name="LblQuoteAuthor" 
                         Text="Martina Navratilova"
-                        FontSize="15"
+                        FontSize="17"
                         FontAttributes = "Bold,Italic"
                         HorizontalOptions="Center"
                         
@@ -213,8 +214,7 @@
                     <Label 
                         x:Name="LblContent" 
                         HorizontalTextAlignment="Center"
-                        FontAttributes="Bold"
-                        FontSize="15"
+                        FontSize="17"
                         LineHeight="1.1"
                         Text=""
                         Margin="0,24,0,12"></Label>
@@ -242,7 +242,7 @@
                 <Grid x:Name="GridJournal">
                     <inputLayout:SfTextInputLayout
                         Margin="12,0,12,0"
-                        Hint="Record a journal entry for today ..."
+                        Hint="Take a minute to reflect on the 'Daily Moment' above"
                         ContainerType="Outlined"
                         Stroke="{StaticResource Black}"
                         FocusedStrokeThickness="4"
@@ -251,14 +251,24 @@
                         EnableHintAnimation="True"
                         ContainerBackground="White"
                         BackgroundColor="White">
-
-                    
+                        
                         <Editor
                             x:Name="EDTTellUsMore"
-                            Focused="EDTTellUsMore_OnFocused"
-                            TextChanged="EDTTellUsMore_OnTextChanged"
-                            AutoSize="TextChanges"
-                        />
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            FontSize="17"
+                            AutoSize="TextChanges">
+                            
+                            <Editor.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="GridJournalTap" Tapped="GridJournalTap_OnTapped" NumberOfTapsRequired="1"  />
+                            </Editor.GestureRecognizers>
+                            
+                        </Editor>
+                        
+                        <inputLayout:SfTextInputLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="GridJournalTap_OnTapped" NumberOfTapsRequired="1"  />
+                        </inputLayout:SfTextInputLayout.GestureRecognizers>
+                        
                     </inputLayout:SfTextInputLayout>
                 </Grid>
 

@@ -20,6 +20,8 @@ namespace MeeeApp.Models
         [JsonProperty("exerciseGrateful")] public string ExerciseGrateful { get; set; } = "";
         [JsonProperty("exerciseAchieved")] public string ExerciseAchieved { get; set; } = "";
         [JsonProperty("exerciseLookingForward")] public string ExerciseLookingForward { get; set; } = "";
+        
+        [JsonProperty("dailyMoment")] public DailyMoment DailyMoment { get; set; } = new DailyMoment();
 
         public string DayDescription
         {

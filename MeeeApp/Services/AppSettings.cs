@@ -12,6 +12,9 @@ namespace MeeeApp.Services
         public static DailyMoment DailyMoment { get; set; }
         public static List<DailyMoment> DailyMoments { get; set; }
         
+        public static Editor CurrentEditor { get; set; }	// Used in conjunction with the TextEditor view
+        public static Label CurrentLabel { get; set; }	// Used in conjunction with the TextEditor view
+        
         public static string MOMENT_IMAGE_URL = "https://meeeweb.azurewebsites.net/moment-images/";
         
 

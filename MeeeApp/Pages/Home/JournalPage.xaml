@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MeeeApp.Pages.JournalPage"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:controls="clr-namespace:MeeeApp.Controls"
              NavigationPage.HasNavigationBar="False"
@@ -11,6 +12,7 @@
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource MeeePrimaryMagenta}"></toolkit:StatusBarBehavior>
     </ContentPage.Behaviors>
+    
 
     <Grid>
 
@@ -21,7 +23,9 @@
 
             <VerticalStackLayout VerticalOptions="Start" Padding="24">
 
-                <Grid ColumnDefinitions="Auto,*,Auto" WidthRequest="280" HorizontalOptions="Start">
+                <!-- Date Navigation -->
+                
+                <Grid ColumnDefinitions="Auto,*,Auto" WidthRequest="290" HorizontalOptions="Start">
                     
                     <controls:CobaltImageButton
                         x:Name="ImgBtnDayBack"
@@ -40,9 +44,10 @@
                            HorizontalOptions="Center"
                            HorizontalTextAlignment="Center"
                            Grid.Column="1"
+                           TextTransform="Uppercase"
                            Margin="12,0"
                            FontSize="40"
-                           FontFamily="BearHugs"
+                           FontFamily="MeeeFont"
                            FontAttributes="Bold" />
 
                     <controls:CobaltImageButton
@@ -58,6 +63,8 @@
                     </controls:CobaltImageButton>
                 </Grid>
 
+                <!-- Last Checked In Label -->
+                
                 <HorizontalStackLayout HorizontalOptions="Start">
                         <Label x:Name="LblLastCheckedIn"
                                Text="You last checked in 2 days ago."
@@ -189,22 +196,16 @@
 
                         <HorizontalStackLayout HorizontalOptions="Center">
                             <Label
+                                x:Name="LblCheckInTime"
                                 Text="checked-in"
                                 TextColor="White"
-                                FontFamily="BearHugs"
+                                FontFamily="MeeeFont"
+                                TextTransform="Uppercase"
                                 VerticalOptions="Center"
                                 FontSize="32"
                                 HorizontalOptions="Center"
                                 Margin="0,0,0,4"
                             />
-                            <Label x:Name="LblCheckInTime"
-                                   Text="8:30 : 5"
-                                   Margin="12,16,12,12"
-                                   FontSize="28"
-                                   FontFamily="Juicebox"
-                                   FontAttributes="Bold"
-                                   TextColor="White"
-                            ></Label>
                             <Image Source="tickwhite.png" WidthRequest="30" HeightRequest="30"></Image>
                         </HorizontalStackLayout>
                         
@@ -226,8 +227,12 @@
                            Margin="24,-18,24,24"
                            Text=""
                            FontSize="17"
-                           FontAttributes="Italic"
-                    ></Label>
+                           FontAttributes="Italic">
+                        
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapCheckedInReason" Tapped="TapCheckedInReason_OnTapped" NumberOfTapsRequired="1"></TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                    </Label>
                     
                     
                     <!-- Check Out Button - Not Checked Out -->
@@ -272,22 +277,16 @@
 
                         <HorizontalStackLayout HorizontalOptions="Center">
                             <Label
+                                x:Name="LblCheckOutTime"
                                 Text="checked-out"
                                 TextColor="White"
-                                FontFamily="BearHugs"
+                                TextTransform="Uppercase"
+                                FontFamily="MeeeFont"
                                 VerticalOptions="Center"
                                 FontSize="32"
                                 HorizontalOptions="Center"
                                 Margin="0,0,0,4"
                             />
-                            <Label x:Name="LblCheckOutTime"
-                                   Text="8:30 : 5"
-                                   Margin="12,16,12,12"
-                                   FontSize="28"
-                                   FontFamily="Juicebox"
-                                   FontAttributes="Bold"
-                                   TextColor="White"
-                            ></Label>
                             <Image Source="tickwhite.png" WidthRequest="30" HeightRequest="30"></Image>
                         </HorizontalStackLayout>
                         
@@ -309,54 +308,56 @@
                            Margin="24,-18,24,24"
                            Text=""
                            FontAttributes="Italic"
-                           FontSize="17"
-                    ></Label>
-
-                    <toolkit:MediaElement
-                        x:Name="MeMomentVideo"
-                        Margin="0,12,0,0"
-                        Source="https://meeeweb.azurewebsites.net/moment-images/e12858d5-04bb-4db5-9d8b-2817e5941f3a.m4v"
-                        HeightRequest="225"
-                        WidthRequest="320"
-                        BackgroundColor="White"
-                        Aspect="AspectFill"
-                        HorizontalOptions="Center"
-                        ShouldAutoPlay="True"
-                        ShouldLoopPlayback="True"
-                    ></toolkit:MediaElement>
-
-                    <!-- Daily Exercises -->
-
-                    <!--
-                    <controls:CobaltGrid x:Name="GridDailyExercises" Padding="0" Margin="0,0,0,0">
-
-                        <controls:CobaltImageButton x:Name="ImgBtnDailyExcercises"
-                                 Source="button_black.png"
-                                 HeightRequest="70"
-                                 Aspect="Fill"
-                                 Clicked="ImgBtnDailyExcercises_Clicked"
-                                 VerticalOptions="Center">
-                        </controls:CobaltImageButton>
-
-                        <Label
-                            Text="daily exercises (2 of 3)"
-                            TextColor="White"
-                            FontFamily="BearHugs"
-                            VerticalOptions="Center"
-                            FontSize="24"
-                            HorizontalOptions="Center"
-                            Margin="0,0,0,4"
-                            />
-
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer x:Name="TapDailyExercises" Tapped="TapDailyExercises_Tapped" />
-                        </Grid.GestureRecognizers>
-                   
-                    </controls:CobaltGrid>
-                    -->
- 
+                           FontSize="17">
+                           
+                           <Label.GestureRecognizers>
+                              <TapGestureRecognizer x:Name="TapCheckedOutReason" Tapped="TapCheckedOutReason_OnTapped" NumberOfTapsRequired="1"></TapGestureRecognizer>
+                           </Label.GestureRecognizers>
+                    </Label>
+                    
                 </VerticalStackLayout>
+                
+                <!-- Happy Video -->
+                
+                <toolkit:MediaElement
+                    x:Name="MeMomentVideo"
+                    Margin="0,-6,0,6"
+                    Source="embed://example_animation.m4v"
+                    HeightRequest="225"
+                    WidthRequest="320"
+                    BackgroundColor="White"
+                    Aspect="AspectFill"
+                    HorizontalOptions="Center"
+                    ShouldAutoPlay="True"
+                    ShouldLoopPlayback="True"
+                ></toolkit:MediaElement>
 
+                <!-- Chart -->
+                
+                <chart:SfCartesianChart x:Name="ChartCheckingIn" Margin="-12,0,-12,0" HeightRequest="300">
+                    <chart:SfCartesianChart.XAxes>
+                        <chart:DateTimeAxis>
+                            <!--
+                            <chart:DateTimeAxis.Title>
+                                <chart:ChartAxisTitle Text="Checking-In Date"></chart:ChartAxisTitle>
+                            </chart:DateTimeAxis.Title>
+                            -->
+                        </chart:DateTimeAxis>
+                    </chart:SfCartesianChart.XAxes>
+                    
+                    <chart:SfCartesianChart.YAxes>
+                        <chart:NumericalAxis Minimum="0" Maximum="10" Interval="1">
+                        </chart:NumericalAxis>
+                    </chart:SfCartesianChart.YAxes>
+                    
+                    <chart:SfCartesianChart.Legend>
+                        <chart:ChartLegend Placement="Bottom"></chart:ChartLegend>
+                    </chart:SfCartesianChart.Legend>
+                    
+                </chart:SfCartesianChart>
+
+                
+                
             </VerticalStackLayout>
         </controls:FixedScrollView>
 

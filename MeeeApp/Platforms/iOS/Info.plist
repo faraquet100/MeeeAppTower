@@ -31,7 +31,7 @@
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/meee_app_icon.appiconset</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.cobalttechno.ios.meee</string>
+	<string>com.meee.ios.meeeapp</string>
 	<key>CFBundleDisplayName</key>
 	<string>Meee</string>
 	<key>CFBundleName</key>

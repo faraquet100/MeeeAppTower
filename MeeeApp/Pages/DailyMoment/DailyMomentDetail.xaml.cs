@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MeeeApp.Controls;
 using MeeeApp.Models;
+using MeeeApp.Pages.Common;
 using MeeeApp.Services;
 using Microsoft.Maui.Platform;
 using KeyboardExtensions = CommunityToolkit.Maui.Core.Platform.KeyboardExtensions;
@@ -20,23 +21,42 @@ public partial class DailyMomentDetail : ContentPage
     
     // For review
     private bool _isReview = false;
+    private bool _isFavourites = false;
     private int _currentDailyMomentIndex = 0;
     
-    public DailyMomentDetail(DailyMoment dailyMoment, OnThisDay onThisDay, DateTime calendarDate, bool isReview = false)
+    public DailyMomentDetail(DailyMoment dailyMoment, OnThisDay onThisDay, DateTime calendarDate, bool isReview = false, bool isFavourites = false)
     {
         InitializeComponent();
+        _dailyMoment = dailyMoment;
 
         //AppSettings.CurrentPage = this; // We need to do this so we can get the current page in the FixedScrollView class
-        _dailyMoment = dailyMoment;
         _isReview = isReview;
+        _isFavourites = isFavourites;
         _onThisDay = onThisDay;
         _calendarDate = calendarDate;
         _dailyRecord = User.UserFromPreferences().DailyRecordForDate(_calendarDate);
+
+        // When reviewing saved daily moments
+        if (isFavourites && dailyMoment.DailyRecord != null)
+        {
+            _dailyRecord = dailyMoment.DailyRecord;
+        }
+
+        if (User.TestModeFromPreferences())
+        {
+            _dailyRecord = User.UserFromPreferences().DailyRecordForDate(_calendarDate.AddYears(-5));
+        }
     }
     
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
+        
+        if (AppSettings.CurrentEditor == EDTTellUsMore)
+        {
+            _dailyRecord.CheckOutJournalEntry = AppSettings.CurrentEditor.Text;
+        }
+        
         FormatMoment();
         FixAndroid();
 
@@ -45,12 +65,25 @@ public partial class DailyMomentDetail : ContentPage
             BtnNext.IsVisible = false;
         }
 
-        if (_dailyRecord != null)
+        if (_dailyRecord != null && AppSettings.CurrentEditor != EDTTellUsMore)
         {
             EDTTellUsMore.Text = _dailyRecord.CheckOutJournalEntry;
         }
+
+        if (_dailyRecord != null && AppSettings.CurrentEditor == EDTTellUsMore)
+        {
+            // We need to save an edit
+            SaveDailyRecord();
+        }
+
+        AppSettings.CurrentEditor = null;
         
         DelayedSetup();
+        
+        if (KeyboardExtensions.IsSoftKeyboardShowing(EDTTellUsMore))
+        {
+            await KeyboardExtensions.HideKeyboardAsync(EDTTellUsMore, System.Threading.CancellationToken.None);
+        }
     }
 
     private void FixAndroid()
@@ -69,9 +102,21 @@ public partial class DailyMomentDetail : ContentPage
         LblMomentTitle.Text = _dailyMoment.Heading.ToLower();
         LblCallToAction.Text = _dailyMoment.CallToActionText;
         
-        LblQuote.Text = "\"" + _dailyMoment.QuoteText.Replace("\"", "") + "\"";
+        LblQuote.Text = "“" + _dailyMoment.QuoteText.Replace("\"", "").Trim() + "”";  // Option+[ for opening quote Option+Shift+[ for closing quote
         LblQuoteAuthor.Text = _dailyMoment.QuoteAuthor;
         LblContent.Text = _dailyMoment.Content;
+        
+        if (_dailyMoment.QuoteText.Length == 0)
+        {
+            LblQuote.IsVisible = false;
+            LblQuoteAuthor.IsVisible = false;
+        }
+        else
+        {
+            LblQuote.IsVisible = true;
+            LblQuoteAuthor.IsVisible = true;
+        }
+        
         //WebViewSource.Html = _dailyMoment.ContentWithHtml;
 
         FormatImageVideo();
@@ -105,6 +150,19 @@ public partial class DailyMomentDetail : ContentPage
             ImgBtnLike.IsVisible = false;
             ImgBtnLikePressed.IsVisible = false;
         }
+        
+        // Testing review 
+        if (_isReview && !_isFavourites)
+        {
+            GridJournal.IsVisible = false;
+            GridCheckIn.IsVisible = false;
+        }
+
+        if (_isReview && _isFavourites)
+        {
+            GridCheckIn.IsVisible = false;
+        }
+        
     }
 
     private void FormatImageVideo()
@@ -132,6 +190,7 @@ public partial class DailyMomentDetail : ContentPage
         MainThread.BeginInvokeOnMainThread(() =>
         {
             FormatImageVideo();
+            
         });
     }
     
@@ -187,6 +246,11 @@ public partial class DailyMomentDetail : ContentPage
         ImgBtnHeart.IsVisible = true;
         ImgBtnHeartPressed.IsVisible = false;
         _dailyMoment.RemoveFromFavourites();
+
+        if (_isFavourites)
+        {
+            AppSettings.DailyMoments = AppSettings.DailyMoments.Where(m => m.Id != _dailyMoment.Id).ToList();
+        }
     }
 
     async void ImgBtnShare_OnClicked(object sender, EventArgs e)
@@ -237,5 +301,11 @@ public partial class DailyMomentDetail : ContentPage
     private void SaveDailyRecord()
     {
         ApiService.SaveJournalAndExercise(_dailyRecord);    // Deliberately not awaited
+    }
+
+    async void GridJournalTap_OnTapped(object sender, TappedEventArgs e)
+    {
+        AppSettings.CurrentEditor = this.EDTTellUsMore;
+        await Navigation.PushModalAsync(new NavigationPage(new TextEditor("daily moment", "Take a minute to reflect on today's 'Daily Moment' . . .", EDTTellUsMore.Text)));
     }
 }

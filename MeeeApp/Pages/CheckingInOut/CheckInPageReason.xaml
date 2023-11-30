@@ -44,10 +44,11 @@
                            Text="xxx"
                            TextColor="{StaticResource MeeePrimaryCyan}"
                            FontAttributes="Bold"
-                           FontFamily="BearHugs"
+                           FontFamily="MeeeFont"
+                           TextTransform="Uppercase"
                            Padding="0,12,0,12"
                            FontSize="32" />
-
+                    
                     <inputLayout:SfTextInputLayout
                         x:Name="InputLayoutReason"
                         Margin="-4,12,-4,12"
@@ -60,14 +61,20 @@
                         EnableHintAnimation="True"
                         ContainerBackground="White"
                         BackgroundColor="White">
-
-                    
+                        
                         <Editor
                             x:Name="EDTTellUsMore"
                             AutoSize="TextChanges"
-                            FontSize="17"
-                            Focused="EDTTellUsMore_OnFocused"
-                            />
+                            FontSize="17">
+                            
+                            <Editor.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="GridReasonTap" Tapped="GridReasonTap_OnTapped" NumberOfTapsRequired="1"  />
+                            </Editor.GestureRecognizers>
+                        </Editor>
+                        
+                        <inputLayout:SfTextInputLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="GridReasonTap_OnTapped" NumberOfTapsRequired="1"  />
+                        </inputLayout:SfTextInputLayout.GestureRecognizers>
                     </inputLayout:SfTextInputLayout>
 
                     <Label 

@@ -12,10 +12,33 @@ namespace MeeeApp.Pages;
 public partial class DailyMomentList : ContentPage
 {
     private OnThisDay _onThisDay = new OnThisDay();
-    public DailyMomentList()
+    private bool _isFavourites = false;
+    public DailyMomentList(bool isFavourites)
     {
         InitializeComponent();
+        _isFavourites = isFavourites;
+        AddDailyRecordsToMoments();
     }
+
+    private void AddDailyRecordsToMoments()
+    {
+        // When did the user view this
+        var user = User.UserFromPreferences();
+        var dailyRecords = user.DailyRecords.OrderByDescending(r => r.RecordDate).ToList();
+        foreach (var moment in AppSettings.DailyMoments)
+        {
+            moment.IsFavouritesView = _isFavourites;
+            var dailyRecord = dailyRecords.FirstOrDefault(r => r.DailyMoment.Id == moment.Id);
+            if (dailyRecord != null)
+            {
+                moment.DailyRecord = dailyRecord;
+            }
+        }
+        
+        // Sort the list
+        AppSettings.DailyMoments = AppSettings.DailyMoments.OrderByDescending(m => m.DailyRecord?.RecordDate).ToList();
+    }
+    
     
     protected override async void OnAppearing()
     {
@@ -40,13 +63,13 @@ public partial class DailyMomentList : ContentPage
     {
         if (e.SelectedItem != null)
         {
-            MyActivityIndicator.IsVisible = true;
+            //MyActivityIndicator.IsVisible = true;
             LvDailyMoments.SelectedItem = null;
             var moment = e.SelectedItem as DailyMoment;
-            await Navigation.PushAsync(new DailyMomentDetail(moment, _onThisDay,  DateTime.Now, true));
+            await Navigation.PushAsync(new DailyMomentDetail(moment, _onThisDay,  DateTime.Now, true, _isFavourites));
             LvDailyMoments.SelectedItem = null;
             LvDailyMoments.SelectedItem = null;
-            MyActivityIndicator.IsVisible = false;
+            //MyActivityIndicator.IsVisible = false;
         }
     }
 }

@@ -128,6 +128,46 @@
                                                                 </Grid.GestureRecognizers>
                                                         </controls:CobaltGrid>
                                                 </VerticalStackLayout>
+                                                
+                                                <BoxView HeightRequest="1" Color="{StaticResource Gray100}" Margin="12,0,0,0"></BoxView>
+                                                
+                                                <VerticalStackLayout Padding="12,12,12,12">
+                                                        <controls:CobaltGrid x:Name="GridTurnTestModeOn" ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+                                                                <Image Grid.Column="0" Source="icons8_30gear.png" />
+                                                                <VerticalStackLayout Grid.Column="1" Padding="12,0,12,0">
+                                                                        <Label FontSize="16" FontAttributes="Bold">Turn TestMode ON</Label>
+                                                                        <Label Margin="0,4,0,0" TextColor="{StaticResource Gray500}">With Test Mode On the app will not load existing check in details and will fake Checking-In/Out</Label>
+                                                                </VerticalStackLayout>
+                                                                <Image Grid.Column="2" Source="chevron_right_small.png" WidthRequest="30">
+                                                                        <ImageButton.Behaviors>
+                                                                                <toolkit:IconTintColorBehavior TintColor="{StaticResource Gray600}"></toolkit:IconTintColorBehavior>
+                                                                        </ImageButton.Behaviors>
+                                                                </Image>
+                                                                
+                                                                <Grid.GestureRecognizers>
+                                                                        <TapGestureRecognizer x:Name="TapTurnTestModeOn" Tapped="TapTurnTestModeOn_OnTapped"/>
+                                                                </Grid.GestureRecognizers>
+                                                        </controls:CobaltGrid>
+                                                        
+                                                        <controls:CobaltGrid x:Name="GridTurnTestModeOff" ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+                                                                <Image Grid.Column="0" Source="icons8_30gear.png" />
+                                                                <VerticalStackLayout Grid.Column="1" Padding="12,0,12,0">
+                                                                        <Label FontSize="16" FontAttributes="Bold">Turn TestMode OFF</Label>
+                                                                        <Label Margin="0,4,0,0" TextColor="{StaticResource Gray500}">With Test Mode Off app functionality will return to normal</Label>
+                                                                </VerticalStackLayout>
+                                                                <Image Grid.Column="2" Source="chevron_right_small.png" WidthRequest="30">
+                                                                        <ImageButton.Behaviors>
+                                                                                <toolkit:IconTintColorBehavior TintColor="{StaticResource Gray600}"></toolkit:IconTintColorBehavior>
+                                                                        </ImageButton.Behaviors>
+                                                                </Image>
+                                                                
+                                                                <Grid.GestureRecognizers>
+                                                                        <TapGestureRecognizer x:Name="TapTurnTestModeOff" Tapped="TapTurnTestModeOff_OnTapped"/>
+                                                                </Grid.GestureRecognizers>
+                                                        </controls:CobaltGrid>
+                                                </VerticalStackLayout>
+                                                
+                                                
                                         </VerticalStackLayout>
                                         
                                         <Border.StrokeShape>

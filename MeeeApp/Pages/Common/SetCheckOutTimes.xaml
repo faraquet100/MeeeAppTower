@@ -24,7 +24,7 @@
     </NavigationPage.TitleView>
     
     <ContentPage.Content>
-        <Grid RowDefinitions="Auto,Auto,*,Auto">
+        <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
                 <VerticalStackLayout Grid.Row="0" Margin="24,12,24,0">
                     <Label Text="And what time would you like for Checking-Out?"
                            TextColor="{StaticResource Gray900}"
@@ -45,13 +45,14 @@
                        Aspect="AspectFit"
                        ></Image>
                 
-                <controls:CobaltGrid x:Name="GridLink"  Padding="0" Margin="24,-160,24,0" Grid.Row="2">
+                <controls:CobaltGrid x:Name="GridLink"  Padding="0" Margin="24,40,24,0" Grid.Row="2">
 
                     <controls:CobaltImageButton x:Name="ImgBtnSelectTime"
                                                 Source="button_pink.png"
                                                 Opacity="0.8"
                                                 HeightRequest="80"
                                                 Aspect="Fill"
+                                                Margin="0,8,0,0"
                                                 VerticalOptions="Center">
                     </controls:CobaltImageButton>
 
@@ -59,20 +60,20 @@
                         x:Name="TimePicker"
                         Time="{Binding CheckOutTime, Mode=TwoWay}"
                         HorizontalOptions="Center"
-                        FontSize="36"
+                        FontSize="40"
                         Opacity="1"
                         Format="HH:mm"
+                        FontFamily="MeeeFont"
                         FontAttributes="Bold"
                         HeightRequest="40"
                         TextColor="white"
-                        Margin="0,0,0,4"
                         ></TimePicker>
  
                     
                 </controls:CobaltGrid>
                 
                 
-                <controls:CobaltGrid x:Name="GridContinue" Grid.Row="3">
+                <controls:CobaltGrid x:Name="GridContinue" Grid.Row="4">
                     <Image Source="footer_button.png" Aspect="AspectFill" MaximumHeightRequest="100"/>
                     <VerticalStackLayout
                         x:Name="VSContinueButton"

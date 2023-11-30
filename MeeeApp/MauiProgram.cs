@@ -65,7 +65,7 @@ public static class MauiProgram
 #endif
 		});
 
-        // Remove the underline from the TimePicker
+        // Remove the underline from the TimePicker in Android and the border in IOS
         Microsoft.Maui.Handlers.TimePickerHandler.Mapper.AppendToMapping("MyTimePickerCustomisation",
 	        (handler, view) =>
 	        {
@@ -75,8 +75,10 @@ public static class MauiProgram
 
 					handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
 #endif
+#if IOS
+			        handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+#endif
 		        }
-
 	        });
 
 

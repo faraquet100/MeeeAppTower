@@ -33,13 +33,13 @@ public partial class CheckInPage : ContentPage
         switch (DateExtensions.GetPartOfDay())
         {
             case DateExtensions.PartOfDay.Morning:
-                LblName.Text = "Good Morning " + _user.FirstName + "!";
+                LblName.Text = "good morning " + _user.FirstName.ToLower() + "!";
                 break;
             case DateExtensions.PartOfDay.Afternoon:
-                LblName.Text = "Good Afternoon " + _user.FirstName + "!";
+                LblName.Text = "good afternoon " + _user.FirstName.ToLower() + "!";
                 break;
             case DateExtensions.PartOfDay.Evening:
-                LblName.Text = "Good Evening " + _user.FirstName + "!";
+                LblName.Text = "good evening " + _user.FirstName.ToLower() + "!";
                 break;
         }
 
@@ -50,6 +50,11 @@ public partial class CheckInPage : ContentPage
         }
 
         var dailyRecord = _user.DailyRecordForDate(_calendarDate);
+        if (User.TestModeFromPreferences())
+        {
+            dailyRecord = null;
+        }
+        
         if (dailyRecord != null)
         {
             if (_direction == CheckingDirection.In)
@@ -88,7 +93,7 @@ public partial class CheckInPage : ContentPage
     void SliderCheckIn_ValueChanged(System.Object sender, Microsoft.Maui.Controls.ValueChangedEventArgs e)
     {
         selectedScore = (int)e.NewValue;
-        var imageName = "face" + (selectedScore).ToString();
+        var imageName = "newface" + (selectedScore).ToString();
 
         MainThread.BeginInvokeOnMainThread(() =>
         {

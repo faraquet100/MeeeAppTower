@@ -15,7 +15,22 @@ public partial class SettingsPage : ContentPage
 	async protected override void OnAppearing()
 	{
 		base.OnAppearing();
-		
+
+		FormatForTestMode();
+	}
+
+	private void FormatForTestMode()
+	{
+		if (User.TestModeFromPreferences())
+		{
+			GridTurnTestModeOff.IsVisible = true;
+			GridTurnTestModeOn.IsVisible = false;
+		}
+		else
+		{
+			GridTurnTestModeOff.IsVisible = false;
+			GridTurnTestModeOn.IsVisible = true;
+		}
 	}
 
 	private void BtnLogout_OnClicked(object sender, EventArgs e)
@@ -45,7 +60,7 @@ public partial class SettingsPage : ContentPage
 		if (success)
 		{
 			AppSettings.DailyMoments = AppSettings.DailyMoments.Where(m => favourites.Contains(m.Id)).ToList();
-			await Navigation.PushAsync(new DailyMomentList());
+			await Navigation.PushAsync(new DailyMomentList(true));
 		}
 		
 		MyActivityIndicator.IsVisible = false;
@@ -61,7 +76,7 @@ public partial class SettingsPage : ContentPage
 		if (success)
 		{
 			//var firstMoment = AppSettings.DailyMoments[0];
-			await Navigation.PushAsync(new DailyMomentList());
+			await Navigation.PushAsync(new DailyMomentList(false));
 		}
 
 		MyActivityIndicator.IsVisible = false;
@@ -135,5 +150,17 @@ public partial class SettingsPage : ContentPage
 		{
 			await DisplayAlert("Notifications Disabled", "You have disabled notifications for this app.  Please enable them in your device settings.", "OK");
 		}
+	}
+
+	private void TapTurnTestModeOn_OnTapped(object sender, TappedEventArgs e)
+	{
+		User.SaveTestModeToPreferences(true);
+		FormatForTestMode();
+	}
+
+	private void TapTurnTestModeOff_OnTapped(object sender, TappedEventArgs e)
+	{
+		User.SaveTestModeToPreferences(false);
+		FormatForTestMode();
 	}
 }

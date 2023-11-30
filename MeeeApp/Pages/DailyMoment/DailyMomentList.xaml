@@ -14,7 +14,7 @@
                 <Label 
                     FontSize="16"
                     FontAttributes="Bold"
-                    Text="You have not yet marked any Daily Moments as favourites." 
+                    Text="You have not yet marked any 'Daily Moments' as favourites." 
                     HorizontalOptions="Center" 
                     HorizontalTextAlignment="Center"></Label>
                 
@@ -28,6 +28,7 @@
                           HasUnevenRows="True"
                           ItemSelected="LvDailyMoments_OnItemSelected"
                           Margin="0,0,0,0"
+                          CachingStrategy="RecycleElement"
                           >
                 
                     <ListView.ItemTemplate>
@@ -38,9 +39,14 @@
                                             
                                                 <Image x:Name="MeMomentImage" 
                                                    Grid.Column="0" 
-                                                   Source="{Binding FullImageUrlForListView}"
                                                    WidthRequest="80" 
-                                                   HeightRequest="80" />
+                                                   HeightRequest="80">
+                                                    
+                                                   <Image.Source>
+                                                       <UriImageSource Uri="{Binding FullImageUrlForListView}" CachingEnabled="True" CacheValidity="30:10:05:01"></UriImageSource>
+                                                   </Image.Source>
+                                                   
+                                                </Image>
                                             
                                                 
                                                 <VerticalStackLayout Grid.Column="1" Padding="12,0,12,0" VerticalOptions="Center">
@@ -51,15 +57,20 @@
                                                             TextColor="{StaticResource Gray600}"
                                                             Margin="0,4,0,0"
                                                             MaxLines="3"></Label>
+                                                        <Label 
+                                                            FontSize="12" 
+                                                            FontAttributes="Bold"
+                                                            IsVisible="{Binding IsFavouritesView}"
+                                                            Text="{Binding ReviewedDateFormatted}" 
+                                                            TextColor="{StaticResource Gray600}"
+                                                            Margin="0,8,0,0"></Label>
                                                 </VerticalStackLayout>
-                                                
-                                                
+                                            
                                                 <Image Grid.Column="2" Source="chevron_right_small.png" WidthRequest="30">
                                                         <ImageButton.Behaviors>
                                                                 <toolkit:IconTintColorBehavior TintColor="{StaticResource Gray600}"></toolkit:IconTintColorBehavior>
                                                         </ImageButton.Behaviors>
                                                 </Image>
-                                                
                                                 
                                         </controls:CobaltGrid>
                                 </VerticalStackLayout>
@@ -75,16 +86,7 @@
                 </Border.StrokeShape>
             </Border>
             
-            <ActivityIndicator
-                ZIndex="3"
-                x:Name="MyActivityIndicator"
-                IsRunning="True" Color="{StaticResource MeeePrimaryCyan}"
-                Scale="3"
-                BackgroundColor="Transparent"
-                IsVisible="false" Margin="0,12,0,0"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-            />
+            
         </Grid>
     </ContentPage.Content>
     

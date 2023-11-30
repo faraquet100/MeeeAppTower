@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:controls="clr-namespace:MeeeApp.Controls"
+             NavigationPage.HasNavigationBar="True"
+             x:Class="MeeeApp.Pages.Common.TextEditor">
+    
+    <NavigationPage.TitleView>
+        <Grid ColumnDefinitions="Auto,*,Auto">
+            <Button 
+                x:Name="BtnCancel"
+                Grid.Column="0"
+                Text="cancel" 
+                FontAttributes="Bold"
+                FontFamily="BearHugs"
+                VerticalOptions="Center"
+                BackgroundColor="{StaticResource Transparent}"
+                FontSize="24"
+                HorizontalOptions="Start"
+                Clicked="BtnCancel_OnClicked"
+                TextColor="{StaticResource White}"></Button>
+            <Label
+                x:Name="LblTitle"
+                Grid.Column="1"
+                Margin="0,0,0,0"
+                Text=""
+                TextColor="{StaticResource White}"
+                FontAttributes="Bold"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                FontFamily="BearHugs"
+                FontSize="30" />
+            <Button 
+                x:Name="BtnDone"
+                Grid.Column="2"
+                Text="done" 
+                FontAttributes="Bold"
+                FontFamily="BearHugs"
+                VerticalOptions="Center"
+                BackgroundColor="{StaticResource Transparent}"
+                FontSize="24"
+                HorizontalOptions="End"
+                Clicked="BtnDone_OnClicked"
+                TextColor="{StaticResource White}"></Button>
+        </Grid>
+    </NavigationPage.TitleView>
+    
+    <ContentPage.Content>
+        <Grid>
+            <Editor x:Name="EdtEditor" FontSize="17" Margin="6,0,0,6">
+               <Editor.Keyboard>
+                   <Keyboard x:FactoryMethod="Create">
+                       <x:Arguments>
+                           <KeyboardFlags>CapitalizeSentence</KeyboardFlags>
+                       </x:Arguments>
+                   </Keyboard>
+               </Editor.Keyboard>
+           </Editor>
+            
+            <ActivityIndicator
+                ZIndex="3"
+                x:Name="MyActivityIndicator"
+                IsRunning="true" Color="{StaticResource MeeePrimaryCyan}"
+                Scale="2"
+                BackgroundColor="Transparent"
+                IsVisible="false" Margin="0,12"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+            />
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
