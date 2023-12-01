@@ -65,8 +65,10 @@
 		<!-- <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" /> -->
 
 		<!-- Android App Icon -->
-		<MauiIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\AppIcon\appicon.svg" Color="#FFFFFF">
+		
+		<MauiIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\AppIcon\appicon_padded2.svg" Color="#FFFFFF">
 		</MauiIcon>
+		
 		
 		<!-- iOS App Icon -->
 		<MauiIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\AppIcon\meee_app_icon.png" Color="#FFFFFF">
@@ -79,9 +81,13 @@
 		<MauiFont Include="Resources\Fonts\*" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-		<MauiSplashScreen Include="Resources\Splash\meee_logo.svg" BaseSize="400,400" Color="#FFFFFF" />
+		<MauiSplashScreen Include="Resources\Splash\meee_logo.svg" BaseSize="250,250" Color="#FFFFFF" />
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 		<None Remove="Resources\AppIcon\appicon.svg" />
+		<None Remove="Resources\AppIcon\appicon_padded.svg" />
+		<MauiIcon Include="Resources\AppIcon\appicon_padded.svg" />
+		<None Remove="Resources\AppIcon\appicon_padded2.svg" />
+		<MauiIcon Include="Resources\AppIcon\appicon_padded2.svg" />
 		
 	</ItemGroup>
 

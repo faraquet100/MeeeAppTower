@@ -72,8 +72,8 @@
                 <Image
                     Margin="0,48,0,0"
                     Source="heart_sparkles.png"
-                    WidthRequest="300"
-                    HeightRequest="300"
+                    WidthRequest="200"
+                    HeightRequest="200"
                     ></Image>
                 
             </VerticalStackLayout>

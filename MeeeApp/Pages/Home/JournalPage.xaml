@@ -322,7 +322,7 @@
                 <toolkit:MediaElement
                     x:Name="MeMomentVideo"
                     Margin="0,-6,0,6"
-                    Source="embed://example_animation.m4v"
+                    Source="https://meeeweb.azurewebsites.net/moment-images/e12858d5-04bb-4db5-9d8b-2817e5941f3a.m4v"
                     HeightRequest="225"
                     WidthRequest="320"
                     BackgroundColor="White"
