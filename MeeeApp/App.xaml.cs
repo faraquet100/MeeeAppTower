@@ -1,5 +1,6 @@
 ﻿using MeeeApp.Models;
 using MeeeApp.Pages;
+using Plugin.LocalNotification;
 
 namespace MeeeApp;
 
@@ -24,5 +25,6 @@ public partial class App : Application
 			MainPage = new NavigationPage(new LoginPage());
 		}
 	}
+
 }
 

@@ -11,10 +11,6 @@ public partial class SettingsPage : ContentPage
 	public SettingsPage()
 	{
 		InitializeComponent();
-		
-		// We save a reference to the settings page so we can access it from the AppSettings class
-		// Which we need to do when showing/hiding the admin mode border
-		AppSettings.SettingsPage = this;
 	}
 
 	async protected override void OnAppearing()
@@ -23,6 +19,7 @@ public partial class SettingsPage : ContentPage
 
 		FormatForTestMode();
 		FormatForAdminMode();
+		LoadVersionInfo();
 	}
 
 	public void FormatForAdminMode()
@@ -42,6 +39,12 @@ public partial class SettingsPage : ContentPage
 			GridTurnTestModeOff.IsVisible = false;
 			GridTurnTestModeOn.IsVisible = true;
 		}
+	}
+
+	private void LoadVersionInfo()
+	{
+		LblVersion.Text = "Version: " + VersionTracking.Default.CurrentVersion.ToString();
+		LblBuild.Text = "Build: " + VersionTracking.Default.CurrentBuild.ToString();
 	}
 
 	private void BtnLogout_OnClicked(object sender, EventArgs e)
@@ -203,5 +206,28 @@ public partial class SettingsPage : ContentPage
 		var grid = sender as CobaltGrid;
 		await grid.BounceOnPressAsync();
 		await Navigation.PushAsync(new ReviewExercises());
+	}
+
+	async void GridVersionInfoTap_OnTapped(object sender, TappedEventArgs e)
+	{
+		string response = await DisplayPromptAsync("Admin", "Please enter the admin password");
+
+		if (response.ToLower() == "meeeadmin")
+		{
+			if (!User.AdminModeFromPreferences())
+			{
+				User.SaveAdminModeToPreferences(true);
+				await DisplayAlert("Admin Mode ON",
+					"Admin mode has been turned ON and you will now see additional options in Settings.", "OK");
+			}
+			else
+			{
+				User.SaveAdminModeToPreferences(false);
+				await DisplayAlert("Admin Mode OFF",
+					"Admin mode has been turned OFF and you will no longer see additional options in Settings.", "OK");
+			}
+
+			FormatForAdminMode();
+		}
 	}
 }

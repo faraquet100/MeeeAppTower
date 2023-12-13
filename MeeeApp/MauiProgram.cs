@@ -18,21 +18,27 @@ public static class MauiProgram
 			.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NHaF5cXmpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdgWH9ednVWRGNZUkx/WkM=");
 
         var builder = MauiApp.CreateBuilder();
-		builder
-			.UseMauiApp<App>()
-			.UseMauiCommunityToolkit()
-			.UseMauiCommunityToolkitMediaElement()
-			.UseLocalNotification()
-			.ConfigureFonts(fonts =>
-			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-				fonts.AddFont("head-of-sean.ttf", "HandOfSean");
-				fonts.AddFont("BearHugs.ttf", "BearHugs");
-				fonts.AddFont("ByronRecCon.ttf", "Byron");
-				fonts.AddFont("Montserrat.ttf", "Mont");
-				fonts.AddFont("Montserrat-Italic.ttf", "MontItalic");
-			});
+        builder
+	        .UseMauiApp<App>()
+	        .UseMauiCommunityToolkit()
+	        .UseMauiCommunityToolkitMediaElement()
+	        .UseLocalNotification()
+	        .ConfigureFonts(fonts =>
+	        {
+		        fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+		        fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+		        fonts.AddFont("head-of-sean.ttf", "HandOfSean");
+		        fonts.AddFont("BearHugs.ttf", "BearHugs");
+		        fonts.AddFont("MeeeFont.ttf", "MeeeFont");
+		        fonts.AddFont("ByronRecCon.ttf", "Byron");
+		        fonts.AddFont("Montserrat.ttf", "Mont");
+		        fonts.AddFont("Montserrat-Italic.ttf", "MontItalic");
+	        })
+	        .ConfigureEssentials(essentials =>
+	        {
+		        // Necessary if we want to get version and build numbers
+		        essentials.UseVersionTracking();
+	        });
 
         builder.ConfigureSyncfusionCore();
 

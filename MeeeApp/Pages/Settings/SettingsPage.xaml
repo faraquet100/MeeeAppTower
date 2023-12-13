@@ -109,6 +109,26 @@
                                                         </controls:CobaltGrid>
                                                 </VerticalStackLayout>
                                                 
+                                                <BoxView HeightRequest="1" Color="{StaticResource Gray100}" Margin="12,0,0,0"></BoxView>
+                                                
+                                                <!-- Version info -->
+                                                
+                                                <VerticalStackLayout Padding="12,12,12,12">
+                                                        <controls:CobaltGrid x:Name="GridVersionInfo" ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+                                                                <Image Grid.Column="0" Source="icons8_30gear.png" />
+                                                                <VerticalStackLayout Grid.Column="1" Padding="12,0,12,0">
+                                                                        <Label FontSize="16" FontAttributes="Bold">About This App</Label>
+                                                                        <Label x:Name="LblVersion" Margin="0,4,0,0" TextColor="{StaticResource Gray500}">Version: xxxx</Label>
+                                                                        <Label x:Name="LblBuild" Margin="0,4,0,0" TextColor="{StaticResource Gray500}">Build: xxxx</Label>
+                                                                </VerticalStackLayout>
+                                                                
+                                                                <Grid.GestureRecognizers>
+                                                                        <TapGestureRecognizer x:Name="GridVersionInfoTap" Tapped="GridVersionInfoTap_OnTapped" NumberOfTapsRequired="2"/>
+                                                                </Grid.GestureRecognizers>
+                                                                
+                                                        </controls:CobaltGrid>
+                                                </VerticalStackLayout>
+                                                
                                         </VerticalStackLayout>
                                         
                                         <Border.StrokeShape>

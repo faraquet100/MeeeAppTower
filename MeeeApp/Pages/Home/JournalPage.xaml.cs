@@ -7,6 +7,7 @@ using MeeeApp.Models;
 using MeeeApp.Pages.Common;
 using MeeeApp.Services;
 using Microsoft.Maui.Controls.Shapes;
+using Syncfusion.Maui.Calendar;
 using Syncfusion.Maui.Charts;
 
 namespace MeeeApp.Pages;
@@ -38,6 +39,7 @@ public partial class JournalPage : ContentPage
         InitializeComponent();
         AppSettings.JournalPage = this;
         BindingContext = this;
+        LayoutCalendar.IsVisible = false;
     }
 
     #region StartUp
@@ -53,7 +55,8 @@ public partial class JournalPage : ContentPage
         FormatForPlan();
         //PlayIntroVideo();
         Console.WriteLine("JournalPage.OnAppearing()");
-        UpdateAfterCheckInOut();    
+        UpdateAfterCheckInOut();
+        SfCalendar.MaximumDate = DateTime.Now.AddDays(1);
         
         
         // We need to use this pattern to ensure the page has fully loaded before loading any modals
@@ -71,6 +74,41 @@ public partial class JournalPage : ContentPage
             }
         });
     }
+
+    private void UpdateCalendarSpecialDates()
+    {
+        this.SfCalendar.MonthView.SpecialDayPredicate = (date) =>
+        {
+            var dailyRecord = _user.DailyRecordForDate(date);
+            if (dailyRecord != null)
+            {
+                if (dailyRecord.CheckInTime.Year > 2020 && dailyRecord.CheckOutTime.Year > 2020)
+                {
+                    CalendarIconDetails iconDetails = new CalendarIconDetails();
+                    iconDetails.Icon = CalendarIcon.Square;
+                    iconDetails.Fill = AppSettings.MeeeColorYellow;
+                    return iconDetails;
+                }
+                else if (dailyRecord.CheckInTime.Year > 2020)
+                {
+                    CalendarIconDetails iconDetails = new CalendarIconDetails();
+                    iconDetails.Icon = CalendarIcon.Square;
+                    iconDetails.Fill = AppSettings.MeeeColorMagenta;
+                    return iconDetails;
+                }
+                else if (dailyRecord.CheckOutTime.Year > 2020)
+                {
+                    CalendarIconDetails iconDetails = new CalendarIconDetails();
+                    iconDetails.Icon = CalendarIcon.Square;
+                    iconDetails.Fill = AppSettings.MeeeColorCyan;
+                    return iconDetails;
+                }
+            }
+
+            return null;
+        };
+    }
+    
     
     private bool ShouldRequestCheckInTimes()
     {
@@ -200,6 +238,8 @@ public partial class JournalPage : ContentPage
         {
             FormatForReflection();
         }
+        
+        UpdateCalendarSpecialDates();
     }
 
 
@@ -737,27 +777,6 @@ public partial class JournalPage : ContentPage
         LblCheckedOutReason.Opacity = 1.0;
         */
     }
-    
-
-
-    async void TapAdminMode_OnTapped(object sender, TappedEventArgs e)
-    {
-        if (!User.AdminModeFromPreferences())
-        {
-            User.SaveAdminModeToPreferences(true);
-            await DisplayAlert("Admin Mode ON", "Admin mode has been turned ON and you will now see additional options in Settings.", "OK");
-        }
-        else
-        {
-            User.SaveAdminModeToPreferences(false);
-            await DisplayAlert("Admin Mode OFF", "Admin mode has been turned OFF and you will no longer see additional options in Settings.", "OK");
-        }
-
-        if (AppSettings.SettingsPage != null)
-        {
-            AppSettings.SettingsPage.FormatForAdminMode();
-        }
-    }
 
     private void BtnChartBack_OnClicked(object sender, EventArgs e)
     {
@@ -768,7 +787,8 @@ public partial class JournalPage : ContentPage
 
     private void BtnChartNext_OnClicked(object sender, EventArgs e)
     {
-        if (_chartDate.Month == DateTime.Now.Month && _chartDate.Year == DateTime.Now.Year)
+        var checkDate = DateTime.Now.AddDays(14);
+        if (_chartDate >= checkDate)
         {
             return;
         }
@@ -776,5 +796,36 @@ public partial class JournalPage : ContentPage
         _chartDate = _chartDate.AddDays(14);
         LoadChartData();
         InitialiseChart();
+    }
+
+    private void TodayTap_OnTapped(object sender, TappedEventArgs e)
+    {
+        LayoutCalendar.IsVisible = true;
+    }
+
+    private void SfCalendar_OnSelectionChanged(object sender, CalendarSelectionChangedEventArgs e)
+    {
+        var calendar = sender as SfCalendar;
+        var selectedDate = calendar.SelectedDate;
+        if (selectedDate != null)
+        {
+            calendarDate = selectedDate.Value;
+
+            if (planIsActive)
+            {
+                FormatForPlan();
+            }
+            else
+            {
+                FormatForReflection();
+            }
+        }
+        
+        LayoutCalendar.IsVisible = false;
+    }
+
+    private void BtnCalendarDone_OnClicked(object sender, EventArgs e)
+    {
+        LayoutCalendar.IsVisible = false;
     }
 }
