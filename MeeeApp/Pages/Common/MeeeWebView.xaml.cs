@@ -23,6 +23,6 @@ public partial class MeeeWebView : ContentPage
 
     async void BtnClose_OnClicked(object sender, EventArgs e)
     {
-        await Navigation.PopModalAsync(true);
+        await Navigation.PopAsync();
     }
 }

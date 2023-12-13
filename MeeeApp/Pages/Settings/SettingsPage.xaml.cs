@@ -1,5 +1,6 @@
 ﻿using MeeeApp.Controls;
 using MeeeApp.Models;
+using MeeeApp.Pages.Settings;
 using MeeeApp.Services;
 using Plugin.LocalNotification;
 
@@ -10,6 +11,10 @@ public partial class SettingsPage : ContentPage
 	public SettingsPage()
 	{
 		InitializeComponent();
+		
+		// We save a reference to the settings page so we can access it from the AppSettings class
+		// Which we need to do when showing/hiding the admin mode border
+		AppSettings.SettingsPage = this;
 	}
 
 	async protected override void OnAppearing()
@@ -17,6 +22,12 @@ public partial class SettingsPage : ContentPage
 		base.OnAppearing();
 
 		FormatForTestMode();
+		FormatForAdminMode();
+	}
+
+	public void FormatForAdminMode()
+	{
+		BorderAdmin.IsVisible = User.AdminModeFromPreferences();
 	}
 
 	private void FormatForTestMode()
@@ -63,6 +74,28 @@ public partial class SettingsPage : ContentPage
 			await Navigation.PushAsync(new DailyMomentList(true));
 		}
 		
+		MyActivityIndicator.IsVisible = false;
+	}
+	
+	async void GridJournalEntriesTap_OnTapped(object sender, TappedEventArgs e)
+	{
+		var grid = sender as CobaltGrid;
+		await grid.BounceOnPressAsync();
+
+		MyActivityIndicator.IsVisible = true;
+		var success = await LoadDailyMoments();
+		if (success)
+		{
+			var journalEntries = User.UserFromPreferences().DailyRecords.Where(r => r.CheckOutJournalEntry.Length > 0)
+				.Select(m => m.DailyMoment.Id)
+				.Distinct()
+				.ToList();
+
+			AppSettings.DailyMoments = AppSettings.DailyMoments.Where(m => journalEntries.Contains(m.Id))
+				.ToList();
+			await Navigation.PushAsync(new DailyMomentList(true));
+		}
+
 		MyActivityIndicator.IsVisible = false;
 	}
 
@@ -162,5 +195,13 @@ public partial class SettingsPage : ContentPage
 	{
 		User.SaveTestModeToPreferences(false);
 		FormatForTestMode();
+	}
+
+
+	async void GridExercisesTap_OnTapped(object sender, TappedEventArgs e)
+	{
+		var grid = sender as CobaltGrid;
+		await grid.BounceOnPressAsync();
+		await Navigation.PushAsync(new ReviewExercises());
 	}
 }

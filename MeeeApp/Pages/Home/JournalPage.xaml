@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MeeeApp.Pages.JournalPage"
              xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:controls="clr-namespace:MeeeApp.Controls"
              NavigationPage.HasNavigationBar="False"
@@ -25,7 +26,7 @@
 
                 <!-- Date Navigation -->
                 
-                <Grid ColumnDefinitions="Auto,*,Auto" WidthRequest="290" HorizontalOptions="Start">
+                <Grid ColumnDefinitions="Auto,*,Auto" WidthRequest="290" HorizontalOptions="Center">
                     
                     <controls:CobaltImageButton
                         x:Name="ImgBtnDayBack"
@@ -48,7 +49,13 @@
                            Margin="12,0"
                            FontSize="40"
                            FontFamily="MeeeFont"
-                           FontAttributes="Bold" />
+                           FontAttributes="Bold">
+                        
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapAdminMode" Tapped="TapAdminMode_OnTapped" NumberOfTapsRequired="2"></TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                        
+                    </Label>
 
                     <controls:CobaltImageButton
                         x:Name="ImgBtnDayForward"
@@ -65,13 +72,15 @@
 
                 <!-- Last Checked In Label -->
                 
-                <HorizontalStackLayout HorizontalOptions="Start">
+                <HorizontalStackLayout HorizontalOptions="Center">
                         <Label x:Name="LblLastCheckedIn"
                                Text="You last checked in 2 days ago."
                                TextColor="{StaticResource Gray600}"
                                FontFamily="OpenSansRegular"
                                FontSize="17"
-                               Margin="0,4,0,0"/>
+                               Margin="0,4,0,0">
+                            
+                        </Label>
                     </HorizontalStackLayout>
 
                 <!-- Main Tab Buttons -->
@@ -334,28 +343,68 @@
 
                 <!-- Chart -->
                 
-                <chart:SfCartesianChart x:Name="ChartCheckingIn" Margin="-12,0,-12,0" HeightRequest="300">
-                    <chart:SfCartesianChart.XAxes>
-                        <chart:DateTimeAxis>
-                            <!--
-                            <chart:DateTimeAxis.Title>
-                                <chart:ChartAxisTitle Text="Checking-In Date"></chart:ChartAxisTitle>
-                            </chart:DateTimeAxis.Title>
-                            -->
-                        </chart:DateTimeAxis>
-                    </chart:SfCartesianChart.XAxes>
+                <Border BackgroundColor="Azure" StrokeThickness="0" Margin="-12,0,-12,0">
+                    <VerticalStackLayout>
+                        <chart:SfCartesianChart x:Name="ChartCheckingIn" Margin="0,0,0,0" HeightRequest="300">
+                            <chart:SfCartesianChart.XAxes>
+                                <chart:DateTimeAxis IntervalType="Days" Interval="1">
+                                    <!--
+                                    <chart:DateTimeAxis.Title>
+                                        <chart:ChartAxisTitle Text="Checking-In Date"></chart:ChartAxisTitle>
+                                    </chart:DateTimeAxis.Title>
+                                    -->
+                                </chart:DateTimeAxis>
+                            </chart:SfCartesianChart.XAxes>
+                            
+                            <chart:SfCartesianChart.YAxes>
+                                <chart:NumericalAxis Minimum="0" Maximum="10" Interval="1">
+                                </chart:NumericalAxis>
+                            </chart:SfCartesianChart.YAxes>
+                            
+                            <chart:SfCartesianChart.Legend>
+                                <chart:ChartLegend Placement="Top"></chart:ChartLegend>
+                            </chart:SfCartesianChart.Legend>
+                        </chart:SfCartesianChart>
                     
-                    <chart:SfCartesianChart.YAxes>
-                        <chart:NumericalAxis Minimum="0" Maximum="10" Interval="1">
-                        </chart:NumericalAxis>
-                    </chart:SfCartesianChart.YAxes>
+                        <Grid ColumnDefinitions="Auto,*,Auto" Margin="12,12,12,12">
+                            <buttons:SfButton
+                                Grid.Column="0"
+                                x:Name="BtnChartBack"
+                                Text="&lt;"
+                                FontAttributes="Bold"
+                                VerticalTextAlignment="Center"
+                                ShowIcon="False"
+                                FontSize="14"
+                                HeightRequest="30"
+                                WidthRequest="50"
+                                TextColor="White"
+                                Background="{StaticResource MeeeGarethMagenta}"
+                                HorizontalOptions="Start"
+                                Stroke="Transparent"
+                                Clicked="BtnChartBack_OnClicked" />
+                            
+                            <buttons:SfButton 
+                                Grid.Column="2"
+                                x:Name="BtnChartNext"
+                                Text="&gt;"
+                                FontAttributes="Bold"
+                                VerticalTextAlignment="Center"
+                                ShowIcon="False"
+                                FontSize="14"
+                                HeightRequest="30"
+                                WidthRequest="50"
+                                TextColor="White"
+                                Background="{StaticResource MeeeGarethMagenta}"
+                                HorizontalOptions="Start"
+                                Stroke="Transparent"
+                                Clicked="BtnChartNext_OnClicked" />
+                        </Grid>
+                    </VerticalStackLayout>
                     
-                    <chart:SfCartesianChart.Legend>
-                        <chart:ChartLegend Placement="Bottom"></chart:ChartLegend>
-                    </chart:SfCartesianChart.Legend>
-                    
-                </chart:SfCartesianChart>
-
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"></RoundRectangle>
+                    </Border.StrokeShape>
+                </Border>
                 
                 
             </VerticalStackLayout>

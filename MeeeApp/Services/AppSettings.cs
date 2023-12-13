@@ -8,6 +8,8 @@ namespace MeeeApp.Services
 	{
 		public static ContentPage CurrentPage { get; set; }
         public static JournalPage JournalPage { get; set; }
+        
+        public static SettingsPage SettingsPage { get; set; }
         public static DateTime? LastCheckInTimesAlert { get; set; } // When was the last time was asked to set check in/out times
         public static DailyMoment DailyMoment { get; set; }
         public static List<DailyMoment> DailyMoments { get; set; }

@@ -156,6 +156,7 @@ public class DailyMoment
         return favourites;
     }
     
+    
     public bool ImageIsVideo()
     {
         if (ImageUrl.Length > 0)

@@ -43,7 +43,7 @@
             <!-- Tab Bar, Top Line -->
             <Grid Grid.Row="0" RowDefinitions="Auto,Auto" ColumnDefinitions="*,*" Margin="0,12,0,0">
 
-                    <!-- Gratiude -->
+                    <!-- Gratitude -->
                     <controls:CobaltGrid x:Name="GridTabGratitude" Grid.Row="0" Grid.Column="0">
                         <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,30,0">
                             <Image x:Name="ImgTabGratitude"

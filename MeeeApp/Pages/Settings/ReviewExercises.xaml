@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="My Exercises"
+             x:Class="MeeeApp.Pages.Settings.ReviewExercises">
+    
+    <ContentPage.Content>
+        <Grid BackgroundColor="{StaticResource Gray100}">
+            
+            <!-- No Data -->
+            <VerticalStackLayout x:Name="VsNoData" Margin="24,48,24,0">
+                <Label 
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    Text="You have not yet completed any exercises." 
+                    HorizontalOptions="Center" 
+                    HorizontalTextAlignment="Center"></Label>
+                
+                <Image Source="heart_illus.png" WidthRequest="120" HeightRequest="120" HorizontalOptions="Center" Margin="0,24,0,0" />
+            </VerticalStackLayout>
+            
+            <!-- Exercises List -->
+            <Border x:Name="BordList" BackgroundColor="White" Margin="12,12,12,12">
+                <ListView x:Name="LvExercises"
+                          BackgroundColor="Transparent"
+                          HasUnevenRows="True"
+                          Margin="0,0,0,0"
+                          CachingStrategy="RecycleElement"
+                >
+                    
+                    <!-- Cell Template -->
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <VerticalStackLayout Padding="12,12,12,12">
+                                    <Label FontSize="24" FontFamily="MeeeFont" FontAttributes="Bold" Text="{Binding RecordDateFormattedForExerciseList}" Margin="0,0,0,6"></Label>
+                                    
+                                    <!-- Gratitude -->
+                                    <HorizontalStackLayout IsVisible="{Binding HasGratitude}" VerticalOptions="Center" Margin="0,12,0,0">
+                                        <Image 
+                                               Source="exercise_heart_filled.png"
+                                               VerticalOptions="Center"
+                                               Aspect="AspectFit"
+                                               HeightRequest="20"
+                                               WidthRequest="20" />
+                                        <Label FontSize="14" FontAttributes="Bold" Text="Grateful For" Margin="6,0,0,0" VerticalOptions="Center"></Label>
+                                    </HorizontalStackLayout>
+                                    <Label FontSize="14" Text="{Binding GratitudeString}" Margin="26,2,0,0"></Label>
+                                    
+                                    <!-- Achieved -->
+                                    <HorizontalStackLayout IsVisible="{Binding HasAchievement}" VerticalOptions="Center" Margin="0,12,0,0">
+                                        <Image 
+                                               Source="star_blue.png"
+                                               VerticalOptions="Center"
+                                               Aspect="AspectFit"
+                                               HeightRequest="20"
+                                               WidthRequest="20" />
+                                        <Label FontSize="14" FontAttributes="Bold" Text="I Achieved" Margin="6,0,0,0" VerticalOptions="Center"></Label>
+                                    </HorizontalStackLayout>
+                                    <Label FontSize="14" Text="{Binding AchievedString}" Margin="26,2,0,0"></Label>
+                                    
+                                    <!-- Looking Forward -->
+                                    <HorizontalStackLayout IsVisible="{Binding HasLookingForward}" VerticalOptions="Center" Margin="0,12,0,0">
+                                        <Image 
+                                               Source="carrot_pink.png"
+                                               VerticalOptions="Center"
+                                               Aspect="AspectFit"
+                                               HeightRequest="20"
+                                               WidthRequest="20" />
+                                        <Label FontSize="14" FontAttributes="Bold" Text="Looking Forward To" Margin="6,0,0,0" VerticalOptions="Center"></Label>
+                                    </HorizontalStackLayout>
+                                    <Label FontSize="14" Text="{Binding LookingForwardString}" Margin="26,2,0,0"></Label>
+                                </VerticalStackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    
+                </ListView>
+                
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"></RoundRectangle>
+                </Border.StrokeShape>
+            </Border>
+        </Grid>
+    </ContentPage.Content>
+    
+</ContentPage>

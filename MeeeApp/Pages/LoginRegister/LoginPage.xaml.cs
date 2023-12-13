@@ -1,6 +1,7 @@
 ﻿using MeeeApp.Services;
 using MeeeApp.Controls;
 using CommunityToolkit.Maui.Behaviors;
+using MeeeApp.Pages.LoginRegister;
 
 namespace MeeeApp.Pages;
 
@@ -45,6 +46,7 @@ public partial class LoginPage : ContentPage
     {
         var control = sender as CobaltButton;
         await control.BounceOnPressAsync();
+        await Navigation.PushAsync(new ForgotPassword());
     }
 
     async void BtnRegister_Clicked(System.Object sender, System.EventArgs e)

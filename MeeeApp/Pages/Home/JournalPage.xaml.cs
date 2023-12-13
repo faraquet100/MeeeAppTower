@@ -23,6 +23,8 @@ public partial class JournalPage : ContentPage
     public List<Person> PeopleTestData { get; set; }
     public List<Brush> InChartBrushes { get; set; }
     public List<Brush> OutChartBrushes { get; set; }
+    
+    public DateTime _chartDate = DateTime.Today.AddDays(2);
 
     enum CalendarType
     {
@@ -98,7 +100,8 @@ public partial class JournalPage : ContentPage
 
     public void LoadChartData()
     {
-        var dailyRecords = _user.DailyRecords.Where(d => d.RecordDate > DateTime.Now.AddDays(-30)).OrderBy(d => d.RecordDate);
+        //var dailyRecords = _user.DailyRecords.Where(d => d.RecordDate > DateTime.Now.AddDays(-30)).OrderBy(d => d.RecordDate);
+        var dailyRecords = _user.DailyRecords.Where(d => d.RecordDate > _chartDate.AddDays(-14) && d.RecordDate <= _chartDate).OrderBy(d => d.RecordDate);
         CheckingInData = new List<CalendarEntry>();
         CheckingOutData = new List<CalendarEntry>();
 
@@ -106,20 +109,41 @@ public partial class JournalPage : ContentPage
         {
             CalendarEntry inEntry = new CalendarEntry();
             CalendarEntry outEntry = new CalendarEntry();
-            
-            inEntry.RecordDate = record.RecordDate;
+
+            inEntry.RecordDate = new DateTime(record.RecordDate.Year, record.RecordDate.Month, record.RecordDate.Day);
             inEntry.Score = record.CheckInScore;
             inEntry.Reason = record.CheckInReason ?? "";
             CheckingInData.Add(inEntry);
             
-            outEntry.RecordDate = record.RecordDate;
+            outEntry.RecordDate = new DateTime(record.RecordDate.Year, record.RecordDate.Month, record.RecordDate.Day);;
             outEntry.Score = record.CheckOutScore;
             outEntry.Reason = record.CheckOutReason ?? "";
             CheckingOutData.Add(outEntry);
         }
+        
+        // We need one entry at the start of the month and one at the end to make the chart look right
+        // We need an entry for every day of the two week period
+        int daysToShow = -14;
+        int d = 0;
+        while (d > daysToShow)
+        {
+            var tempDate = _chartDate.AddDays(d);
+            var entry = CheckingInData.Where(r => r.RecordDate.Year == tempDate.Year && r.RecordDate.Month == tempDate.Month && r.RecordDate.Day == tempDate.Day).FirstOrDefault();
+            if (entry == null)
+            {
+                CheckingInData.Add(new CalendarEntry { RecordDate = new DateTime(tempDate.Year, tempDate.Month, tempDate.Day), Score = 0 });
+            }
+            
+            var outEntry = CheckingOutData.Where(r => r.RecordDate.Year == tempDate.Year && r.RecordDate.Month == tempDate.Month && r.RecordDate.Day == tempDate.Day).FirstOrDefault();
+            if (outEntry == null)
+            {
+                CheckingOutData.Add(new CalendarEntry { RecordDate = new DateTime(tempDate.Year, tempDate.Month, tempDate.Day), Score = 0 });
+            }
+            d--;
+        }
 
-        CheckingInData = CheckingInData.OrderByDescending(r => r.RecordDate).ToList();
-        CheckingOutData = CheckingOutData.OrderByDescending(r => r.RecordDate).ToList();
+        CheckingInData = CheckingInData.OrderBy(r => r.RecordDate).ToList();
+        CheckingOutData = CheckingOutData.OrderBy(r => r.RecordDate).ToList();
     }
 
     public void InitialiseChart()
@@ -139,6 +163,9 @@ public partial class JournalPage : ContentPage
         checkingInSeries.PaletteBrushes = InChartBrushes;
         checkingInSeries.EnableTooltip = true;
         checkingInSeries.Label = "Checking-In";
+        checkingInSeries.Width = 1.0;
+        checkingInSeries.CornerRadius = 8;
+        checkingInSeries.Spacing = 0.2;
         
         ColumnSeries checkingOutSeries = new ColumnSeries();
         checkingOutSeries.ShowDataLabels = false;
@@ -148,10 +175,14 @@ public partial class JournalPage : ContentPage
         checkingOutSeries.PaletteBrushes = OutChartBrushes;
         checkingOutSeries.EnableTooltip = true;
         checkingOutSeries.Label = "Checking-Out";
+        checkingOutSeries.Spacing = 0.2;
+        checkingOutSeries.Width = 1.0;
+        checkingOutSeries.CornerRadius = 8.0;
         
         ChartCheckingIn.Series.Clear();
         ChartCheckingIn.Series.Add(checkingInSeries);
         ChartCheckingIn.Series.Add(checkingOutSeries);
+        
     }
 
 
@@ -371,7 +402,7 @@ public partial class JournalPage : ContentPage
                 GridHasCheckedIn.IsVisible = true;
                
                 GridCheckIn.IsVisible = false;
-                LblCheckInTime.Text = "CHECKED-IN " + dailyRecord.CheckInTime.ToString("hh:mmtt").ToUpper() + " : " + dailyRecord.CheckInScore.ToString();
+                LblCheckInTime.Text = "CHECKED-IN " + dailyRecord.CheckInTime.ToString("HH:mm").ToUpper() + " : " + dailyRecord.CheckInScore.ToString() + " ";
 
                 string atOra = dailyRecord.CheckInScore == 8 ? "an" : "a";
                 LblCheckedInReasonTitle.Text = "I Checked-In at " + atOra + " " + dailyRecord.CheckInScore.ToString() + " because:";
@@ -419,7 +450,7 @@ public partial class JournalPage : ContentPage
                 GridHasCheckedOut.IsVisible = true;
                
                 GridCheckOut.IsVisible = false;
-                LblCheckOutTime.Text = "CHECKED-OUT " + dailyRecord.CheckOutTime.ToString("hh:mmtt").ToUpper() + " : " + dailyRecord.CheckOutScore.ToString();
+                LblCheckOutTime.Text = "CHECKED-OUT " + dailyRecord.CheckOutTime.ToString("HH:mm").ToUpper() + " : " + dailyRecord.CheckOutScore.ToString()+ " ";
                 
                 string atOra = dailyRecord.CheckOutScore == 8 ? "an" : "a";
                 LblCheckedOutReasonTitle.Text = "I Checked-Out at " + atOra + " " + dailyRecord.CheckOutScore.ToString() + " because:";
@@ -705,5 +736,45 @@ public partial class JournalPage : ContentPage
         await Navigation.PushModalAsync(new NavigationPage(new TextEditor("checking-out", "Tell us more . . .", LblCheckedOutReason.Text, true, false)));
         LblCheckedOutReason.Opacity = 1.0;
         */
+    }
+    
+
+
+    async void TapAdminMode_OnTapped(object sender, TappedEventArgs e)
+    {
+        if (!User.AdminModeFromPreferences())
+        {
+            User.SaveAdminModeToPreferences(true);
+            await DisplayAlert("Admin Mode ON", "Admin mode has been turned ON and you will now see additional options in Settings.", "OK");
+        }
+        else
+        {
+            User.SaveAdminModeToPreferences(false);
+            await DisplayAlert("Admin Mode OFF", "Admin mode has been turned OFF and you will no longer see additional options in Settings.", "OK");
+        }
+
+        if (AppSettings.SettingsPage != null)
+        {
+            AppSettings.SettingsPage.FormatForAdminMode();
+        }
+    }
+
+    private void BtnChartBack_OnClicked(object sender, EventArgs e)
+    {
+        _chartDate = _chartDate.AddDays(-14);
+        LoadChartData();
+        InitialiseChart();
+    }
+
+    private void BtnChartNext_OnClicked(object sender, EventArgs e)
+    {
+        if (_chartDate.Month == DateTime.Now.Month && _chartDate.Year == DateTime.Now.Year)
+        {
+            return;
+        }
+        
+        _chartDate = _chartDate.AddDays(14);
+        LoadChartData();
+        InitialiseChart();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Newtonsoft.Json;
 using Syncfusion.XlsIO.Parser.Biff_Records.Charts;
 
@@ -300,6 +301,88 @@ namespace MeeeApp.Models
         public List<string> LookingForwardList
         {
 	        get { return ExerciseLookingFowardList(); }
+        }
+
+        public string RecordDateFormattedForExerciseList
+        {
+	        get
+	        {
+		        if (RecordDate == null)
+		        {
+			        return "";
+		        }
+		        else
+		        {
+			        return RecordDate.ToString("ddd, dd MMM yy").ToUpper();
+		        }
+	        }
+        }
+        
+        public bool HasGratitude => ExerciseGrateful.Length > 0;
+        public bool HasAchievement => ExerciseAchieved.Length > 0;
+        public bool HasLookingForward => ExerciseLookingForward.Length > 0;
+
+        public string GratitudeString
+        {
+	        get
+	        {
+		        var returnValue = "";
+		        foreach (var g in ExerciseGratefulList())
+		        {
+			        if (g != ExerciseGratefulList().Last())
+			        {
+				        returnValue += CultureInfo.CurrentCulture.TextInfo.ToTitleCase(g) + ", ";
+			        }
+			        else
+			        {
+				        returnValue += CultureInfo.CurrentCulture.TextInfo.ToTitleCase(g);
+			        }
+		        }
+
+		        return returnValue;
+	        }
+        }
+        
+        public string AchievedString
+        {
+	        get
+	        {
+		        var returnValue = "";
+		        foreach (var g in ExerciseAchievementList())
+		        {
+			        if (g != ExerciseAchievementList().Last())
+			        {
+				        returnValue += CultureInfo.CurrentCulture.TextInfo.ToTitleCase(g) + ", ";
+			        }
+			        else
+			        {
+				        returnValue += CultureInfo.CurrentCulture.TextInfo.ToTitleCase(g);
+			        }
+		        }
+
+		        return returnValue;
+	        }
+        }
+        
+        public string LookingForwardString
+        {
+	        get
+	        {
+		        var returnValue = "";
+		        foreach (var g in ExerciseLookingFowardList())
+		        {
+			        if (g != ExerciseLookingFowardList().Last())
+			        {
+				        returnValue += CultureInfo.CurrentCulture.TextInfo.ToTitleCase(g) + ", ";
+			        }
+			        else
+			        {
+				        returnValue += CultureInfo.CurrentCulture.TextInfo.ToTitleCase(g);
+			        }
+		        }
+
+		        return returnValue;
+	        }
         }
 	}
 }

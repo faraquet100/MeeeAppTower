@@ -52,6 +52,7 @@ public partial class DailyMomentDetail : ContentPage
     {
         base.OnAppearing();
         
+        // Returning from entering a journal entry
         if (AppSettings.CurrentEditor == EDTTellUsMore)
         {
             _dailyRecord.CheckOutJournalEntry = AppSettings.CurrentEditor.Text;
@@ -64,7 +65,7 @@ public partial class DailyMomentDetail : ContentPage
         {
             BtnNext.IsVisible = false;
         }
-
+        
         if (_dailyRecord != null && AppSettings.CurrentEditor != EDTTellUsMore)
         {
             EDTTellUsMore.Text = _dailyRecord.CheckOutJournalEntry;
@@ -100,8 +101,6 @@ public partial class DailyMomentDetail : ContentPage
         
         ImgMomentImage.Source = _dailyMoment.FullImageUrl;
         LblMomentTitle.Text = _dailyMoment.Heading.ToLower();
-        LblCallToAction.Text = _dailyMoment.CallToActionText;
-        
         LblQuote.Text = "“" + _dailyMoment.QuoteText.Replace("\"", "").Trim() + "”";  // Option+[ for opening quote Option+Shift+[ for closing quote
         LblQuoteAuthor.Text = _dailyMoment.QuoteAuthor;
         LblContent.Text = _dailyMoment.Content;
@@ -115,6 +114,16 @@ public partial class DailyMomentDetail : ContentPage
         {
             LblQuote.IsVisible = true;
             LblQuoteAuthor.IsVisible = true;
+        }
+
+        if (_dailyMoment.LinkUrl.Length > 2 && _dailyMoment.CallToActionText.Length > 0)
+        {
+            LayoutLink.IsVisible = true;
+            BtnLink.Text = _dailyMoment.CallToActionText;
+        }
+        else
+        {
+            LayoutLink.IsVisible = false;
         }
         
         //WebViewSource.Html = _dailyMoment.ContentWithHtml;
@@ -307,5 +316,10 @@ public partial class DailyMomentDetail : ContentPage
     {
         AppSettings.CurrentEditor = this.EDTTellUsMore;
         await Navigation.PushModalAsync(new NavigationPage(new TextEditor("daily moment", "Take a minute to reflect on today's 'Daily Moment' . . .", EDTTellUsMore.Text)));
+    }
+
+    async void BtnLink_OnClicked(object sender, EventArgs e)
+    {
+        OpenWebLink(_dailyMoment.LinkUrl);
     }
 }

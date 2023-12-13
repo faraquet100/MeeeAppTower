@@ -36,16 +36,7 @@
     <ContentPage.Content>
         <VerticalStackLayout Padding="24,12,24,48">
             <HorizontalStackLayout HorizontalOptions="Center">
-                <Label x:Name="LblDay" 
-                       FontSize="40"
-                       Text="12"
-                       TextColor="{StaticResource MeeeGarethCyan}"
-                       Padding="0,0,2,0"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"
-                       FontAttributes="Bold"
-                       FontFamily="Juicebox"></Label>
-                <Label x:Name="LblMonth" 
+                <Label x:Name="LblDayMonth" 
                        FontSize="40"
                        Text="June"
                        Padding="2,2,0,0"
@@ -53,7 +44,7 @@
                        VerticalOptions="Center"
                        HorizontalOptions="Center"
                        FontAttributes="Bold"
-                       FontFamily="BearHugs"></Label>
+                       FontFamily="MeeeFont"></Label>
             </HorizontalStackLayout>
             
             <Label 
@@ -70,7 +61,6 @@
             <Label 
                 x:Name="LblContent" 
                 HorizontalTextAlignment="Center"
-                FontAttributes="Bold"
                 FontSize="17"
                 LineHeight="1.1"
                 Text="This is the content"

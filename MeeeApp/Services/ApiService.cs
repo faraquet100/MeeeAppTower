@@ -34,6 +34,7 @@ namespace MeeeApp.Services
         public static string ENDPOINT_DAILY_MOMENT = API_URL + "DailyMoment/";
         public static string ENDPOINT_ONTHISDAY = API_URL + "OnThisDay?";
         public static string ENDPOINT_DAILY_RECORDS = API_URL + "DailyRecord/";
+        public static string ENDPOINT_FORGOT_PASSWORD = API_URL + "Users/ForgotPassword";
 
         // Preference Keys
         // Using banditoth.MAUI.PreferencesExtension which allows us to serialize obkects
@@ -96,6 +97,27 @@ namespace MeeeApp.Services
             Preferences.Default.Set(KEY_USER_TOKEN, result.Token);
             SaveUserDetailsToPreferences(result);
 
+            return ApiResult.Success;
+        }
+
+        public static async Task<ApiResult> ForgotPassword(string email)
+        {
+            var model = new Login { Email = email, Password = "" };
+            var httpClient = new HttpClient();
+            var json = JsonConvert.SerializeObject(model);
+            var payload = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response;
+
+            try
+            {
+                response = await httpClient.PostAsync(ENDPOINT_FORGOT_PASSWORD, payload);
+            }
+            catch
+            {
+                return ApiResult.NoInternet;
+            }
+            
+            if (!response.IsSuccessStatusCode) return ApiResult.BadRequest;
             return ApiResult.Success;
         }
 
@@ -227,6 +249,8 @@ namespace MeeeApp.Services
 
             return await ProcessUserReturnResponse(response);
         }
+        
+        
 
         #endregion
 

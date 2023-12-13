@@ -5,6 +5,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:controls="clr-namespace:MeeeApp.Controls"
              xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              NavigationPage.HasNavigationBar="True"
              x:Class="MeeeApp.Pages.DailyMomentDetail">
     
@@ -93,17 +94,6 @@
                     FontFamily="BearHugs"
                     FontSize="32" />
                 
-                <!-- Call to Action -->
-                
-                <Label x:Name="LblCallToAction" 
-                       Text="Test Test" 
-                       IsVisible="False"
-                       HorizontalOptions="Center" 
-                       HorizontalTextAlignment="Center"
-                       Margin="12,12,12,0"
-                       FontSize="17" 
-                       FontAttributes="Bold"></Label>
-                
                 <!-- Icons -->
 
                 <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="8">
@@ -181,6 +171,25 @@
                     </ImageButton>
                     
                 </HorizontalStackLayout>
+                
+                <!-- Call to Action, Link -->
+                
+                <VerticalStackLayout x:Name="LayoutLink" IsVisible="False" Margin="48,12,48, 0">
+                    
+                    <buttons:SfButton 
+                        x:Name="BtnLink"
+                        Text=""
+                        FontAttributes="Bold"
+                        Padding="4"
+                        ShowIcon="False"
+                        FontSize="14"
+                        HeightRequest="40"
+                        TextColor="White"
+                        Background="{StaticResource MeeePrimaryCyan}"
+                        HorizontalOptions="Center"
+                        Clicked="BtnLink_OnClicked" />
+                    
+                </VerticalStackLayout>
 
                 
                 <!-- Daily Moment Text -->

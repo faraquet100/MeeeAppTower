@@ -12,6 +12,8 @@ public class User
     public static string KEY_CHECKIN_TIME = "user_checkin_time";
     public static string KEY_CHECKOUT_TIME = "user_checkout_time";
     public static string KEY_TESTMODE = "user_testmode";
+    public static string KEY_ADMIN_MODE = "user_adminmode";
+    
     [JsonProperty("token")] public string Token { get; set; }
     [JsonProperty("id")] public int UserId { get; set; }
     [JsonProperty("email")] public string Email { get; set; }
@@ -159,11 +161,6 @@ public class User
         Preferences.Default.Set(KEY_CHECKOUT_TIME, checkOutTime);
     }
 
-    public static void SaveTestModeToPreferences(bool testModeOn)
-    {
-        Preferences.Default.Set(KEY_TESTMODE, testModeOn);
-    }
-
     public static DateTime CheckInTimeFromPreferences()
     {
         var checkInTime = Preferences.Default.Get<DateTime>(KEY_CHECKIN_TIME, DateTime.MinValue);
@@ -175,11 +172,27 @@ public class User
         var checkInTime = Preferences.Default.Get<DateTime>(KEY_CHECKOUT_TIME, DateTime.MinValue);
         return checkInTime;
     }
+    
+    public static void SaveTestModeToPreferences(bool testModeOn)
+    {
+        Preferences.Default.Set(KEY_TESTMODE, testModeOn);
+    }
 
     public static bool TestModeFromPreferences()
     {
         var testModeOn = Preferences.Default.Get<bool>(KEY_TESTMODE, false);
         return testModeOn;
+    }
+    
+    public static void SaveAdminModeToPreferences(bool adminModeOn)
+    {
+        Preferences.Default.Set(KEY_ADMIN_MODE, adminModeOn);
+    }
+
+    public static bool AdminModeFromPreferences()
+    {
+        var adminModeOn = Preferences.Default.Get<bool>(KEY_ADMIN_MODE, false);
+        return adminModeOn;
     }
     
     

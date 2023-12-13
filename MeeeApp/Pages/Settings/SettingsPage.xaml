@@ -16,8 +16,11 @@
                                 
                                 <!-- First Section -->
                                 <Border BackgroundColor="White" Grid.Row="0">
-                                        <!-- My Saved Moments -->
+                                        
                                         <VerticalStackLayout>
+                                                
+                                                <!-- My Saved Moments -->
+                                                
                                                 <VerticalStackLayout Padding="12,12,12,12">
                                                         <controls:CobaltGrid x:Name="GridSavedMoments" ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
                                                                 <Image Grid.Column="0" Source="icons8_30gear.png" />
@@ -39,12 +42,14 @@
                                                 
                                                 <BoxView HeightRequest="1" Color="{StaticResource Gray100}" Margin="12,0,0,0"></BoxView>
                                                 
+                                                <!-- Journal Entries -->
+                                                
                                                 <VerticalStackLayout Padding="12,12,12,12">
-                                                        <controls:CobaltGrid x:Name="GridReviewMoments" ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+                                                        <controls:CobaltGrid x:Name="GridJournalEntries" ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
                                                                 <Image Grid.Column="0" Source="icons8_30gear.png" />
                                                                 <VerticalStackLayout Grid.Column="1" Padding="12,0,12,0">
-                                                                        <Label FontSize="16" FontAttributes="Bold">Review Daily Moments</Label>
-                                                                        <Label Margin="0,4,0,0" TextColor="{StaticResource Gray500}">A test feature to allow the review of all Daily Moments</Label>
+                                                                        <Label FontSize="16" FontAttributes="Bold">My Journal Entries</Label>
+                                                                        <Label Margin="0,4,0,0" TextColor="{StaticResource Gray500}">Review the Daily Moments that you have entered journal entries for</Label>
                                                                 </VerticalStackLayout>
                                                                 <Image Grid.Column="2" Source="chevron_right_small.png" WidthRequest="30">
                                                                         <ImageButton.Behaviors>
@@ -53,21 +58,38 @@
                                                                 </Image>
                                                                 
                                                                 <Grid.GestureRecognizers>
-                                                                        <TapGestureRecognizer x:Name="GridReviewMomentsTap" Tapped="GridReviewMomentsTap_OnTapped" />
+                                                                        <TapGestureRecognizer x:Name="GridJournalEntriesTap" Tapped="GridJournalEntriesTap_OnTapped" />
                                                                 </Grid.GestureRecognizers>
                                                         </controls:CobaltGrid>
                                                 </VerticalStackLayout>
-                                        </VerticalStackLayout>
-                                        
-                                        <Border.StrokeShape>
-                                                <RoundRectangle CornerRadius="10"></RoundRectangle>
-                                        </Border.StrokeShape>
-                                </Border>
-                                
-                                <!-- Second Section -->
-                                <Border BackgroundColor="White" Grid.Row="1" Margin="0,12,0,0">
-                                        <!-- My Saved Moments -->
-                                        <VerticalStackLayout>
+                                                
+                                                <BoxView HeightRequest="1" Color="{StaticResource Gray100}" Margin="12,0,0,0"></BoxView>
+                                                
+                                                <!-- Exercise Review -->
+                                                
+                                                <VerticalStackLayout Padding="12,12,12,12">
+                                                        <controls:CobaltGrid x:Name="GridExercises" ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+                                                                <Image Grid.Column="0" Source="icons8_30gear.png" />
+                                                                <VerticalStackLayout Grid.Column="1" Padding="12,0,12,0">
+                                                                        <Label FontSize="16" FontAttributes="Bold">My Completed Exercises</Label>
+                                                                        <Label Margin="0,4,0,0" TextColor="{StaticResource Gray500}">Review the exercises you have completed after Checking-Out</Label>
+                                                                </VerticalStackLayout>
+                                                                <Image Grid.Column="2" Source="chevron_right_small.png" WidthRequest="30">
+                                                                        <ImageButton.Behaviors>
+                                                                                <toolkit:IconTintColorBehavior TintColor="{StaticResource Gray600}"></toolkit:IconTintColorBehavior>
+                                                                        </ImageButton.Behaviors>
+                                                                </Image>
+                                                                
+                                                                <Grid.GestureRecognizers>
+                                                                        <TapGestureRecognizer x:Name="GridExercisesTap" Tapped="GridExercisesTap_OnTapped" />
+                                                                </Grid.GestureRecognizers>
+                                                        </controls:CobaltGrid>
+                                                </VerticalStackLayout>
+                                                
+                                                <BoxView HeightRequest="1" Color="{StaticResource Gray100}" Margin="12,0,0,0"></BoxView>
+                                                
+                                                <!-- Reset Checking-In/Out Times -->
+                                                
                                                 <VerticalStackLayout Padding="12,12,12,12">
                                                         <controls:CobaltGrid x:Name="GridResetTimes" ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
                                                                 <Image Grid.Column="0" Source="icons8_30gear.png" />
@@ -83,6 +105,39 @@
                                                                 
                                                                 <Grid.GestureRecognizers>
                                                                         <TapGestureRecognizer x:Name="GridResetTimesTap" Tapped="GridResetTimesTap_OnTapped"/>
+                                                                </Grid.GestureRecognizers>
+                                                        </controls:CobaltGrid>
+                                                </VerticalStackLayout>
+                                                
+                                        </VerticalStackLayout>
+                                        
+                                        <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="10"></RoundRectangle>
+                                        </Border.StrokeShape>
+                                </Border>
+                                
+                                <!-- Second Section -->
+                                <Border x:Name="BorderAdmin" IsVisible="False" BackgroundColor="White" Grid.Row="1" Margin="0,12,0,0">
+                                        <!-- My Saved Moments -->
+                                        <VerticalStackLayout>
+                                                
+                                                <!-- Review Daily Moments -->
+                                                
+                                                <VerticalStackLayout Padding="12,12,12,12">
+                                                        <controls:CobaltGrid x:Name="GridReviewMoments" ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+                                                                <Image Grid.Column="0" Source="icons8_30gear.png" />
+                                                                <VerticalStackLayout Grid.Column="1" Padding="12,0,12,0">
+                                                                        <Label FontSize="16" FontAttributes="Bold">Review Daily Moments</Label>
+                                                                        <Label Margin="0,4,0,0" TextColor="{StaticResource Gray500}">A test feature to allow the review of all Daily Moments</Label>
+                                                                </VerticalStackLayout>
+                                                                <Image Grid.Column="2" Source="chevron_right_small.png" WidthRequest="30">
+                                                                        <ImageButton.Behaviors>
+                                                                                <toolkit:IconTintColorBehavior TintColor="{StaticResource Gray600}"></toolkit:IconTintColorBehavior>
+                                                                        </ImageButton.Behaviors>
+                                                                </Image>
+                                                                
+                                                                <Grid.GestureRecognizers>
+                                                                        <TapGestureRecognizer x:Name="GridReviewMomentsTap" Tapped="GridReviewMomentsTap_OnTapped" />
                                                                 </Grid.GestureRecognizers>
                                                         </controls:CobaltGrid>
                                                 </VerticalStackLayout>
